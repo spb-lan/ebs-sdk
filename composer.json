@@ -1,0 +1,12 @@
+{
+  "name": "lan/ebs-sdk",
+  "description": "Ebs SDK",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "dp",
+      "email": "denis.a.shestakov@gmail.com"
+    }
+  ]
+}
