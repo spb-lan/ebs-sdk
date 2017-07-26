@@ -8,5 +8,21 @@
       "name": "dp",
       "email": "denis.a.shestakov@gmail.com"
     }
-  ]
+  ],
+  "autoload": {
+    "psr-4": {
+      "Lan\\Ebs\\Sdk\\": "src/",
+      "Lan\\Ebs\\Sdk\\Classes\\": "src/classes/",
+      "Lan\\Ebs\\Sdk\\Collection\\": "src/collection/",
+      "Lan\\Ebs\\Sdk\\Helper\\": "src/helper/",
+      "Lan\\Ebs\\Sdk\\Model\\": "src/model/",
+      "Lan\\Ebs\\Sdk\\Test\\Unit\\": "tests/unit/"
+    }
+  },
+  "require": {
+    "monolog/monolog": "1.23.*"
+  },
+  "require-dev": {
+    "codeception/codeception": "dev-master"
+  }
 }
