@@ -14,6 +14,22 @@ class ClientTest extends \Codeception\Test\Unit
 
     private static $token = 'fc92d67fb9597650d3f99d023a7f51db87d8';
 
+    protected function getServices()
+    {
+        return [
+            'di'         => new \Codeception\Lib\Di(),
+            'dispatcher' => new \Codeception\Util\Maybe(),
+            'modules'    => \Codeception\Util\Stub::makeEmpty('Codeception\Lib\ModuleContainer')
+        ];
+    }
+
+    protected function setUp()
+    {
+        $this->getMetadata()->setServices($this->getServices());
+
+        parent::setUp();
+    }
+
     protected function _before()
     {
     }

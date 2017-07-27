@@ -185,4 +185,11 @@ abstract class Collection implements Iterator
 
         return $this->logger;
     }
+
+    public function getFields()
+    {
+        $class = $this->class;
+
+        return array_merge(['id'], $this->fields ? $this->fields : $class::$defaultFields);
+    }
 }
