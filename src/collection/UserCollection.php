@@ -15,13 +15,9 @@ use Lan\Ebs\Sdk\Model\User;
 
 class UserCollection extends Collection
 {
-    public function __construct(Client $client, array $fields = [], $class = User::class)
+    public function __construct(Client $client, array $fields = [], $limit = 10, $offset = 0)
     {
-        if ($class != User::class) {
-            throw new Error('Wrong class for model collection');
-        }
-
-        parent::__construct($client, $fields, $class);
+        parent::__construct($client, $fields, User::class, $limit, $offset);
     }
 
     protected function getRequest()

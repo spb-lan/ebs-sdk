@@ -8,17 +8,15 @@
 
 namespace Lan\Ebs\Sdk;
 
+use Codeception\Util\Debug;
 use Error;
 use Lan\Ebs\Sdk\Helper\Curl;
-use Monolog\Logger;
 
 final class Client
 {
-    private $host = 'http:/eop.local';
+    private $host = 'http://eop.local';
 
     private $token;
-
-    private $logger = null;
 
     /**
      * Ebs constructor.
@@ -43,24 +41,13 @@ final class Client
         $response = Curl::getResponse($this->host, $request['url'], $request['method'], $this->token, $params);
 
         if (isset($response['debug'])) {
-            $this->getLogger()->debug('debug', (array)$response['debug']);
+            Debug::debug(['request' => $request, 'params' => $params, 'response' => $response]);
         }
 
         if ($response['status'] != $request['code']) {
-            $this->getLogger()->error($response['message'], $response);
-
-            throw new Error($response['message']);
+            throw new Error($response['message'], $response['status']);
         }
 
         return $response;
-    }
-
-    private function getLogger()
-    {
-        if ($this->logger === null) {
-            $this->logger = new Logger(get_class($this));
-        }
-
-        return $this->logger;
     }
 }

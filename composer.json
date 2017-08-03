@@ -20,7 +20,6 @@
     }
   },
   "require": {
-    "monolog/monolog": "1.23.*"
   },
   "require-dev": {
     "codeception/codeception": "dev-master"

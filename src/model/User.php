@@ -12,6 +12,12 @@ use Error;
 use Lan\Ebs\Sdk\Classes\Model;
 use Lan\Ebs\Sdk\Client;
 
+/**
+ * @property mixed login
+ * @property mixed email
+ * @property mixed fio
+ * @property mixed registered_at
+ */
 class User extends Model
 {
     const FIELD_LOGIN = 'login';
@@ -51,13 +57,13 @@ class User extends Model
                 return [
                     'url' => vsprintf('/1.0/security/user/put/%d', $params),
                     'method' => 'PUT',
-                    'code' => 204
+                    'code' => 200
                 ];
             case 'delete':
                 return [
                     'url' => vsprintf('/1.0/security/user/delete/%d', $params),
                     'method' => 'DELETE',
-                    'code' => 204
+                    'code' => 200
                 ];
             default :
                 throw new Error('Route for ' . $method . ' not found');

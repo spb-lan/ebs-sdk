@@ -10,12 +10,11 @@ namespace Lan\Ebs\Sdk\Classes;
 
 use Error;
 use Lan\Ebs\Sdk\Client;
-use Monolog\Logger;
 
 abstract class Model
 {
     const MESSAGE_ID_REQUIRED = 'Id is required';
-    const MESSAGE_ID_CAN_NOT_CHANGED = 'Id can not changed';
+    const MESSAGE_ID_CAN_NOT_CHANGED = 'Id can not be changed';
 
     private $client;
 
@@ -25,7 +24,7 @@ abstract class Model
 
     private $id = null;
 
-    private $logger = null;
+    private $lastStatus = 0;
 
     /**
      * Model constructor.
@@ -51,22 +50,19 @@ abstract class Model
      * Set data to model
      *
      * @param array $data
+     * @param null $status
      * @return $this
      * @throws Error
      */
-    public function set(array $data)
+    public function set(array $data, $status = null)
     {
-        if ($this->id === null) {
-            if (empty($data['id'])) {
-                throw new Error(Model::MESSAGE_ID_REQUIRED);
-            }
-        } else {
-            if (!empty($data['id']) && $data['id'] != $this->id) {
-                throw new Error(Model::MESSAGE_ID_CAN_NOT_CHANGED);
-            }
+        if (empty($data['id']) && empty($this->id)) {
+            throw new Error(Model::MESSAGE_ID_REQUIRED);
         }
 
-        $class = get_class($this);
+        if (!empty($data['id']) && !empty($this->id) && $data['id'] != $this->id) {
+            throw new Error(Model::MESSAGE_ID_CAN_NOT_CHANGED);
+        }
 
         $this->data = array_merge(
             (array)$this->data,
@@ -75,6 +71,10 @@ abstract class Model
 
         $this->id = $this->data['id'];
 
+        if ($status) {
+            $this->lastStatus = $status;
+        }
+
         return $this;
     }
 
@@ -82,35 +82,50 @@ abstract class Model
 
     public function get($id = null)
     {
-        if (empty($id)) {
-            if ($this->data === null) {
-                throw new Error(Model::MESSAGE_ID_REQUIRED);
-            }
-        } else {
-            if ($this->data === null || $id != $this->id) {
-                $this->data = $this->client->getResponse($this->getUrl(__FUNCTION__, [$id]), $this->getFields())['data'];
-
-                if (!empty($this->data['id'])) {
-                    $this->id = $this->data['id'];
-                }
-            }
+        if ($id === null && $this->id !== null) {
+            return $this->data;
         }
+
+        $this->set(['id' => $id]);
+
+        $response = $this->client->getResponse($this->getUrl(__FUNCTION__, [$this->getId()]), $this->getFields());
+
+        $this->set($response['data'], $response['status']);
 
         return $this->data;
     }
 
-    private function post($data)
+    public function post(array $data)
     {
+        $response = $this->client->getResponse($this->getUrl(__FUNCTION__), $data);
 
+        $this->set($response['data'], $response['status']);
+
+        return $this;
     }
 
-    protected function getLogger()
+    public function put(array $data)
     {
-        if ($this->logger === null) {
-            $this->logger = new Logger(get_class($this));
+        $this->set($data);
+
+        $response = $this->client->getResponse($this->getUrl(__FUNCTION__, [$this->getId()]), $data);
+
+        $this->set($response['data'], $response['status']);
+
+        return $this;
+    }
+
+    public function delete($id = null)
+    {
+        if (empty($this->id)) {
+            $this->set(['id' => $id]);
         }
 
-        return $this->logger;
+        $response = $this->client->getResponse($this->getUrl(__FUNCTION__, [$this->getId()]));
+
+        $this->set($response['data'], $response['status']);
+
+        return $this;
     }
 
     public function getId()
@@ -123,5 +138,14 @@ abstract class Model
         $class = get_class($this);
 
         return array_merge(['id'], $this->fields ? $this->fields : $class::$defaultFields);
+    }
+
+    public function __get($name)
+    {
+        if ($this->data === null || !array_key_exists($name, $this->data)) {
+            throw new Error('Param ' . $name . ' not defined for ' . get_class($this));
+        }
+
+        return $this->data[$name];
     }
 }

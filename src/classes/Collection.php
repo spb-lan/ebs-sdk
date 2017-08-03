@@ -8,12 +8,11 @@
 
 namespace Lan\Ebs\Sdk\Classes;
 
+use ArrayObject;
 use Error;
-use Iterator;
 use Lan\Ebs\Sdk\Client;
-use Monolog\Logger;
 
-abstract class Collection implements Iterator
+abstract class Collection extends ArrayObject
 {
     private $client;
 
@@ -23,20 +22,20 @@ abstract class Collection implements Iterator
 
     private $result = null;
 
-    private $limit = 10;
+    private $limit = null;
 
-    private $offset = 0;
-
-    private $logger = null;
+    private $offset = null;
 
     /**
      * Collection constructor.
      * @param Client $client
      * @param array $fields
      * @param $class
+     * @param int $limit
+     * @param int $offset
      * @throws Error
      */
-    public function __construct(Client $client, array $fields, $class)
+    public function __construct(Client $client, array $fields, $class, $limit, $offset)
     {
         if (!$client) {
             throw new Error('Client not defined');
@@ -53,10 +52,63 @@ abstract class Collection implements Iterator
         $this->client = $client;
         $this->fields = $fields;
         $this->class = $class;
+
+        $this->setLimit($limit);
+        $this->setOffset($offset);
     }
 
-    private function load()
+    public function getIterator()
     {
+        return new CollectionIterator($this);
+    }
+
+    /**
+     * Offset to retrieve
+     * @link http://php.net/manual/en/arrayaccess.offsetget.php
+     * @param mixed $offset <p>
+     * The offset to retrieve.
+     * </p>
+     * @return mixed Can return all value types.
+     * @since 5.0.0
+     */
+//    public function offsetGet($offset) {
+//        return $this->offsetExists($offset) ? $this->createModel($this->result['data'][$offset]) : null;
+//    }
+
+    /**
+     * Offset to set
+     * @link http://php.net/manual/en/arrayaccess.offsetset.php
+     * @param mixed $offset <p>
+     * The offset to assign the value to.
+     * </p>
+     * @param mixed $value <p>
+     * The value to set.
+     * </p>
+     * @return void
+     * @throws Error
+     * @since 5.0.0
+     */
+//    public function offsetSet($offset, $value) {
+//        if (!($value instanceof Model)) {
+//            throw new Error('Value mast be instance of Model class');
+//        }
+//
+//        if (is_null($offset)) {
+//            $this->result['data'][] = $value;
+//        } else {
+//            $this->result['data'][$offset] = $value->get();
+//        }
+//    }
+
+    /**
+     * @return $this
+     */
+    public function load($force = false)
+    {
+        if ($this->result !== null && !$force) {
+            return $this;
+        }
+
         $params = [
             'limit' => $this->limit,
             'offset' => $this->offset
@@ -67,129 +119,79 @@ abstract class Collection implements Iterator
         }
 
         $this->result = $this->client->getResponse($this->getRequest(), $params);
+
+        $this->exchangeArray($this->result['data']);
+
+        return $this;
     }
 
     /**
      * @param int $limit
      */
-    public function setLimit(int $limit)
+    public function setLimit($limit)
     {
         $this->limit = $limit;
 
         if ($this->result !== null) {
-            $this->load();
+            $this->load(true);
         }
     }
 
     /**
      * @param int $offset
      */
-    public function setOffset(int $offset)
+    public function setOffset($offset)
     {
         $this->offset = $offset;
 
         if ($this->result !== null) {
-            $this->load();
+            $this->load(true);
         }
     }
 
-    /**
-     * Return the current element
-     * @link http://php.net/manual/en/iterator.current.php
-     * @return Model
-     */
-    public function current()
-    {
-        if ($this->result === null) {
-            $this->load();
-        }
-
-        return $this->createModel(current($this->result['data']));
-    }
-
-    /**
-     * Move forward to next element
-     * @link http://php.net/manual/en/iterator.next.php
-     * @return Model
-     */
-    public function next()
-    {
-        if ($this->result === null) {
-            $this->load();
-        }
-
-        return next($this->result['data']);
-    }
-
-    /**
-     * Return the key of the current element
-     * @link http://php.net/manual/en/iterator.key.php
-     * @return integer
-     */
-    public function key()
-    {
-        if ($this->result === null) {
-            $this->load();
-        }
-
-        return key($this->result['data']);
-    }
-
-    /**
-     * Checks if current position is valid
-     * @link http://php.net/manual/en/iterator.valid.php
-     * @return boolean
-     */
-    public function valid()
-    {
-        $key = $this->key();
-
-        return ($key !== NULL && $key !== FALSE);
-    }
-
-    /**
-     * Rewind the Iterator to the first element
-     * @link http://php.net/manual/en/iterator.rewind.php
-     * @return void
-     */
     public function rewind()
     {
-        if ($this->result === null) {
-            $this->load();
-        }
-
-        reset($this->result['data']);
+        $this->load();
     }
 
     /**
      * @param array $data
      * @return Model
      */
-    private function createModel(array $data) {
+    public function createModel(array $data = null)
+    {
         $class = $this->class;
 
         /** @var Model $model */
         $model = new $class($this->client, $this->fields);
 
-        $model->set($data);
+        $model->set($data === null ? current($this) : $data);
 
         return $model;
     }
 
     abstract protected function getRequest();
 
-    protected function getLogger() {
-        if ($this->logger === null) {
-            $this->logger = new Logger(get_class($this));
-        }
-
-        return $this->logger;
-    }
-
     public function getFields()
     {
         $class = $this->class;
 
         return array_merge(['id'], $this->fields ? $this->fields : $class::$defaultFields);
+    }
+
+    public function getData() {
+        return $this->result === null ? [] : $this->result['data'];
+    }
+
+    public function reset() {
+        $this->load();
+
+        return $this->createModel(reset($this));
+    }
+
+    public function end() {
+        $this->load();
+
+        return $this->createModel(end($this));
     }
 }

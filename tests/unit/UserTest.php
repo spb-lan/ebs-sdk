@@ -3,9 +3,12 @@
 namespace Lan\Ebs\Sdk\Test\Unit;
 
 use Error;
+use Lan\Ebs\Sdk\Classes\Collection;
 use Lan\Ebs\Sdk\Classes\Model;
+use Lan\Ebs\Sdk\Collection\UserCollection;
 use Lan\Ebs\Sdk\Helper\Test;
 use Lan\Ebs\Sdk\Model\User;
+use Phalcon\Debug;
 
 class UserTest extends \Codeception\Test\Unit
 {
@@ -50,35 +53,35 @@ class UserTest extends \Codeception\Test\Unit
 
     }
 
-    public function testSetOnlyId()
-    {
-        $user = new User($this->client);
-
-        $this->expectException(Error::class);
-        $user->set(['id' => 2]);
-    }
-
-    public function testSetPartFields()
-    {
-        $user = new User($this->client);
-
-        $this->expectException(Error::class);
-        $user->set([
-            'id' => 2,
-            'login' => __FUNCTION__
-        ]);
-    }
-
-    public function testSetPartFields2()
-    {
-        $user = new User($this->client, [User::FIELD_LOGIN, User::FIELD_EMAIL, User::FIELD_FIO]);
-
-        $this->expectException(Error::class);
-        $user->set([
-            'id' => 2,
-            'login' => __FUNCTION__
-        ]);
-    }
+//    public function testSetOnlyId()
+//    {
+//        $user = new User($this->client);
+//
+//        $this->expectException(Error::class);
+//        $user->set(['id' => 2]);
+//    }
+//
+//    public function testSetPartFields()
+//    {
+//        $user = new User($this->client);
+//
+//        $this->expectException(Error::class);
+//        $user->set([
+//            'id' => 2,
+//            'login' => __FUNCTION__
+//        ]);
+//    }
+//
+//    public function testSetPartFields2()
+//    {
+//        $user = new User($this->client, [User::FIELD_LOGIN, User::FIELD_EMAIL, User::FIELD_FIO]);
+//
+//        $this->expectException(Error::class);
+//        $user->set([
+//            'id' => 2,
+//            'login' => __FUNCTION__
+//        ]);
+//    }
 
     public function testSetDefinedFields()
     {
@@ -95,6 +98,24 @@ class UserTest extends \Codeception\Test\Unit
     public function testPost()
     {
         $user = new User($this->client);
+
+        $time = time();
+
+        $user->post([
+            'login' => __FUNCTION__ . '_' . $time,
+            'password' => __FUNCTION__ . '_' . $time,
+            'fio' => __FUNCTION__
+        ]);
+
+        $data = $user->get();
+
+        $this->assertNotNull($user->getId());
+        $this->assertNotNull($user->id);
+        $this->assertNotNull($data['id']);
+
+        $this->assertNotNull($user->login);
+        $this->assertNotNull($user->email);
+        $this->assertNotNull($user->fio);
     }
 
     public function testGet()
@@ -107,21 +128,60 @@ class UserTest extends \Codeception\Test\Unit
             Test::assertExceptionMessage($this, $e, Model::MESSAGE_ID_REQUIRED);
         }
 
-        $data = $user->get(264);
+        /** @var  Collection $userCollection */
+        $userCollection = new UserCollection($this->client, [], 1);
 
-        $this->assertEquals(264, $user->getId());
-        $this->assertEquals(264, $data['id']);
+        /** @var User $user */
+        $user = $userCollection->reset();
 
-        $this->assertEquals('dmitry@kokovtsev.ru', $data['email']);
+        $data = $user->get();
+
+        $this->assertNotNull($user->getId());
+        $this->assertNotNull($user->id);
+        $this->assertNotNull($data['id']);
+
+        $this->assertNotNull($user->login);
+        $this->assertNotNull($user->email);
+        $this->assertNotNull($user->fio);
     }
 
     public function testPut()
     {
-        $user = new User($this->client);
+        /** @var  Collection $userCollection */
+        $userCollection = new UserCollection($this->client, [], 1);
+
+        /** @var User $user */
+        $user = $userCollection->reset();
+
+        $oldFio = $user->fio;
+
+        $this->assertNotNull($oldFio);
+
+        $user->put([
+            'fio' => __FUNCTION__,
+            'password' => __FUNCTION__
+        ]);
+
+        $this->assertNotNull($user->fio);
+
+        $this->assertNotEquals($user->fio, $oldFio);
     }
 
     public function testDelete()
     {
-        $user = new User($this->client);
+        /** @var  Collection $userCollection */
+        $userCollection = new UserCollection($this->client, [], 1);
+
+        /** @var User $user */
+        $user = $userCollection->reset();
+
+        $oldId = $user->id;
+
+        $user->delete();
+
+        $this->expectException(Error::class);
+        $this->expectExceptionCode(404);
+
+        $user->get($oldId);
     }
 }
