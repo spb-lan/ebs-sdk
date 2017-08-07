@@ -8,7 +8,6 @@ use Lan\Ebs\Sdk\Classes\Model;
 use Lan\Ebs\Sdk\Collection\UserCollection;
 use Lan\Ebs\Sdk\Helper\Test;
 use Lan\Ebs\Sdk\Model\User;
-use Phalcon\Debug;
 
 class UserTest extends \Codeception\Test\Unit
 {
