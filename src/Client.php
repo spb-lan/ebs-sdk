@@ -14,7 +14,7 @@ use Lan\Ebs\Sdk\Helper\Curl;
 
 final class Client
 {
-    private $host = 'http://eop.local';
+    private $host = 'http://openapi.landev.ru';
 
     private $token;
 

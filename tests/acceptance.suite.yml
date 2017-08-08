@@ -8,5 +8,5 @@ actor: AcceptanceTester
 modules:
     enabled:
         - PhpBrowser:
-            url: http://eop.local
+            url: http://openapi.landev.ru
         - \Helper\Acceptance
