@@ -49,7 +49,6 @@ class UserTest extends \Codeception\Test\Unit
 
         $this->expectException(Error::class);
         $user->set([]);
-
     }
 
 //    public function testSetOnlyId()

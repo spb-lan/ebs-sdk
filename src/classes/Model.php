@@ -10,8 +10,9 @@ namespace Lan\Ebs\Sdk\Classes;
 
 use Error;
 use Lan\Ebs\Sdk\Client;
+use Lan\Ebs\Sdk\Common;
 
-abstract class Model
+abstract class Model implements Common
 {
     const MESSAGE_ID_REQUIRED = 'Id is required';
     const MESSAGE_ID_CAN_NOT_CHANGED = 'Id can not be changed';
@@ -77,8 +78,6 @@ abstract class Model
 
         return $this;
     }
-
-    abstract protected function getUrl($method, array $params = []);
 
     public function get($id = null)
     {

@@ -9,18 +9,20 @@
 namespace Lan\Ebs\Sdk\Classes;
 
 use ArrayObject;
+use Codeception\Util\Debug;
 use Error;
 use Lan\Ebs\Sdk\Client;
+use Lan\Ebs\Sdk\Common;
 
-abstract class Collection extends ArrayObject
+abstract class Collection extends ArrayObject implements Common
 {
     private $client;
+
+    private $loadStatus = 0;
 
     private $fields = [];
 
     private $class = null;
-
-    private $result = null;
 
     private $limit = null;
 
@@ -63,49 +65,12 @@ abstract class Collection extends ArrayObject
     }
 
     /**
-     * Offset to retrieve
-     * @link http://php.net/manual/en/arrayaccess.offsetget.php
-     * @param mixed $offset <p>
-     * The offset to retrieve.
-     * </p>
-     * @return mixed Can return all value types.
-     * @since 5.0.0
-     */
-//    public function offsetGet($offset) {
-//        return $this->offsetExists($offset) ? $this->createModel($this->result['data'][$offset]) : null;
-//    }
-
-    /**
-     * Offset to set
-     * @link http://php.net/manual/en/arrayaccess.offsetset.php
-     * @param mixed $offset <p>
-     * The offset to assign the value to.
-     * </p>
-     * @param mixed $value <p>
-     * The value to set.
-     * </p>
-     * @return void
-     * @throws Error
-     * @since 5.0.0
-     */
-//    public function offsetSet($offset, $value) {
-//        if (!($value instanceof Model)) {
-//            throw new Error('Value mast be instance of Model class');
-//        }
-//
-//        if (is_null($offset)) {
-//            $this->result['data'][] = $value;
-//        } else {
-//            $this->result['data'][$offset] = $value->get();
-//        }
-//    }
-
-    /**
+     * @param bool $force
      * @return $this
      */
     public function load($force = false)
     {
-        if ($this->result !== null && !$force) {
+        if ($this->loadStatus == 200 && !$force) {
             return $this;
         }
 
@@ -118,9 +83,13 @@ abstract class Collection extends ArrayObject
             $params['fields'] = implode(',', $this->fields);
         }
 
-        $this->result = $this->client->getResponse($this->getRequest(), $params);
+        $response = $this->client->getResponse($this->getUrl(__FUNCTION__), $params);
 
-        $this->exchangeArray($this->result['data']);
+        $this->exchangeArray($response['data']);
+
+        $this->loadStatus = $response['status'];
+
+        unset($response);
 
         return $this;
     }
@@ -132,7 +101,7 @@ abstract class Collection extends ArrayObject
     {
         $this->limit = $limit;
 
-        if ($this->result !== null) {
+        if ($this->loadStatus == 200) {
             $this->load(true);
         }
     }
@@ -144,14 +113,9 @@ abstract class Collection extends ArrayObject
     {
         $this->offset = $offset;
 
-        if ($this->result !== null) {
+        if ($this->loadStatus == 200) {
             $this->load(true);
         }
-    }
-
-    public function rewind()
-    {
-        $this->load();
     }
 
     /**
@@ -170,26 +134,35 @@ abstract class Collection extends ArrayObject
         return $model;
     }
 
-    abstract protected function getRequest();
+//    public function getFields()
+//    {
+//        $class = $this->class;
+//
+//        return array_merge(['id'], $this->fields ? $this->fields : $class::$defaultFields);
+//    }
 
-    public function getFields()
+    public function count() {
+        $this->load();
+
+        return parent::count();
+    }
+
+    public function getData()
     {
-        $class = $this->class;
+        $this->load();
 
-        return array_merge(['id'], $this->fields ? $this->fields : $class::$defaultFields);
+        return $this->getArrayCopy();
     }
 
-    public function getData() {
-        return $this->result === null ? [] : $this->result['data'];
-    }
-
-    public function reset() {
+    public function reset()
+    {
         $this->load();
 
         return $this->createModel(reset($this));
     }
 
-    public function end() {
+    public function end()
+    {
         $this->load();
 
         return $this->createModel(end($this));

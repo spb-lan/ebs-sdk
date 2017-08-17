@@ -11,13 +11,13 @@ namespace Lan\Ebs\Sdk\Collection;
 use Error;
 use Lan\Ebs\Sdk\Classes\Collection;
 use Lan\Ebs\Sdk\Client;
-use Lan\Ebs\Sdk\Model\User;
+use Lan\Ebs\Sdk\Model\Book;
 
-class UserCollection extends Collection
+class BookCollection extends Collection
 {
     public function __construct(Client $client, array $fields = [], $limit = 10, $offset = 0)
     {
-        parent::__construct($client, $fields, User::class, $limit, $offset);
+        parent::__construct($client, $fields, Book::class, $limit, $offset);
     }
 
     public function getUrl($method, array $params = [])
@@ -25,7 +25,7 @@ class UserCollection extends Collection
         switch ($method) {
             case 'load':
                 return [
-                    'url' => '/1.0/security/user',
+                    'url' => '/1.0/resource/book',
                     'method' => 'GET',
                     'code' => '200'
                 ];

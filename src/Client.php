@@ -30,6 +30,14 @@ final class Client
         }
 
         $this->token = $token;
+
+        if ($_SERVER['USER'] == 'dp') {
+            $this->host = 'http://eop.local';
+        }
+
+        if (\session_status() === PHP_SESSION_NONE && !\headers_sent()) {
+            session_start();
+        }
     }
 
     public function getResponse(array $request, array $params = [])
@@ -50,4 +58,12 @@ final class Client
 
         return $response;
     }
+
+//    /**
+//     * @return mixed
+//     */
+//    public function getToken()
+//    {
+//        return $this->token;
+//    }
 }

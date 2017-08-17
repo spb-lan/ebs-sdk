@@ -37,8 +37,8 @@ class Curl
 
         $headers = [
             'X-Auth-Token: ' . $token,
-//            'Content-Type: application/x-www-form-urlencoded; charset=utf-8',
-//            'Accept: application/json'
+            'Content-Type: application/x-www-form-urlencoded; charset=utf-8',
+            'Accept: application/json'
         ];
 
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
@@ -55,32 +55,35 @@ class Curl
 //            die();
 //        }
 
-        try {
-            $response = curl_exec($curl);
+        $response = curl_exec($curl);
 
-            if (curl_errno($curl)) {
-                throw new Error('Curl error: ' . curl_errno($curl));
-            }
+        Debug::debug($method . ' ' . $host . $url . ' [' . (curl_errno($curl) ? 500 : curl_getinfo($curl)['http_code']) . ']');
 
-            if (empty($response)) {
-                throw new Error('Response is empty (after curl_exec): ' . curl_errno($curl));
-            }
+        if (curl_errno($curl)) {
+            return Curl::getError('Curl error: ' . curl_errno($curl), 500);
+        }
 
-            $response = json_decode(curl_exec($curl), true);
+        $response = json_decode($response, true);
 
-            if (json_last_error()) {
-                throw new Error('JSON error: ' . json_last_error_msg());
-            }
+        if (json_last_error()) {
+            return Curl::getError('JSON error: ' . json_last_error_msg(), curl_getinfo($curl)['http_code']);
+        }
 
-            if (empty($response)) {
-                throw new Error('Response is empty (after json_decode): ' . curl_errno($curl));
-            }
-        } catch (Error $e) {
-            $errorData = ' (' . $method . ' ' . $host . $url . ' ' . preg_replace('/[\x00-\x1F\x7F ]/', ' ', print_r($params, true)) . ')';
-
-            throw new Error(preg_replace('/\s{2,}/', ' ', $e->getMessage() . $errorData));
+        if (empty($response)) {
+            return Curl::getError('Response is empty', curl_getinfo($curl)['http_code']);
         }
 
         return $response;
+    }
+
+    private static function getError($message, $code)
+    {
+        return [
+            'type' => 'none',
+            'data' => null,
+            'count' => 0,
+            'status' => $code,
+            'message' => $message
+        ];
     }
 }

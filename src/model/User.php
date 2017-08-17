@@ -37,7 +37,7 @@ class User extends Model
         parent::__construct($client, $fields);
     }
 
-    protected function getUrl($method, array $params = [])
+    public function getUrl($method, array $params = [])
     {
         switch ($method) {
             case 'get':

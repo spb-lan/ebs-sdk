@@ -2,10 +2,10 @@
 
 namespace Lan\Ebs\Sdk\Test\Unit;
 
-use Lan\Ebs\Sdk\Collection\UserCollection;
-use Lan\Ebs\Sdk\Model\User;
+use Lan\Ebs\Sdk\Collection\BookCollection;
+use Lan\Ebs\Sdk\Model\Book;
 
-class UserCollectionTest extends \Codeception\Test\Unit
+class BookCollectionTest extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester
@@ -43,7 +43,7 @@ class UserCollectionTest extends \Codeception\Test\Unit
     {
         $limit = 5;
 
-        $collection = new UserCollection($this->client, [], $limit);
+        $collection = new BookCollection($this->client, [], $limit);
 
         $collectionCount = $collection->count();
 
@@ -56,20 +56,20 @@ class UserCollectionTest extends \Codeception\Test\Unit
         if ($collectionCount >= $limit) {
             $count = 0;
 
-            $previousUser = null;
-            $previousUserId = 0;
+            $previousBook = null;
+            $previousBookId = 0;
 
-            /** @var User $user */
-            foreach ($collection as $user) {
-                $this->assertInstanceOf(User::class, $user);
+            /** @var Book $book */
+            foreach ($collection as $book) {
+                $this->assertInstanceOf(Book::class, $book);
 
-                $this->assertNotNull($user->getId());
+                $this->assertNotNull($book->getId());
 
-                $this->assertNotEquals($previousUser, $user);
-                $this->assertNotEquals($previousUserId, $user->getId());
+                $this->assertNotEquals($previousBook, $book);
+                $this->assertNotEquals($previousBookId, $book->getId());
 
-                $previousUser = $user;
-                $previousUserId = $user->getId();
+                $previousBook = $book;
+                $previousBookId = $book->getId();
 
                 $count++;
             }
