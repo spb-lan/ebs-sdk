@@ -30,11 +30,12 @@ abstract class Collection extends ArrayObject implements Common
 
     /**
      * Collection constructor.
-     * @param Client $client
-     * @param array $fields
-     * @param string $class
-     * @param int $limit
-     * @param int $offset
+     *
+     * @param  Client $client
+     * @param  array $fields
+     * @param  string $class
+     * @param  int $limit
+     * @param  int $offset
      * @throws Exception
      */
     public function __construct(Client $client, array $fields, $class, $limit, $offset)
@@ -61,9 +62,16 @@ abstract class Collection extends ArrayObject implements Common
         $this->setOffset($offset);
     }
 
-    public function getIterator()
+    /**
+     * @param int $limit
+     */
+    public function setLimit($limit)
     {
-        return new CollectionIterator($this);
+        $this->limit = $limit;
+
+        if ($this->loadStatus == 200) {
+            $this->load(true);
+        }
     }
 
     /**
@@ -82,7 +90,7 @@ abstract class Collection extends ArrayObject implements Common
         ];
 
         if ($this->fields) {
-            $params['fields'] = implode(',', (array) $this->fields);
+            $params['fields'] = implode(',', (array)$this->fields);
         }
 
         $response = $this->client->getResponse($this->getUrl(__FUNCTION__), $params);
@@ -97,18 +105,6 @@ abstract class Collection extends ArrayObject implements Common
     }
 
     /**
-     * @param int $limit
-     */
-    public function setLimit($limit)
-    {
-        $this->limit = $limit;
-
-        if ($this->loadStatus == 200) {
-            $this->load(true);
-        }
-    }
-
-    /**
      * @param int $offset
      */
     public function setOffset($offset)
@@ -120,23 +116,13 @@ abstract class Collection extends ArrayObject implements Common
         }
     }
 
-    /**
-     * @param array $data
-     * @return Model
-     */
-    public function createModel(array $data = null)
+    public function getIterator()
     {
-        $class = $this->class;
-
-        /** @var Model $model */
-        $model = new $class($this->client, $this->fields);
-
-        $model->set($data === null ? current($this) : $data);
-
-        return $model;
+        return new CollectionIterator($this);
     }
 
-    public function count() {
+    public function count()
+    {
         $this->load();
 
         return parent::count();
@@ -154,6 +140,24 @@ abstract class Collection extends ArrayObject implements Common
         $this->load();
 
         return $this->createModel(reset($this));
+    }
+
+    /**
+     * @param array $data
+     * @return Model
+     */
+    public function createModel(array $data = null)
+    {
+        $class = $this->class;
+
+        /**
+         * @var Model $model
+         */
+        $model = new $class($this->client, $this->fields);
+
+        $model->set($data === null ? current($this) : $data);
+
+        return $model;
     }
 
     public function end()

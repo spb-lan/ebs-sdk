@@ -17,7 +17,7 @@ final class Security implements Common
     /**
      * Security constructor.
      *
-     * @param Client $client
+     * @param  Client $client
      * @throws Exception
      */
     public function __construct(Client $client)

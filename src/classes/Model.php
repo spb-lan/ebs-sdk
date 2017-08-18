@@ -29,8 +29,9 @@ abstract class Model implements Common
 
     /**
      * Model constructor.
-     * @param Client $client
-     * @param $fields
+     *
+     * @param  Client $client
+     * @param  $fields
      * @throws Exception
      */
     public function __construct(Client $client, array $fields)
@@ -47,11 +48,26 @@ abstract class Model implements Common
         $this->fields = $fields;
     }
 
+    public function get($id = null)
+    {
+        if ($id === null && $this->id !== null) {
+            return $this->data;
+        }
+
+        $this->set(['id' => $id]);
+
+        $response = $this->client->getResponse($this->getUrl(__FUNCTION__, [$this->getId()]), $this->getFields());
+
+        $this->set($response['data'], $response['status']);
+
+        return $this->data;
+    }
+
     /**
      * Set data to model
      *
-     * @param array $data
-     * @param null $status
+     * @param  array $data
+     * @param  null $status
      * @return $this
      * @throws Exception
      */
@@ -79,19 +95,16 @@ abstract class Model implements Common
         return $this;
     }
 
-    public function get($id = null)
+    public function getFields()
     {
-        if ($id === null && $this->id !== null) {
-            return $this->data;
-        }
+        $class = get_class($this);
 
-        $this->set(['id' => $id]);
+        return array_merge(['id'], $this->fields ? $this->fields : $class::$defaultFields);
+    }
 
-        $response = $this->client->getResponse($this->getUrl(__FUNCTION__, [$this->getId()]), $this->getFields());
-
-        $this->set($response['data'], $response['status']);
-
-        return $this->data;
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function post(array $data)
@@ -125,18 +138,6 @@ abstract class Model implements Common
         $this->set($response['data'], $response['status']);
 
         return $this;
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getFields()
-    {
-        $class = get_class($this);
-
-        return array_merge(['id'], $this->fields ? $this->fields : $class::$defaultFields);
     }
 
     public function __get($name)

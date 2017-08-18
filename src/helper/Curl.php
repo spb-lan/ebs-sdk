@@ -46,14 +46,14 @@ class Curl
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
-//        if ($method == 'PUT') {
-//            $fp = fopen(dirname(__FILE__) . '/errorlog.txt', 'w');
-//            curl_setopt($curl, CURLOPT_VERBOSE, 1);
-//            curl_setopt($curl, CURLOPT_STDERR, $fp);
-//
-//            Debug::debug('"' . curl_exec($curl) . '"');
-//            die();
-//        }
+        //        if ($method == 'PUT') {
+        //            $fp = fopen(dirname(__FILE__) . '/errorlog.txt', 'w');
+        //            curl_setopt($curl, CURLOPT_VERBOSE, 1);
+        //            curl_setopt($curl, CURLOPT_STDERR, $fp);
+        //
+        //            Debug::debug('"' . curl_exec($curl) . '"');
+        //            die();
+        //        }
 
         $response = curl_exec($curl);
 

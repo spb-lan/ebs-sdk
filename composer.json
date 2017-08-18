@@ -22,6 +22,8 @@
   "require": {
   },
   "require-dev": {
-    "codeception/codeception": "dev-master"
+    "codeception/codeception": "dev-master",
+    "squizlabs/php_codesniffer": "dev-master",
+    "sami/sami": "3.3.*"
   }
 }

@@ -21,6 +21,7 @@ class CollectionIterator extends ArrayIterator
 
     /**
      * CollectionIterator constructor.
+     *
      * @param Collection $collection
      */
     public function __construct(Collection $collection)
@@ -30,7 +31,8 @@ class CollectionIterator extends ArrayIterator
 
     /**
      * Return the current element
-     * @link http://php.net/manual/en/iterator.current.php
+     *
+     * @link   http://php.net/manual/en/iterator.current.php
      * @return Model
      */
     public function current()
@@ -40,7 +42,8 @@ class CollectionIterator extends ArrayIterator
 
     /**
      * Move forward to next element
-     * @link http://php.net/manual/en/iterator.next.php
+     *
+     * @link   http://php.net/manual/en/iterator.next.php
      * @return Model
      */
     public function next()
@@ -49,8 +52,22 @@ class CollectionIterator extends ArrayIterator
     }
 
     /**
+     * Checks if current position is valid
+     *
+     * @link   http://php.net/manual/en/iterator.valid.php
+     * @return boolean
+     */
+    public function valid()
+    {
+        $key = $this->key();
+
+        return ($key !== null && $key !== false);
+    }
+
+    /**
      * Return the key of the current element
-     * @link http://php.net/manual/en/iterator.key.php
+     *
+     * @link   http://php.net/manual/en/iterator.key.php
      * @return integer
      */
     public function key()
@@ -59,20 +76,9 @@ class CollectionIterator extends ArrayIterator
     }
 
     /**
-     * Checks if current position is valid
-     * @link http://php.net/manual/en/iterator.valid.php
-     * @return boolean
-     */
-    public function valid()
-    {
-        $key = $this->key();
-
-        return ($key !== NULL && $key !== FALSE);
-    }
-
-    /**
      * Rewind the Iterator to the first element
-     * @link http://php.net/manual/en/iterator.rewind.php
+     *
+     * @link   http://php.net/manual/en/iterator.rewind.php
      * @return void
      */
     public function rewind()
