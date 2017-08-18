@@ -8,7 +8,7 @@
 
 namespace Lan\Ebs\Sdk\Model;
 
-use Error;
+use Exception;
 use Lan\Ebs\Sdk\Classes\Model;
 use Lan\Ebs\Sdk\Client;
 
@@ -66,7 +66,7 @@ class User extends Model
                     'code' => 200
                 ];
             default :
-                throw new Error('Route for ' . $method . ' not found');
+                throw new Exception('Route for ' . $method . ' not found');
         }
     }
 }

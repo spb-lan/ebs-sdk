@@ -9,8 +9,7 @@
 namespace Lan\Ebs\Sdk\Classes;
 
 use ArrayObject;
-use Codeception\Util\Debug;
-use Error;
+use Exception;
 use Lan\Ebs\Sdk\Client;
 use Lan\Ebs\Sdk\Common;
 
@@ -35,20 +34,20 @@ abstract class Collection extends ArrayObject implements Common
      * @param $class
      * @param int $limit
      * @param int $offset
-     * @throws Error
+     * @throws Exception
      */
     public function __construct(Client $client, array $fields, $class, $limit, $offset)
     {
         if (!$client) {
-            throw new Error('Client not defined');
+            throw new Exception('Client not defined');
         }
 
         if (!is_array($fields)) {
-            throw new Error('Fields for model of collection mast be array');
+            throw new Exception('Fields for model of collection mast be array');
         }
 
         if (!is_subclass_of($class, Model::class)) {
-            throw new Error('Class of model collection not subclass for Model');
+            throw new Exception('Class of model collection not subclass for Model');
         }
 
         $this->client = $client;

@@ -8,7 +8,7 @@
 
 namespace Lan\Ebs\Sdk\Classes;
 
-use Error;
+use Exception;
 use Lan\Ebs\Sdk\Client;
 use Lan\Ebs\Sdk\Common;
 
@@ -31,16 +31,16 @@ abstract class Model implements Common
      * Model constructor.
      * @param Client $client
      * @param $fields
-     * @throws Error
+     * @throws Exception
      */
     public function __construct(Client $client, array $fields)
     {
         if (!$client) {
-            throw new Error('Client not defined');
+            throw new Exception('Client not defined');
         }
 
         if (!is_array($fields)) {
-            throw new Error('Fields for model of collection mast be array');
+            throw new Exception('Fields for model of collection mast be array');
         }
 
         $this->client = $client;
@@ -53,16 +53,16 @@ abstract class Model implements Common
      * @param array $data
      * @param null $status
      * @return $this
-     * @throws Error
+     * @throws Exception
      */
     public function set(array $data, $status = null)
     {
         if (empty($data['id']) && empty($this->id)) {
-            throw new Error(Model::MESSAGE_ID_REQUIRED);
+            throw new Exception(Model::MESSAGE_ID_REQUIRED);
         }
 
         if (!empty($data['id']) && !empty($this->id) && $data['id'] != $this->id) {
-            throw new Error(Model::MESSAGE_ID_CAN_NOT_CHANGED);
+            throw new Exception(Model::MESSAGE_ID_CAN_NOT_CHANGED);
         }
 
         $this->data = array_merge(
@@ -142,7 +142,7 @@ abstract class Model implements Common
     public function __get($name)
     {
         if ($this->data === null || !array_key_exists($name, $this->data)) {
-            throw new Error('Param ' . $name . ' not defined for ' . get_class($this));
+            throw new Exception('Param ' . $name . ' not defined for ' . get_class($this));
         }
 
         return $this->data[$name];

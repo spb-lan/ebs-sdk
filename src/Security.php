@@ -8,7 +8,7 @@
 
 namespace Lan\Ebs\Sdk;
 
-use Error;
+use Exception;
 
 final class Security implements Common
 {
@@ -18,12 +18,12 @@ final class Security implements Common
      * Security constructor.
      *
      * @param Client $client
-     * @throws Error
+     * @throws Exception
      */
     public function __construct(Client $client)
     {
         if (!$client) {
-            throw new Error('Client not defined');
+            throw new Exception('Client not defined');
         }
 
         $this->client = $client;
@@ -52,7 +52,7 @@ final class Security implements Common
                     'code' => 200
                 ];
             default :
-                throw new Error('Route for ' . $method . ' not found');
+                throw new Exception('Route for ' . $method . ' not found');
         }
     }
 }

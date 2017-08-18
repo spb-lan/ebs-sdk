@@ -9,7 +9,7 @@
 namespace Lan\Ebs\Sdk\Helper;
 
 use Codeception\Util\Debug;
-use Error;
+use Exception;
 
 class Curl
 {
@@ -32,7 +32,7 @@ class Curl
                 }
                 break;
             default:
-                throw new Error('Method ' . $method . ' unknown');
+                throw new Exception('Method ' . $method . ' unknown');
         }
 
         $headers = [

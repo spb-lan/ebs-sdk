@@ -8,7 +8,7 @@
 
 namespace Lan\Ebs\Sdk\Collection;
 
-use Error;
+use Exception;
 use Lan\Ebs\Sdk\Classes\Collection;
 use Lan\Ebs\Sdk\Client;
 use Lan\Ebs\Sdk\Model\Book;
@@ -30,7 +30,7 @@ class BookCollection extends Collection
                     'code' => '200'
                 ];
             default :
-                throw new Error('Route for ' . $method . ' not found');
+                throw new Exception('Route for ' . $method . ' not found');
         }
     }
 }
