@@ -51,8 +51,13 @@ final class Security implements Common
                     'method' => 'GET',
                     'code' => 200
                 ];
-            default :
+            default:
                 throw new Exception('Route for ' . $method . ' not found');
         }
+    }
+
+    public function getDemoUrl($type, $id)
+    {
+
     }
 }

@@ -40,7 +40,7 @@ class Book extends Model
                     'method' => 'GET',
                     'code' => 200
                 ];
-            default :
+            default:
                 throw new Exception('Route for ' . $method . ' not found');
         }
     }

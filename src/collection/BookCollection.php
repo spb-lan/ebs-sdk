@@ -29,7 +29,7 @@ class BookCollection extends Collection
                     'method' => 'GET',
                     'code' => '200'
                 ];
-            default :
+            default:
                 throw new Exception('Route for ' . $method . ' not found');
         }
     }

@@ -65,7 +65,7 @@ class User extends Model
                     'method' => 'DELETE',
                     'code' => 200
                 ];
-            default :
+            default:
                 throw new Exception('Route for ' . $method . ' not found');
         }
     }
