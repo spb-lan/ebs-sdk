@@ -2,7 +2,7 @@
 
 namespace Lan\Ebs\Sdk\Test\Unit;
 
-use Error;
+use Exception;
 use Lan\Ebs\Sdk\Classes\Collection;
 use Lan\Ebs\Sdk\Classes\Model;
 use Lan\Ebs\Sdk\Collection\UserCollection;
@@ -47,7 +47,7 @@ class UserTest extends \Codeception\Test\Unit
     {
         $user = new User($this->client);
 
-        $this->expectException(Error::class);
+        $this->expectException(Exception::class);
         $user->set([]);
     }
 
@@ -55,7 +55,7 @@ class UserTest extends \Codeception\Test\Unit
 //    {
 //        $user = new User($this->client);
 //
-//        $this->expectException(Error::class);
+//        $this->expectException(Exception::class);
 //        $user->set(['id' => 2]);
 //    }
 //
@@ -63,7 +63,7 @@ class UserTest extends \Codeception\Test\Unit
 //    {
 //        $user = new User($this->client);
 //
-//        $this->expectException(Error::class);
+//        $this->expectException(Exception::class);
 //        $user->set([
 //            'id' => 2,
 //            'login' => __FUNCTION__
@@ -74,7 +74,7 @@ class UserTest extends \Codeception\Test\Unit
 //    {
 //        $user = new User($this->client, [User::FIELD_LOGIN, User::FIELD_EMAIL, User::FIELD_FIO]);
 //
-//        $this->expectException(Error::class);
+//        $this->expectException(Exception::class);
 //        $user->set([
 //            'id' => 2,
 //            'login' => __FUNCTION__
@@ -122,7 +122,7 @@ class UserTest extends \Codeception\Test\Unit
 
         try {
             $user->get();
-        } catch (Error $e) {
+        } catch (Exception $e) {
             Test::assertExceptionMessage($this, $e, Model::MESSAGE_ID_REQUIRED);
         }
 
@@ -177,7 +177,7 @@ class UserTest extends \Codeception\Test\Unit
 
         $user->delete();
 
-        $this->expectException(Error::class);
+        $this->expectException(Exception::class);
         $this->expectExceptionCode(404);
 
         $user->get($oldId);

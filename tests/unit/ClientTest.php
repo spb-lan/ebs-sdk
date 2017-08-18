@@ -40,7 +40,7 @@ class ClientTest extends \Codeception\Test\Unit
 
     public function testFailCreateClient()
     {
-        $this->expectException(Error::class);
+        $this->expectException(Exception::class);
         $this->getClient('');
     }
 

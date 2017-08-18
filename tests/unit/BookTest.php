@@ -2,15 +2,12 @@
 
 namespace Lan\Ebs\Sdk\Test\Unit;
 
-use Error;
+use Exception;
 use Lan\Ebs\Sdk\Classes\Collection;
 use Lan\Ebs\Sdk\Classes\Model;
 use Lan\Ebs\Sdk\Collection\BookCollection;
-use Lan\Ebs\Sdk\Collection\UserCollection;
 use Lan\Ebs\Sdk\Helper\Test;
 use Lan\Ebs\Sdk\Model\Book;
-use Lan\Ebs\Sdk\Model\User;
-use Phalcon\Debug;
 
 class BookTest extends \Codeception\Test\Unit
 {
@@ -50,7 +47,7 @@ class BookTest extends \Codeception\Test\Unit
     {
         $book = new Book($this->client);
 
-        $this->expectException(Error::class);
+        $this->expectException(Exception::class);
         $book->set([]);
     }
 
@@ -60,7 +57,7 @@ class BookTest extends \Codeception\Test\Unit
 
         try {
             $book->get();
-        } catch (Error $e) {
+        } catch (Exception $e) {
             Test::assertExceptionMessage($this, $e, Model::MESSAGE_ID_REQUIRED);
         }
 

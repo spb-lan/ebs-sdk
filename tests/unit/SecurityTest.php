@@ -1,8 +1,8 @@
 <?php
 
+namespace Lan\Ebs\Sdk\Test\Unit;
 
 use Lan\Ebs\Sdk\Security;
-use Lan\Ebs\Sdk\Test\Unit\ClientTest;
 
 class SecurityTest extends \Codeception\Test\Unit
 {
@@ -62,7 +62,7 @@ class SecurityTest extends \Codeception\Test\Unit
 
         $this->assertNotEquals($secretKey2, $secretKey3);
 
-        $this->expectException(Error::class);
+        $this->expectException(Exception::class);
 
         $security->getSecretKey(date('Ymd', strtotime('+2 days')));
     }
