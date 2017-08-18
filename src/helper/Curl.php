@@ -19,7 +19,7 @@ class Curl
 
         switch ($method) {
             case 'GET':
-                if ($params) {
+                if (!empty($params)) {
                     $url = sprintf("%s?%s", $url, http_build_query($params));
                 };
 
@@ -27,7 +27,7 @@ class Curl
             case 'POST':
             case 'PUT':
             case 'DELETE':
-                if ($params) {
+                if (!empty($params)) {
                     curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($params));
                 }
                 break;
@@ -45,15 +45,6 @@ class Curl
         curl_setopt($curl, CURLOPT_URL, $host . $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-
-        //        if ($method == 'PUT') {
-        //            $fp = fopen(dirname(__FILE__) . '/errorlog.txt', 'w');
-        //            curl_setopt($curl, CURLOPT_VERBOSE, 1);
-        //            curl_setopt($curl, CURLOPT_STDERR, $fp);
-        //
-        //            Debug::debug('"' . curl_exec($curl) . '"');
-        //            die();
-        //        }
 
         $response = curl_exec($curl);
 
