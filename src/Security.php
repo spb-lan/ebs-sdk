@@ -51,6 +51,12 @@ final class Security implements Common
                     'method' => 'GET',
                     'code' => 200
                 ];
+            case 'getDemoUrl':
+                return [
+                    'url' => '/1.0/security/demoUrl',
+                    'method' => 'GET',
+                    'code' => 200
+                ];
             default:
                 throw new Exception('Route for ' . $method . ' not found');
         }
@@ -58,6 +64,6 @@ final class Security implements Common
 
     public function getDemoUrl($type, $id)
     {
-
+        $this->client->getResponse($this->getUrl(__FUNCTION__), ['type' => $type, 'id' => $id])['data'];
     }
 }
