@@ -2,6 +2,7 @@
 
 namespace Lan\Ebs\Sdk\Test\Unit;
 
+use Exception;
 use Lan\Ebs\Sdk\Security;
 
 class SecurityTest extends \Codeception\Test\Unit

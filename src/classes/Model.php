@@ -67,7 +67,7 @@ abstract class Model implements Common
 
         $this->data = array_merge(
             (array)$this->data,
-            array_intersect_key($data, array_flip(array_merge($this->getFields(), ['id'])))
+            array_intersect_key($data, array_flip($this->getFields()))
         );
 
         $this->id = $this->data['id'];

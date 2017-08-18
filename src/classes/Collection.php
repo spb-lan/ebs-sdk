@@ -12,6 +12,7 @@ use ArrayObject;
 use Exception;
 use Lan\Ebs\Sdk\Client;
 use Lan\Ebs\Sdk\Common;
+use ReflectionClass;
 
 abstract class Collection extends ArrayObject implements Common
 {
@@ -31,7 +32,7 @@ abstract class Collection extends ArrayObject implements Common
      * Collection constructor.
      * @param Client $client
      * @param array $fields
-     * @param $class
+     * @param string $class
      * @param int $limit
      * @param int $offset
      * @throws Exception
@@ -46,7 +47,9 @@ abstract class Collection extends ArrayObject implements Common
             throw new Exception('Fields for model of collection mast be array');
         }
 
-        if (!is_subclass_of($class, Model::class)) {
+        $reflectionClass = new ReflectionClass($class);
+
+        if (!$reflectionClass->isSubclassOf(Model::class)) {
             throw new Exception('Class of model collection not subclass for Model');
         }
 
@@ -79,7 +82,7 @@ abstract class Collection extends ArrayObject implements Common
         ];
 
         if ($this->fields) {
-            $params['fields'] = implode(',', $this->fields);
+            $params['fields'] = implode(',', (array) $this->fields);
         }
 
         $response = $this->client->getResponse($this->getUrl(__FUNCTION__), $params);
@@ -132,13 +135,6 @@ abstract class Collection extends ArrayObject implements Common
 
         return $model;
     }
-
-//    public function getFields()
-//    {
-//        $class = $this->class;
-//
-//        return array_merge(['id'], $this->fields ? $this->fields : $class::$defaultFields);
-//    }
 
     public function count() {
         $this->load();

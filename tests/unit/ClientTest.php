@@ -3,6 +3,7 @@
 namespace Lan\Ebs\Sdk\Test\Unit;
 
 use Error;
+use Exception;
 use Lan\Ebs\Sdk\Client;
 
 class ClientTest extends \Codeception\Test\Unit

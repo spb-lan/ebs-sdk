@@ -9,11 +9,11 @@
 namespace Lan\Ebs\Sdk\Helper;
 
 use Codeception\Test\Unit;
-use Error;
+use Exception;
 
 class Test
 {
-    public static function assertExceptionMessage(Unit $test, Error $e, $message)
+    public static function assertExceptionMessage(Unit $test, Exception $e, $message)
     {
         $test->assertEquals($message, $e->getMessage());
     }

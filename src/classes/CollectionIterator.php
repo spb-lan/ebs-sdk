@@ -8,9 +8,9 @@
 
 namespace Lan\Ebs\Sdk\Classes;
 
-use Iterator;
+use ArrayIterator;
 
-class CollectionIterator implements Iterator
+class CollectionIterator extends ArrayIterator
 {
     /**
      * @var Collection
