@@ -9,7 +9,6 @@
 namespace Lan\Ebs\Sdk;
 
 use Codeception\Util\Debug;
-use Error;
 use Lan\Ebs\Sdk\Helper\Curl;
 
 final class Client
@@ -21,12 +20,12 @@ final class Client
     /**
      * Ebs constructor.
      * @param $token
-     * @throws Error
+     * @throws \Error
      */
     public function __construct($token)
     {
         if (empty($token)) {
-            throw new Error('Token is empty');
+            throw new \Error('Token is empty');
         }
 
         $this->token = $token;
@@ -43,7 +42,7 @@ final class Client
     public function getResponse(array $request, array $params = [])
     {
         if (empty($request['url']) || empty($request['method']) || empty($request['code'])) {
-            throw new Error('Request url, method or success_code is missing');
+            throw new \Error('Request url, method or success_code is missing');
         }
 
         $response = Curl::getResponse($this->host, $request['url'], $request['method'], $this->token, $params);
@@ -53,7 +52,7 @@ final class Client
         }
 
         if ($response['status'] != $request['code']) {
-            throw new Error($response['message'], $response['status']);
+            throw new \Error($response['message'], $response['status']);
         }
 
         return $response;
