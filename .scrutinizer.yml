@@ -1,0 +1,32 @@
+build:
+    environment:
+        php:
+            version: 7.1
+
+filter:
+    paths:
+        - src/*
+    excluded_paths:
+        - tests/*
+        - vendor/*
+
+checks:
+    php: true
+
+
+coding_style:
+    php:
+        spaces:
+            around_operators:
+                concatenation: true
+            other:
+                after_type_cast: false
+
+
+tools:
+    php_sim: true
+    php_pdepend: ture
+    php_analyzer: true
+    php_cs_fixer: true
+    external_code_coverage:
+        timeout: 2100 # Timeout in seconds.
