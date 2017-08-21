@@ -5,6 +5,7 @@ namespace Lan\Ebs\Sdk\Test\Unit;
 use Error;
 use Exception;
 use Lan\Ebs\Sdk\Client;
+use Lan\Ebs\Sdk\Security;
 
 class ClientTest extends \Codeception\Test\Unit
 {
@@ -13,7 +14,9 @@ class ClientTest extends \Codeception\Test\Unit
      */
     protected $tester;
 
-    private static $token = 'fc92d67fb9597650d3f99d023a7f51db87d8';
+    private static $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520';
+
+    private $client;
 
     protected function getServices()
     {
@@ -33,6 +36,7 @@ class ClientTest extends \Codeception\Test\Unit
 
     protected function _before()
     {
+        $this->client = ClientTest::getClient();
     }
 
     protected function _after()
@@ -57,5 +61,9 @@ class ClientTest extends \Codeception\Test\Unit
     public static function getClient($token = null)
     {
         return new Client($token === null ? ClientTest::$token : $token);
+    }
+
+    public function testGetAutologinUrl() {
+        $security = new Security($this->client);
     }
 }

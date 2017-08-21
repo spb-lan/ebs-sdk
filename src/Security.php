@@ -57,6 +57,12 @@ final class Security implements Common
                     'method' => 'GET',
                     'code' => 200
                 ];
+            case 'getAutologinUrl':
+                return [
+                    'url' => '/1.0/security/autologinUrl',
+                    'method' => 'GET',
+                    'code' => 200
+                ];
             default:
                 throw new Exception('Route for ' . $method . ' not found');
         }
@@ -65,5 +71,19 @@ final class Security implements Common
     public function getDemoUrl($type, $id)
     {
         $this->client->getResponse($this->getUrl(__FUNCTION__), ['type' => $type, 'id' => $id])['data'];
+    }
+
+    public function getAutologinUrl($sid, $uid, $time, $fio = null, $email = null, $redirect = null) {
+        $this->client->getResponse(
+            $this->getUrl(__FUNCTION__),
+            [
+                'sid' => $sid,
+                'uid' => $uid,
+                'time' => $time,
+                'fio' => $fio,
+                'email' => $email,
+                'redirect' => $redirect
+            ]
+        )['data'];
     }
 }

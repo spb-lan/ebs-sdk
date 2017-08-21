@@ -59,12 +59,4 @@ final class Client
 
         return $response;
     }
-
-    //    /**
-    //     * @return mixed
-    //     */
-    //    public function getToken()
-    //    {
-    //        return $this->token;
-    //    }
 }
