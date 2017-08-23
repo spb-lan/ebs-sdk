@@ -1972,12 +1972,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "f41e30b5309109397989e8bb04fb2036ca97c44b"
+                "reference": "ed5dbc37c9a87a315c2d2a3a406ad7998f930e55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/f41e30b5309109397989e8bb04fb2036ca97c44b",
-                "reference": "f41e30b5309109397989e8bb04fb2036ca97c44b",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/ed5dbc37c9a87a315c2d2a3a406ad7998f930e55",
+                "reference": "ed5dbc37c9a87a315c2d2a3a406ad7998f930e55",
                 "shasum": ""
             },
             "require": {
@@ -2015,7 +2015,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2017-08-17T03:24:01+00:00"
+            "time": "2017-08-23T00:49:37+00:00"
         },
         {
             "name": "stecman/symfony-console-completion",
