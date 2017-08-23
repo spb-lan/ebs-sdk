@@ -9,6 +9,7 @@
 namespace Lan\Ebs\Sdk;
 
 use Exception;
+use Ice\Core\Debuger;
 
 final class Security implements Common
 {
@@ -70,11 +71,12 @@ final class Security implements Common
 
     public function getDemoUrl($type, $id)
     {
-        $this->client->getResponse($this->getUrl(__FUNCTION__), ['type' => $type, 'id' => $id])['data'];
+        return $this->client->getResponse($this->getUrl(__FUNCTION__), ['type' => $type, 'id' => $id])['data'];
     }
 
     public function getAutologinUrl($sid, $uid, $time, $fio = null, $email = null, $redirect = null) {
-        $this->client->getResponse(
+
+        return $this->client->getResponse(
             $this->getUrl(__FUNCTION__),
             [
                 'sid' => $sid,

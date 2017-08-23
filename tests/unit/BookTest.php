@@ -6,6 +6,7 @@ use Exception;
 use Lan\Ebs\Sdk\Classes\Collection;
 use Lan\Ebs\Sdk\Classes\Model;
 use Lan\Ebs\Sdk\Collection\BookCollection;
+use Lan\Ebs\Sdk\Helper\Debuger;
 use Lan\Ebs\Sdk\Helper\Test;
 use Lan\Ebs\Sdk\Model\Book;
 
@@ -79,7 +80,7 @@ class BookTest extends \Codeception\Test\Unit
 
         $bookData = $book1->get($book->getId());
 
-//        \Codeception\Util\Debug::debug($bookData);
+//        Debuger::dump($bookData);
 //
 //        $this->assertEquals($book->name, $bookData['name']);
 
