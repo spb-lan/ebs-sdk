@@ -8,9 +8,9 @@
 
 namespace Lan\Ebs\Sdk;
 
-use Codeception\Util\Debug;
 use Exception;
 use Lan\Ebs\Sdk\Helper\Curl;
+use Lan\Ebs\Sdk\Helper\Debuger;
 
 final class Client
 {
@@ -50,7 +50,7 @@ final class Client
         $response = Curl::getResponse($this->host, $request['url'], $request['method'], $this->token, $params);
 
         if (isset($response['debug'])) {
-            Debug::debug(['request' => $request, 'params' => $params, 'response' => $response]);
+            Debuger::dump(['request' => $request, 'params' => $params, 'response' => $response]);
         }
 
         if ($response['status'] != $request['code']) {

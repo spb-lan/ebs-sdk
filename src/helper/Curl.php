@@ -8,7 +8,6 @@
 
 namespace Lan\Ebs\Sdk\Helper;
 
-use Codeception\Util\Debug;
 use Exception;
 
 class Curl
@@ -48,7 +47,7 @@ class Curl
 
         $response = curl_exec($curl);
 
-        Debug::debug($method . ' ' . $host . $url . ' [' . (curl_errno($curl) ? 500 : curl_getinfo($curl)['http_code']) . ']');
+        Debuger::dump($method . ' ' . $host . $url . ' [' . (curl_errno($curl) ? 500 : curl_getinfo($curl)['http_code']) . ']');
 
         if (curl_errno($curl)) {
             return Curl::getError('Curl error: ' . curl_errno($curl), 500);
