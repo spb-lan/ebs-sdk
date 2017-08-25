@@ -45,7 +45,7 @@ class Curl
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
-        $response = curl_exec($curl);
+        $curlResult = curl_exec($curl);
 
         Debuger::dump($method . ' ' . $host . $url . ' [' . (curl_errno($curl) ? 500 : curl_getinfo($curl)['http_code']) . ']');
 
@@ -53,10 +53,10 @@ class Curl
             return Curl::getError('Curl error: ' . curl_errno($curl), 500);
         }
 
-        $response = json_decode($response, true);
+        $response = json_decode($curlResult, true);
 
         if (json_last_error()) {
-            return Curl::getError('JSON error: ' . json_last_error_msg(), curl_getinfo($curl)['http_code']);
+            return Curl::getError('JSON error: ' . json_last_error_msg() . "\n" . $curlResult, curl_getinfo($curl)['http_code']);
         }
 
         if (empty($response)) {

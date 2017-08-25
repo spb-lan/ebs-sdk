@@ -12,7 +12,7 @@ class Debuger
 {
     public static function dump($var) {
         if (class_exists('\Codeception\Util\Debug', false)) {
-            \Codeception\Util\Debug::dump($var);
+            \Codeception\Util\Debug::debug($var);
         } else {
             if (class_exists('\Ice\Core\Debuger', false)) {
                 \Ice\Core\Debuger::dump($var);

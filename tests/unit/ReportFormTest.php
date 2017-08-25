@@ -5,7 +5,7 @@ namespace Lan\Ebs\Sdk\Test\Unit;
 use Exception;
 use Lan\Ebs\Sdk\Security;
 
-class ReportFormTest extends \Codeception\Test\Unit
+class SecurityTest extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester
@@ -39,11 +39,15 @@ class ReportFormTest extends \Codeception\Test\Unit
     {
     }
 
-    public function testDemoUrl()
+    public function testBibFond()
     {
     }
 
-    public function testAutologinUrl()
+    public function testEBooks()
+    {
+    }
+
+    public function testSpecPo()
     {
     }
 }
