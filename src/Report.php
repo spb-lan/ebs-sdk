@@ -83,6 +83,13 @@ final class Report implements Common
                     'method' => 'GET',
                     'code' => 200
                 ];
+            case 'getFormReportEBooks':
+                return [
+                    'url' => '/1.0/report/form/eBooks',
+                    'params' => [],
+                    'method' => 'GET',
+                    'code' => 200
+                ];
             default:
                 throw new Exception('Route for ' . $method . ' not found');
         }
@@ -135,6 +142,11 @@ final class Report implements Common
     }
 
     public function getAvailableJournals()
+    {
+        return $this->client->getResponse($this->getUrl(__FUNCTION__))['data'];
+    }
+
+    public function getFormReportEBooks()
     {
         return $this->client->getResponse($this->getUrl(__FUNCTION__))['data'];
     }

@@ -154,4 +154,12 @@ class ReportTest extends \Codeception\Test\Unit
         $this->assertNotEmpty($available);
     }
 
+    public function testGetFormReportEBooks()
+    {
+        $report = new Report($this->client);
+        $available = $report->getFormReportEBooks();
+        $this->assertNotNull($available);
+        $this->assertNotEmpty($available);
+    }
+
 }

@@ -167,19 +167,19 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testDelete()
     {
-//        /** @var  Collection $userCollection */
-//        $userCollection = new UserCollection($this->client, [], 1);
-//
-//        /** @var User $user */
-//        $user = $userCollection->reset();
-//
-//        $oldId = $user->id;
-//
-//        $user->delete();
-//
-//        $this->expectException(Exception::class);
-//        $this->expectExceptionCode(404);
-//
-//        $user->get($oldId);
+        /** @var  Collection $userCollection */
+        $userCollection = new UserCollection($this->client, [], 1);
+
+        /** @var User $user */
+        $user = $userCollection->reset();
+
+        $oldId = $user->id;
+
+        //$user->delete();
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionCode(404);
+
+        $user->get($oldId);
     }
 }
