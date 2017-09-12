@@ -29,19 +29,6 @@ final class Report implements Common
         $this->client = $client;
     }
 
-    public function getSecretKey($date)
-    {
-        if (is_string($date) && strlen($date) >= 8) {
-            $date = substr($date, 0, 8);
-
-            if (!empty($_SESSION[$date])) {
-                return $_SESSION[$date];
-            }
-        }
-
-        return $_SESSION[$date] = $this->client->getResponse($this->getUrl(__FUNCTION__), ['date' => $date])['data'];
-    }
-
     public function getUrl($method, array $params = [])
     {
         switch ($method) {
