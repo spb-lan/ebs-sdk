@@ -12,6 +12,16 @@ use Exception;
 
 final class Security implements Common
 {
+    const TEST_TOKEN = '7c0c2193d27108a509abd8ea84a8750c82b3a520';
+
+    const PROD_API_HOST = 'https://openapi.e.lanbook.com';
+    const TEST_API_HOST = 'http://openapi.landev.ru';
+    const DEV_API_HOST = 'http://eop.local';
+
+    const PROD_EBS_HOST = 'https://e.lanbook.com';
+    const TEST_EBS_HOST = 'http://ebs.landev.ru';
+    const DEV_EBS_HOST = 'http://ebs.local';
+
     private $client;
 
     /**

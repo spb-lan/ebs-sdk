@@ -14,9 +14,7 @@ use Lan\Ebs\Sdk\Helper\Debuger;
 
 final class Client
 {
-    private $host = 'http://openapi.landev.ru';
-
-    private $token;
+    private $token = '';
 
     /**
      * Ebs constructor.
