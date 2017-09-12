@@ -82,4 +82,14 @@ final class Security implements Common
             ]
         )['data'];
     }
+
+    public static function getApiHost()
+    {
+        return $_SERVER['USER'] == 'dp' ? Security::DEV_API_HOST : Security::TEST_API_HOST;
+    }
+
+    public static function getEbsHost()
+    {
+        return $_SERVER['USER'] == 'dp' ? Security::DEV_EBS_HOST : Security::TEST_EBS_HOST;
+    }
 }
