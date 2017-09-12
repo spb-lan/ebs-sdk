@@ -14,9 +14,7 @@ use Lan\Ebs\Sdk\Helper\Debuger;
 
 final class Client
 {
-    private $host = 'http://openapi.landev.ru';
-
-    private $token;
+    private $token = '';
 
     /**
      * Ebs constructor.
@@ -31,14 +29,6 @@ final class Client
         }
 
         $this->token = $token;
-
-        if ($_SERVER['USER'] == 'dp') {
-            $this->host = 'http://eop.local';
-        }
-
-        if (\session_status() === PHP_SESSION_NONE && !\headers_sent()) {
-            session_start();
-        }
     }
 
     public function getResponse(array $request, array $params = [])

@@ -14,8 +14,6 @@ class ClientTest extends \Codeception\Test\Unit
      */
     protected $tester;
 
-    private static $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520';
-
     private $client;
 
     protected function getServices()
@@ -46,7 +44,7 @@ class ClientTest extends \Codeception\Test\Unit
     public function testFailCreateClient()
     {
         $this->expectException(Exception::class);
-        $this->getClient('');
+        $this->getClient();
     }
 
     public function testSuccessCreateClient()
@@ -55,15 +53,20 @@ class ClientTest extends \Codeception\Test\Unit
     }
 
     /**
-     * @param null $token
      * @return Client
      */
-    public static function getClient($token = null)
+    public static function getClient()
     {
-        return new Client($token === null ? ClientTest::$token : $token);
+        return new Client(Security::TEST_TOKEN);
     }
 
     public function testGetAutologinUrl() {
         $security = new Security($this->client);
+        $this->assertNotEmpty($security->getAutologinUrl(rand(0, 9999)));
+    }
+
+    public function testGetDemoUrl() {
+        $security = new Security($this->client);
+        $this->assertNotEmpty($security->getDemoUrl('book', 27));
     }
 }
