@@ -37,10 +37,12 @@ final class Client
             throw new Exception('Request url, method or success_code is missing');
         }
 
-        $response = Curl::getResponse($this->host, $request['url'], $request['method'], $this->token, $params);
+        $host = Security::getApiHost();
+
+        $response = Curl::getResponse($host, $request['url'], $request['method'], $this->token, $params);
 
         if (isset($response['debug'])) {
-            Debuger::dump(['host' => $this->host, 'request' => $request, 'params' => $params, 'response' => $response]);
+            Debuger::dump(['host' => $host, 'request' => $request, 'params' => $params, 'response' => $response]);
         }
 
         if ($response['status'] != $request['code']) {
