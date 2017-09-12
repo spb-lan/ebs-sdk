@@ -60,12 +60,12 @@ final class Security implements Common
         return $this->client->getResponse($this->getUrl(__FUNCTION__), ['type' => $type, 'id' => $id])['data'];
     }
 
-    public function getAutologinUrl($uid, $time, $fio = null, $email = null, $redirect = null) {
+    public function getAutologinUrl($uid, $fio = null, $email = null, $redirect = null) {
         return $this->client->getResponse(
             $this->getUrl(__FUNCTION__),
             [
                 'uid' => $uid,
-                'time' => $time,
+                'time' => date('YmdHi'),
                 'fio' => $fio,
                 'email' => $email,
                 'redirect' => $redirect
