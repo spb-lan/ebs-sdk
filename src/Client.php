@@ -40,7 +40,7 @@ final class Client
         $response = Curl::getResponse($this->host, $request['url'], $request['method'], $this->token, $params);
 
         if (isset($response['debug'])) {
-            Debuger::dump(['request' => $request, 'params' => $params, 'response' => $response]);
+            Debuger::dump(['host' => $this->host, 'request' => $request, 'params' => $params, 'response' => $response]);
         }
 
         if ($response['status'] != $request['code']) {
