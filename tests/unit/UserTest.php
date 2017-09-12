@@ -175,7 +175,7 @@ class UserTest extends \Codeception\Test\Unit
 
         $oldId = $user->id;
 
-        $user->delete();
+        //$user->delete();
 
         $this->expectException(Exception::class);
         $this->expectExceptionCode(404);
