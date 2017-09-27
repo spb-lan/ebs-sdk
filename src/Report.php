@@ -29,6 +29,12 @@ final class Report implements Common
         $this->client = $client;
     }
 
+    /**
+     * @param $method
+     * @param array $params
+     * @return array
+     * @throws Exception
+     */
     public function getUrl($method, array $params = [])
     {
         switch ($method) {
@@ -82,6 +88,13 @@ final class Report implements Common
         }
     }
 
+    /**
+     * @param null $groupBy
+     * @param null $periodFrom
+     * @param null $periodTo
+     * @return mixed
+     * @throws Exception
+     */
     public function getBooksViewsStatistics($groupBy = null, $periodFrom = null, $periodTo = null)
     {
         return $this->client->getResponse(
@@ -94,6 +107,13 @@ final class Report implements Common
         )['data'];
     }
 
+    /**
+     * @param null $groupBy
+     * @param null $periodFrom
+     * @param null $periodTo
+     * @return mixed
+     * @throws Exception
+     */
     public function getJournalsViewsStatistics($groupBy = null, $periodFrom = null, $periodTo = null)
     {
         return $this->client->getResponse(
@@ -106,6 +126,13 @@ final class Report implements Common
         )['data'];
     }
 
+    /**
+     * @param null $groupBy
+     * @param null $periodFrom
+     * @param null $periodTo
+     * @return mixed
+     * @throws Exception
+     */
     public function getUsersVisitsSatistics($groupBy = null, $periodFrom = null, $periodTo = null)
     {
         return $this->client->getResponse(
@@ -118,21 +145,38 @@ final class Report implements Common
         )['data'];
     }
 
+    /**
+     * @return mixed
+     * @throws Exception
+     */
     public function getAvailablePackets()
     {
         return $this->client->getResponse($this->getUrl(__FUNCTION__))['data'];
     }
 
+    /**
+     * @param $pdKey
+     * @return mixed
+     * @throws Exception
+     */
     public function getAvailableBooks($pdKey)
     {
         return $this->client->getResponse($this->getUrl(__FUNCTION__, ['pdKey' => $pdKey]))['data'];
     }
 
+    /**
+     * @return mixed
+     * @throws Exception
+     */
     public function getAvailableJournals()
     {
         return $this->client->getResponse($this->getUrl(__FUNCTION__))['data'];
     }
 
+    /**
+     * @return mixed
+     * @throws Exception
+     */
     public function getFormReportEBooks()
     {
         return $this->client->getResponse($this->getUrl(__FUNCTION__))['data'];

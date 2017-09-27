@@ -39,6 +39,12 @@ final class Security implements Common
         $this->client = $client;
     }
 
+    /**
+     * @param $method
+     * @param array $params
+     * @return array
+     * @throws Exception
+     */
     public function getUrl($method, array $params = [])
     {
         switch ($method) {
@@ -65,11 +71,25 @@ final class Security implements Common
         }
     }
 
+    /**
+     * @param $type
+     * @param $id
+     * @return mixed
+     * @throws Exception
+     */
     public function getDemoUrl($type, $id)
     {
         return $this->client->getResponse($this->getUrl(__FUNCTION__), ['type' => $type, 'id' => $id])['data'];
     }
 
+    /**
+     * @param $uid
+     * @param null $fio
+     * @param null $email
+     * @param null $redirect
+     * @return mixed
+     * @throws Exception
+     */
     public function getAutologinUrl($uid, $fio = null, $email = null, $redirect = null) {
         return $this->client->getResponse(
             $this->getUrl(__FUNCTION__),

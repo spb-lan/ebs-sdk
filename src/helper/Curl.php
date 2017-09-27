@@ -12,6 +12,15 @@ use Exception;
 
 class Curl
 {
+    /**
+     * @param $host
+     * @param $url
+     * @param $method
+     * @param $token
+     * @param array $params
+     * @return array|mixed
+     * @throws Exception
+     */
     public static function getResponse($host, $url, $method, $token, array $params)
     {
         $curl = curl_init();

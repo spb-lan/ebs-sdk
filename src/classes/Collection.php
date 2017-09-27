@@ -124,6 +124,10 @@ abstract class Collection extends ArrayObject implements Common
         return new CollectionIterator($this);
     }
 
+    /**
+     * @return int
+     * @throws Exception
+     */
     public function count()
     {
         $this->load();
@@ -131,6 +135,10 @@ abstract class Collection extends ArrayObject implements Common
         return parent::count();
     }
 
+    /**
+     * @return array
+     * @throws Exception
+     */
     public function getData()
     {
         $this->load();
@@ -138,6 +146,10 @@ abstract class Collection extends ArrayObject implements Common
         return $this->getArrayCopy();
     }
 
+    /**
+     * @return Model
+     * @throws Exception
+     */
     public function reset()
     {
         $this->load();
@@ -148,6 +160,7 @@ abstract class Collection extends ArrayObject implements Common
     /**
      * @param array $data
      * @return Model
+     * @throws Exception
      */
     public function createModel(array $data = null)
     {
@@ -163,6 +176,10 @@ abstract class Collection extends ArrayObject implements Common
         return $model;
     }
 
+    /**
+     * @return Model
+     * @throws Exception
+     */
     public function end()
     {
         $this->load();

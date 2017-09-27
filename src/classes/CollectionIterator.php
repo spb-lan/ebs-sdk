@@ -34,6 +34,7 @@ class CollectionIterator extends ArrayIterator
      *
      * @link   http://php.net/manual/en/iterator.current.php
      * @return Model
+     * @throws \Exception
      */
     public function current()
     {
@@ -80,6 +81,7 @@ class CollectionIterator extends ArrayIterator
      *
      * @link   http://php.net/manual/en/iterator.rewind.php
      * @return void
+     * @throws \Exception
      */
     public function rewind()
     {

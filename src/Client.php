@@ -31,6 +31,12 @@ final class Client
         $this->token = $token;
     }
 
+    /**
+     * @param array $request
+     * @param array $params
+     * @return array|mixed
+     * @throws Exception
+     */
     public function getResponse(array $request, array $params = [])
     {
         if (empty($request['url']) || empty($request['method']) || empty($request['code'])) {

@@ -8,11 +8,9 @@
 
 namespace Lan\Ebs\Sdk\Classes;
 
-use Codeception\Util\Debug;
 use Exception;
 use Lan\Ebs\Sdk\Client;
 use Lan\Ebs\Sdk\Common;
-use Lan\Ebs\Sdk\Helper\Debuger;
 
 abstract class Model implements Common
 {

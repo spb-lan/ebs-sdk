@@ -32,6 +32,12 @@ class User extends Model
         User::FIELD_REGISTERED
     ];
 
+    /**
+     * User constructor.
+     * @param Client $client
+     * @param array $fields
+     * @throws Exception
+     */
     public function __construct(Client $client, array $fields = [])
     {
         parent::__construct($client, $fields);

@@ -26,11 +26,23 @@ class Book extends Model
         Book::FIELD_NAME,
     ];
 
+    /**
+     * Book constructor.
+     * @param Client $client
+     * @param array $fields
+     * @throws Exception
+     */
     public function __construct(Client $client, array $fields = [])
     {
         parent::__construct($client, $fields);
     }
 
+    /**
+     * @param $method
+     * @param array $params
+     * @return array
+     * @throws Exception
+     */
     public function getUrl($method, array $params = [])
     {
         switch ($method) {

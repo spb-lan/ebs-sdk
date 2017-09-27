@@ -29,6 +29,12 @@ final class ReportForm implements Common
         $this->client = $client;
     }
 
+    /**
+     * @param $method
+     * @param array $params
+     * @return array
+     * @throws Exception
+     */
     public function getUrl($method, array $params = [])
     {
         switch ($method) {
@@ -55,16 +61,28 @@ final class ReportForm implements Common
         }
     }
 
+    /**
+     * @return mixed
+     * @throws Exception
+     */
     public function getBibFond()
     {
         return $this->client->getResponse($this->getUrl(__FUNCTION__))['data'];
     }
 
+    /**
+     * @return mixed
+     * @throws Exception
+     */
     public function getEBooks()
     {
         return $this->client->getResponse($this->getUrl(__FUNCTION__))['data'];
     }
 
+    /**
+     * @return mixed
+     * @throws Exception
+     */
     public function getSpecPo()
     {
         return $this->client->getResponse($this->getUrl(__FUNCTION__))['data'];

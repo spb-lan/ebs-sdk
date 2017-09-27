@@ -15,11 +15,25 @@ use Lan\Ebs\Sdk\Model\User;
 
 class UserCollection extends Collection
 {
+    /**
+     * UserCollection constructor.
+     * @param Client $client
+     * @param array $fields
+     * @param int $limit
+     * @param int $offset
+     * @throws Exception
+     */
     public function __construct(Client $client, array $fields = [], $limit = 10, $offset = 0)
     {
         parent::__construct($client, $fields, User::class, $limit, $offset);
     }
 
+    /**
+     * @param $method
+     * @param array $params
+     * @return array
+     * @throws Exception
+     */
     public function getUrl($method, array $params = [])
     {
         switch ($method) {

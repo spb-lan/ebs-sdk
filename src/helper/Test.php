@@ -13,6 +13,11 @@ use Exception;
 
 class Test
 {
+    /**
+     * @param Unit $test
+     * @param Exception $e
+     * @param $message
+     */
     public static function assertExceptionMessage(Unit $test, Exception $e, $message)
     {
         $test->assertEquals($message, $e->getMessage());
