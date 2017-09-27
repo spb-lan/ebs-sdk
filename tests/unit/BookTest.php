@@ -8,7 +8,6 @@ use Lan\Ebs\Sdk\Classes\Model;
 use Lan\Ebs\Sdk\Collection\BookCollection;
 use Lan\Ebs\Sdk\Helper\Test;
 use Lan\Ebs\Sdk\Model\Book;
-use PHPUnit_Framework_TestResult;
 
 class BookTest extends \Codeception\Test\Unit
 {
@@ -85,32 +84,5 @@ class BookTest extends \Codeception\Test\Unit
         $bookData = $book1->get($book->getId());
 
         $this->assertEquals($book->name, $bookData['name']);
-
-    }
-
-    /**
-     * Count elements of an object
-     * @link http://php.net/manual/en/countable.count.php
-     * @return int The custom count as an integer.
-     * </p>
-     * <p>
-     * The return value is cast to an integer.
-     * @since 5.1.0
-     */
-    public function count()
-    {
-        // TODO: Implement count() method.
-    }
-
-    /**
-     * Runs a test and collects its result in a TestResult instance.
-     *
-     * @param PHPUnit_Framework_TestResult $result
-     *
-     * @return PHPUnit_Framework_TestResult
-     */
-    public function run(PHPUnit_Framework_TestResult $result = null)
-    {
-        // TODO: Implement run() method.
     }
 }
