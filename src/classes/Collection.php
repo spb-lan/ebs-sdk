@@ -64,6 +64,7 @@ abstract class Collection extends ArrayObject implements Common
 
     /**
      * @param int $limit
+     * @throws Exception
      */
     public function setLimit($limit)
     {
@@ -77,6 +78,7 @@ abstract class Collection extends ArrayObject implements Common
     /**
      * @param bool $force
      * @return $this
+     * @throws Exception
      */
     public function load($force = false)
     {
@@ -106,6 +108,7 @@ abstract class Collection extends ArrayObject implements Common
 
     /**
      * @param int $offset
+     * @throws Exception
      */
     public function setOffset($offset)
     {
