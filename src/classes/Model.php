@@ -8,9 +8,11 @@
 
 namespace Lan\Ebs\Sdk\Classes;
 
+use Codeception\Util\Debug;
 use Exception;
 use Lan\Ebs\Sdk\Client;
 use Lan\Ebs\Sdk\Common;
+use Lan\Ebs\Sdk\Helper\Debuger;
 
 abstract class Model implements Common
 {
@@ -48,15 +50,19 @@ abstract class Model implements Common
         $this->fields = $fields;
     }
 
+    public function setId($id) {
+        return $this->set(['id' => $id]);
+    }
+
     public function get($id = null)
     {
         if ($id === null && $this->id !== null) {
             return $this->data;
         }
 
-        $this->set(['id' => $id]);
+        $this->setId($id);
 
-        $response = $this->client->getResponse($this->getUrl(__FUNCTION__, [$this->getId()]), $this->getFields());
+        $response = $this->client->getResponse($this->getUrl(__FUNCTION__, [$this->getId()]), ['fields' => implode(',', $this->getFields())]);
 
         $this->set($response['data'], $response['status']);
 
@@ -83,7 +89,7 @@ abstract class Model implements Common
 
         $this->data = array_merge(
             (array)$this->data,
-            array_intersect_key($data, array_flip(array_merge($this->getFields(), ['id'])))
+            array_intersect_key($data, array_flip(array_merge(['id'], $this->getFields())))
         );
 
         $this->id = $this->data['id'];
@@ -99,7 +105,7 @@ abstract class Model implements Common
     {
         $class = get_class($this);
 
-        return array_merge(['id'], $this->fields ? $this->fields : $class::$defaultFields);
+        return $this->fields ? $this->fields : $class::$defaultFields;
     }
 
     public function getId()
@@ -142,10 +148,12 @@ abstract class Model implements Common
 
     public function __get($name)
     {
-        if ($this->data === null || !array_key_exists($name, $this->data)) {
+        $data = $this->get();
+
+        if (!array_key_exists($name, $data)) {
             throw new Exception('Param ' . $name . ' not defined for ' . get_class($this));
         }
 
-        return $this->data[$name];
+        return $data[$name];
     }
 }

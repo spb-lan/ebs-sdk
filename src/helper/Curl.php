@@ -47,7 +47,7 @@ class Curl
 
         $curlResult = curl_exec($curl);
 
-        Debuger::dump($method . ' ' . $host . $url . ' [' . (curl_errno($curl) ? 500 : curl_getinfo($curl)['http_code']) . ']');
+        Debuger::dump($method . ' ' . $host . $url . ' ' . ($method == 'POST' || $method == 'PUT' || $method == 'DELETE' ? Curl::arrayPrettyPrint($params) : '') .  '[' . (curl_errno($curl) ? 500 : curl_getinfo($curl)['http_code']) . ']');
 
         if (curl_errno($curl)) {
             return Curl::getError('Curl error: ' . curl_errno($curl), 500);
@@ -75,5 +75,9 @@ class Curl
             'status' => $code,
             'message' => $message
         ];
+    }
+
+    private static function arrayPrettyPrint(array $array) {
+        return str_replace('Array (', '(', preg_replace('/\s{2,}/', ' ', preg_replace('/[\x00-\x1F\x7F ]/', ' ', print_r($array, true))));
     }
 }

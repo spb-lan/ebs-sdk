@@ -3,11 +3,10 @@
 namespace Lan\Ebs\Sdk\Test\Unit;
 
 use Exception;
-use Lan\Ebs\Sdk\Classes\Collection;
 use Lan\Ebs\Sdk\Classes\Model;
-use Lan\Ebs\Sdk\Collection\UserCollection;
 use Lan\Ebs\Sdk\Helper\Test;
 use Lan\Ebs\Sdk\Model\User;
+use PHPUnit_Framework_TestResult;
 
 class UserTest extends \Codeception\Test\Unit
 {
@@ -114,6 +113,9 @@ class UserTest extends \Codeception\Test\Unit
         $this->assertNotNull($user->login);
         $this->assertNotNull($user->email);
         $this->assertNotNull($user->fio);
+
+        file_put_contents('testUserPk', $user->getId());
+        file_put_contents('testUserFio', $user->fio);
     }
 
     public function testGet()
@@ -126,13 +128,13 @@ class UserTest extends \Codeception\Test\Unit
             Test::assertExceptionMessage($this, $e, Model::MESSAGE_ID_REQUIRED);
         }
 
-        /** @var  Collection $userCollection */
-        $userCollection = new UserCollection($this->client, [], 1);
+        $testUserPk = file_get_contents('testUserPk');
 
-        /** @var User $user */
-        $user = $userCollection->reset();
+        $user->setId($testUserPk);
 
-        $data = $user->get();
+        $data = $user->get($testUserPk);
+
+        $this->assertEquals($testUserPk, $user->getId());
 
         $this->assertNotNull($user->getId());
         $this->assertNotNull($user->id);
@@ -145,41 +147,67 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testPut()
     {
-        /** @var  Collection $userCollection */
-        $userCollection = new UserCollection($this->client, [], 1);
+        $testUserPk = file_get_contents('testUserPk');
+        $testUserFio = file_get_contents('testUserFio');
 
-        /** @var User $user */
-        $user = $userCollection->reset();
+        $user = new User($this->client);
 
-        $oldFio = $user->fio;
+        $user->setId($testUserPk);
 
-        $this->assertNotNull($oldFio);
+        $this->assertEquals($testUserPk, $user->getId());
+
+        $this->assertEquals('testPost', $testUserFio);
 
         $user->put([
             'fio' => __FUNCTION__,
-            'password' => __FUNCTION__
+            'password' => __FUNCTION__ . '_' . time(),
         ]);
 
-        $this->assertNotNull($user->fio);
-
-        $this->assertNotEquals($user->fio, $oldFio);
+        $this->assertEquals('testPut', $user->fio);
     }
 
     public function testDelete()
     {
-        /** @var  Collection $userCollection */
-        $userCollection = new UserCollection($this->client, [], 1);
+        $testUserPk = file_get_contents('testUserPk');
 
-        /** @var User $user */
-        $user = $userCollection->reset();
+        $user = new User($this->client);
 
-        $oldId = $user->id;
+        $user->setId($testUserPk);
 
-        //$user->delete();
+        $user->delete();
 
         $this->expectException(Exception::class);
         $this->expectExceptionCode(404);
 
-        $user->get($oldId);
+        unlink('testUserPk');
+        unlink('testUserFio');
+
+        $user->get($testUserPk);
+    }
+
+    /**
+     * Count elements of an object
+     * @link http://php.net/manual/en/countable.count.php
+     * @return int The custom count as an integer.
+     * </p>
+     * <p>
+     * The return value is cast to an integer.
+     * @since 5.1.0
+     */
+    public function count()
+    {
+        // TODO: Implement count() method.
+    }
+
+    /**
+     * Runs a test and collects its result in a TestResult instance.
+     *
+     * @param PHPUnit_Framework_TestResult $result
+     *
+     * @return PHPUnit_Framework_TestResult
+     */
+    public function run(PHPUnit_Framework_TestResult $result = null)
+    {
+        // TODO: Implement run() method.
     }
 }

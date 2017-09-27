@@ -4,6 +4,7 @@ namespace Lan\Ebs\Sdk\Test\Unit;
 
 use Lan\Ebs\Sdk\Collection\BookCollection;
 use Lan\Ebs\Sdk\Model\Book;
+use PHPUnit_Framework_TestResult;
 
 class BookCollectionTest extends \Codeception\Test\Unit
 {
@@ -48,37 +49,67 @@ class BookCollectionTest extends \Codeception\Test\Unit
         $collectionCount = $collection->count();
 
         if ($collectionCount > 0) {
-            $this->assertNotNull($collection->reset());
+            $first = $collection->reset();
+            $last = $collection->end();
 
-            $this->assertNotNull($collection->end());
+            $this->assertNotNull($first);
+            $this->assertNotNull($last);
+
+            $this->assertNotEquals($first, $last);
         }
 
-        if ($collectionCount >= $limit) {
-            $count = 0;
+        $this->assertLessThanOrEqual($limit, $collectionCount);
 
-            $previousBook = null;
-            $previousBookId = 0;
+        $count = 0;
 
-            /** @var Book $book */
-            foreach ($collection as $book) {
-                $this->assertInstanceOf(Book::class, $book);
+        $previousBook = null;
+        $previousBookId = 0;
 
-                $this->assertNotNull($book->getId());
+        /** @var Book $book */
+        foreach ($collection as $book) {
+            $this->assertInstanceOf(Book::class, $book);
 
-                $this->assertNotEquals($previousBook, $book);
-                $this->assertNotEquals($previousBookId, $book->getId());
+            $this->assertNotNull($book->getId());
 
-                $previousBook = $book;
-                $previousBookId = $book->getId();
+            $this->assertNotEquals($previousBook, $book);
+            $this->assertNotEquals($previousBookId, $book->getId());
 
-                $count++;
-            }
+            $previousBook = $book;
+            $previousBookId = $book->getId();
 
-            $this->assertEquals($limit, $count);
+            $count++;
         }
+
+        $this->assertEquals($limit, $count);
 
         $data = $collection->getData();
 
         $this->assertEquals($collectionCount, count($data));
+    }
+
+    /**
+     * Count elements of an object
+     * @link http://php.net/manual/en/countable.count.php
+     * @return int The custom count as an integer.
+     * </p>
+     * <p>
+     * The return value is cast to an integer.
+     * @since 5.1.0
+     */
+    public function count()
+    {
+        // TODO: Implement count() method.
+    }
+
+    /**
+     * Runs a test and collects its result in a TestResult instance.
+     *
+     * @param PHPUnit_Framework_TestResult $result
+     *
+     * @return PHPUnit_Framework_TestResult
+     */
+    public function run(PHPUnit_Framework_TestResult $result = null)
+    {
+        // TODO: Implement run() method.
     }
 }
