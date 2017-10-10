@@ -48,12 +48,6 @@ final class Security implements Common
     public function getUrl($method, array $params = [])
     {
         switch ($method) {
-            case 'getSecretKey':
-                return [
-                    'url' => '/1.0/security/secretKey',
-                    'method' => 'GET',
-                    'code' => 200
-                ];
             case 'getDemoUrl':
                 return [
                     'url' => '/1.0/security/demoUrl',

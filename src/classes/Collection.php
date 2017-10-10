@@ -91,7 +91,7 @@ abstract class Collection extends ArrayObject implements Common
             'offset' => $this->offset
         ];
 
-        if ($this->fields) {
+        if (!empty($this->fields)) {
             $params['fields'] = implode(',', (array)$this->fields);
         }
 
