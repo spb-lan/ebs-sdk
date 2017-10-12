@@ -9,6 +9,7 @@
 namespace Lan\Ebs\Sdk;
 
 use Exception;
+use Lan\Ebs\Sdk\Helper\Debuger;
 
 final class Security implements Common
 {
@@ -99,11 +100,11 @@ final class Security implements Common
 
     public static function getApiHost()
     {
-        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? Security::DEV_API_HOST : Security::TEST_API_HOST;
+        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? Security::DEV_API_HOST : Security::PROD_API_HOST;
     }
 
     public static function getEbsHost()
     {
-        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? Security::DEV_EBS_HOST : Security::TEST_EBS_HOST;
+        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? Security::DEV_EBS_HOST : Security::PROD_EBS_HOST;
     }
 }
