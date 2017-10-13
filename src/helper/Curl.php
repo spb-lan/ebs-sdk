@@ -10,15 +10,24 @@ namespace Lan\Ebs\Sdk\Helper;
 
 use Exception;
 
+/**
+ * Хелпер для работы с curl
+ *
+ * @package Lan\Ebs\Sdk\Helper
+ */
 class Curl
 {
     /**
-     * @param $host
-     * @param $url
-     * @param $method
-     * @param $token
-     * @param array $params
+     * Получение ответа от сервера API
+     *
+     * @param string $host Домен сервера API
+     * @param string $url Урл ресурса API
+     * @param string $method Метод http-запроса (GET|POST|PUT|DELETE)
+     * @param string $token Токен клиента
+     * @param array $params Параметры, переданные серверу API
+     *
      * @return array|mixed
+     *
      * @throws Exception
      */
     public static function getResponse($host, $url, $method, $token, array $params)
@@ -75,6 +84,14 @@ class Curl
         return $response;
     }
 
+    /**
+     *  Дефолтный ответ при ошибке
+     *
+     * @param string $message Сообщение об ошибке
+     * @param int $code Статус код ошибки
+     *
+     * @return array
+     */
     private static function getError($message, $code)
     {
         return [
@@ -86,6 +103,13 @@ class Curl
         ];
     }
 
+    /**
+     * Получение массива как строку
+     *
+     * @param array $array Данные массива
+     *
+     * @return mixed
+     */
     private static function arrayPrettyPrint(array $array) {
         return str_replace('Array (', '(', preg_replace('/\s{2,}/', ' ', preg_replace('/[\x00-\x1F\x7F ]/', ' ', print_r($array, true))));
     }

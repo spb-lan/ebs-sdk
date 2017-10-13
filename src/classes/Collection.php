@@ -14,28 +14,64 @@ use Lan\Ebs\Sdk\Client;
 use Lan\Ebs\Sdk\Common;
 use ReflectionClass;
 
+/**
+ * Абстрактный класс для всех коллекций (+ итерируемый)
+ *
+ * @package Lan\Ebs\Sdk\Classes
+ */
 abstract class Collection extends ArrayObject implements Common
 {
+    /**
+     * Инстанс клиента
+     *
+     * @var Client
+     */
     private $client;
 
+    /**
+     * Флаг, сигнализирующий что коллекция загружена
+     *
+     * @var int
+     */
     private $loadStatus = 0;
 
+    /**
+     * Имена полей, подлежаших получению через API
+     *
+     * @var array
+     */
     private $fields = [];
 
+    /**
+     * Класс модели
+     *
+     * @var Model|string
+     */
     private $class = null;
 
+    /**
+     * Лимит получаемых моделей коллекции через API
+     *
+     * @var int
+     */
     private $limit = null;
 
+    /**
+     * Смещение выборки моделей через API
+     *
+     * @var int
+     */
     private $offset = null;
 
     /**
-     * Collection constructor.
+     * Конструктор коллекции
      *
-     * @param  Client $client
-     * @param  array $fields
-     * @param  string $class
-     * @param  int $limit
-     * @param  int $offset
+     * @param Client $client Инстанс клиента
+     * @param array $fields Поля для выборки
+     * @param string $class Класс модели
+     * @param int $limit Лимит выборки
+     * @param int $offset Смещение выборки
+     *
      * @throws Exception
      */
     public function __construct(Client $client, array $fields, $class, $limit, $offset)
@@ -63,7 +99,10 @@ abstract class Collection extends ArrayObject implements Common
     }
 
     /**
-     * @param int $limit
+     * Установка лимита выборки
+     *
+     * @param int $limit Значение лимита выборки
+     *
      * @throws Exception
      */
     public function setLimit($limit)
@@ -76,8 +115,12 @@ abstract class Collection extends ArrayObject implements Common
     }
 
     /**
-     * @param bool $force
+     * Загрузка коллекции
+     *
+     * @param bool $force Заново загружать коллекцию даже если она загружена ранее
+     *
      * @return $this
+     *
      * @throws Exception
      */
     public function load($force = false)
@@ -107,7 +150,10 @@ abstract class Collection extends ArrayObject implements Common
     }
 
     /**
-     * @param int $offset
+     * Установка смещения выборки
+     *
+     * @param int $offset Значение смещения выборки
+     *
      * @throws Exception
      */
     public function setOffset($offset)
@@ -119,13 +165,21 @@ abstract class Collection extends ArrayObject implements Common
         }
     }
 
+    /**
+     * Получение нового инстанса итератора коллекции
+     *
+     * @return CollectionIterator
+     */
     public function getIterator()
     {
         return new CollectionIterator($this);
     }
 
     /**
+     * Количество моделей в коллекции
+     *
      * @return int
+     *
      * @throws Exception
      */
     public function count()
@@ -136,7 +190,10 @@ abstract class Collection extends ArrayObject implements Common
     }
 
     /**
+     * Получение коллекции в виде массива
+     *
      * @return array
+     *
      * @throws Exception
      */
     public function getData()
@@ -147,7 +204,10 @@ abstract class Collection extends ArrayObject implements Common
     }
 
     /**
+     * Получение первой модели в коллекции
+     *
      * @return Model
+     *
      * @throws Exception
      */
     public function reset()
@@ -158,8 +218,12 @@ abstract class Collection extends ArrayObject implements Common
     }
 
     /**
-     * @param array $data
+     * Создание модели по переданным данным
+     *
+     * @param array $data Данные для создания модели
+     *
      * @return Model
+     *
      * @throws Exception
      */
     public function createModel(array $data = null)
@@ -177,7 +241,10 @@ abstract class Collection extends ArrayObject implements Common
     }
 
     /**
+     * Получение последней модели в коллекции
+     *
      * @return Model
+     *
      * @throws Exception
      */
     public function end()

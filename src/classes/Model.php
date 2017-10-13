@@ -60,7 +60,9 @@ abstract class Model implements Common
 
         $this->setId($id);
 
-        $response = $this->client->getResponse($this->getUrl(__FUNCTION__, [$this->getId()]), ['fields' => implode(',', $this->getFields())]);
+        $params = $this->fields ? ['fields' => implode(',', $this->fields)] : [];
+
+        $response = $this->client->getResponse($this->getUrl(__FUNCTION__, [$this->getId()]), $params);
 
         $this->set($response['data'], $response['status']);
 
@@ -85,10 +87,7 @@ abstract class Model implements Common
             throw new Exception(Model::MESSAGE_ID_CAN_NOT_CHANGED);
         }
 
-        $this->data = array_merge(
-            (array)$this->data,
-            array_intersect_key($data, array_flip(array_merge(['id'], $this->getFields())))
-        );
+        $this->data = array_merge((array)$this->data, $data);
 
         $this->id = $this->data['id'];
 
@@ -101,9 +100,7 @@ abstract class Model implements Common
 
     public function getFields()
     {
-        $class = get_class($this);
-
-        return $this->fields ? $this->fields : $class::$defaultFields;
+        return $this->fields;
     }
 
     public function getId()

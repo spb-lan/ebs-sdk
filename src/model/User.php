@@ -13,6 +13,8 @@ use Lan\Ebs\Sdk\Classes\Model;
 use Lan\Ebs\Sdk\Client;
 
 /**
+ * Модель пользователя
+ *
  * @property mixed login
  * @property mixed email
  * @property mixed fio
@@ -20,22 +22,37 @@ use Lan\Ebs\Sdk\Client;
  */
 class User extends Model
 {
+    /**
+     * Логин пользователя
+     */
     const FIELD_LOGIN = 'login';
-    const FIELD_EMAIL = 'email';
-    const FIELD_FIO = 'fio';
-    const FIELD_REGISTERED = 'registered_at';
-
-    public static $defaultFields = [
-        User::FIELD_LOGIN,
-        User::FIELD_EMAIL,
-        User::FIELD_FIO,
-        User::FIELD_REGISTERED
-    ];
 
     /**
-     * User constructor.
-     * @param Client $client
-     * @param array $fields
+     * ФИО пользователя
+     */
+    const FIELD_FIO = 'fio';
+
+    /**
+     * Email пользователя
+     */
+    const FIELD_EMAIL = 'email';
+
+    /**
+     * Дата и время регистрации
+     */
+    const FIELD_REGISTERED = 'registered_at';
+
+    /**
+     * Пароль пользователя
+     */
+    const FIELD_PASSWORD = 'password';
+
+    /**
+     * Конструктор модели пользователя
+     *
+     * @param Client $client Инстанс клиента
+     * @param array $fields Поля для выборки
+     *
      * @throws Exception
      */
     public function __construct(Client $client, array $fields = [])
@@ -43,6 +60,16 @@ class User extends Model
         parent::__construct($client, $fields);
     }
 
+    /**
+     * Получение данных для запроса через API
+     *
+     * @param string $method Http-метод запроса
+     * @param array $params Параметры для формирования урла
+     *
+     * @return array
+     *
+     * @throws Exception
+     */
     public function getUrl($method, array $params = [])
     {
         switch ($method) {
