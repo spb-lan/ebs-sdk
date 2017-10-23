@@ -119,7 +119,7 @@ $bookCollection = new BookCollection($this->client, [], $limit);
 
 ```php
 $book = new Book($this->client);
-$metaDataBook = $book->get($bookId)
+$metaDataBook = $book->get($bookId);
 ```
 
 ### Получение коллекции журналов
@@ -132,7 +132,7 @@ $journalCollection = new JournalCollection($this->client, [], $limit);
 
 ```php
 $journal = new Journal($this->client);
-$metaDataJournal = $journal->get($journalId)
+$metaDataJournal = $journal->get($journalId);
 ```
 
 ### Получение коллекции выпусков журнала
@@ -145,7 +145,7 @@ $issueCollection = new IssueCollection($journalId, $this->client, [], $limit);
 
 ```php
 $issue = new Issue($this->client);
-$metaDataIssue = $issue->get($issueId)
+$metaDataIssue = $issue->get($issueId);
 ```
 
 ### Получение коллекции статей выпуска
@@ -158,7 +158,7 @@ $articleCollection = new ArticleCollection($journalId, $this->client, [], $limit
 
 ```php
 $article = new Article($this->client);
-$metaDataArticle = $article->get($articleId)
+$metaDataArticle = $article->get($articleId);
 ```
 
 # Отчетность
@@ -166,21 +166,66 @@ $metaDataArticle = $article->get($articleId)
 
 ### Статистика посещений
 
+```php
+$report = new Report($this->client);
+$userVisitStatistics = $report->getUsersVisitsStatistics(Report::GROUP_BY_MONTH, '2017-07-01', '2017-08-28');
+```
+
 ### Статистика чтения книг
+
+```php
+$report = new Report($this->client);
+$bookViewsStatistics = $report->getBooksViewsStatistics(Report::GROUP_BY_MONTH, '2017-07-01', '2017-08-28');
+```
 
 ### Статистика чтения журналов
 
+```php
+$report = new Report($this->client);
+$journalViewsStatistics = $report->getJournalsViewsStatistics(Report::GROUP_BY_MONTH, '2017-07-01', '2017-08-28');
+```
+
 ### Отчет о доступных книгах (по коллекциям)
+
+```php
+$report = new Report($this->client);
+$availablePacketsStatistics = $report->getAvailablePackets();
+```
 
 ### Отчет о доступных книгах - доступные книги в коллекции
 
+```php
+$report = new Report($this->client);
+$availableBooksStatistics = $report->getAvailableBooks();
+```
+
 ### Отчет о доступных журналах
+
+```php
+$report = new Report($this->client);
+$availableJournalsStatistics = $report->getAvailableJournals();
+```
 
 # Формализованные отчеты
 ---
 
 ### Библиотечный фонд
 
+```php
+$report = new ReportForm($this->client);
+$bibFond = $report->getBibFond();
+```
+
 ### Электронные книги по направлениям подготовки
 
+```php
+$report = new ReportForm($this->client);
+$ebooks = $report->getEBooks();
+```
+
 ### Специальное ПО
+
+```php
+$report = new ReportForm($this->client);
+$specPo = $report->getSpecPo();
+```

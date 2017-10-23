@@ -6,6 +6,11 @@ use Exception;
 
 final class Report implements Common
 {
+    const GROUP_BY_DAY = 'day';
+    const GROUP_BY_MONTH = 'month';
+    const GROUP_BY_YEAR = 'year';
+    const GROUP_BY_ALL = 'all';
+
     private $client;
 
     /**
@@ -30,7 +35,7 @@ final class Report implements Common
      * @return mixed
      * @throws Exception
      */
-    public function getBooksViewsStatistics($groupBy = null, $periodFrom = null, $periodTo = null)
+    public function getBooksViewsStatistics($groupBy, $periodFrom, $periodTo)
     {
         return $this->client->getResponse(
             $this->getUrl(__FUNCTION__),
@@ -99,7 +104,7 @@ final class Report implements Common
      * @return mixed
      * @throws Exception
      */
-    public function getJournalsViewsStatistics($groupBy = null, $periodFrom = null, $periodTo = null)
+    public function getJournalsViewsStatistics($groupBy, $periodFrom, $periodTo)
     {
         return $this->client->getResponse(
             $this->getUrl(__FUNCTION__),
@@ -118,7 +123,7 @@ final class Report implements Common
      * @return mixed
      * @throws Exception
      */
-    public function getUsersVisitsSatistics($groupBy = null, $periodFrom = null, $periodTo = null)
+    public function getUsersVisitsSatistics($groupBy, $periodFrom, $periodTo)
     {
         return $this->client->getResponse(
             $this->getUrl(__FUNCTION__),
