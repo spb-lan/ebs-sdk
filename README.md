@@ -19,16 +19,19 @@
 # Установка
 ---
 Для загрузки и установки SDK Вы можете воспользоваться одним из 3-х вариантов:
- - вариант 1: Скачать https://github.com/spb-lan/ebs-sdk/archive/master.zip (классы придется подключать вручную)
- - вариант 2: Склонировать из репозитория git clone https://github.com/spb-lan/ebs-sdk.git (классы придется подключать вручную)
- - вариант 3 (предпочтительный): Через composer. "lan/ebs-sdk": "1.0.*"
+ - вариант 1 (предпочтительный): Через composer. "lan/ebs-sdk": "1.0.*"
+ - вариант 2: Скачать https://github.com/spb-lan/ebs-sdk/archive/master.zip (классы придется подключать вручную)
+ - вариант 3: Склонировать из репозитория git clone https://github.com/spb-lan/ebs-sdk.git (классы придется подключать вручную)
 
 ### Инициализация клиента Api
+
 Для авторизации на сервере ЭБС необходим токен, который выдается каждой организации индивидуально при подключении к сервису. Для первичного ознакомления с функционалом Вы можете использовать тестовый токен.
-~~~
+
+```php
 $token = '569f1f950afe79012fb9b8edffacc6fb6d6dac99d7103c51570cad1'; // токен для тестового подписчика
 $client = new Client($token);
-~~~
+```
+
 # Автологин
 ---
 ЭБС Лань поддерживает автоматическую регистрацию и авторизацию читателей подписчика по специальным образом формированной ссылке:
@@ -42,49 +45,121 @@ $client = new Client($token);
 $security = new Security($client);
 ~~~
 ### Шаг 2. Получение URL для автологина
-~~~
-$url = $security->getAutologinUrl($uid, $fio, $email, $redirect);
-~~~
+
 ##### Параметры
 * **$uid = '12345';** - Идентификатор пользователя в вашей системе (id или логин, или любой другой уникальный) - *обязательный*
 * **$fio = ‘Иванов Иван Иванович’;** - ФИО пользователя - *необязательный*
 * **$email = ‘ivanov@example.com’;** - email пользователя - *необязательный*
 * **$redirect = ‘/book/27’;** - Желаемая страница, после успешной регистрации/авторизации - *необязательный*
 
-### Шаг 3. Формирование ссылки
-~~~
+```php
 try {
-    echo '<a class="lan-ebs-autologin" href="' . $url .  '">ЭБС Лань</a>';
+    echo '<a class="lan-ebs-autologin" href="' . $security->getAutologinUrl($uid, $fio, $email, $redirect) .  '">ЭБС Лань</a>';
 } catch (\Exception $e) {
     echo '<span class="lan-ebs-autologin">Сгенерировать ссылку для автологина в ЭБС Лань не удалось (' . $e->getMessage() . ')</span>';
 }
-~~~
+```
 
 # Управление пользователями
 
 ### Получение списка пользователей
+
+```php
+$collection = new UserCollection($this->client, [], $limit);
+```
+
+### Получение пользователя
+
+```php
+$user = new User($this->client, [User::FIELD_LOGIN, User::FIELD_EMAIL, User::FIELD_FIO]);
+$userInfp = $user->get($testUserPk);
+```
+
 ### Создание пользователя
+
+```php
+$user = new User($this->client);
+$user->post([
+    'login' => 'new_user_login',
+    'password' => 'new_user_password',
+    'fio' => 'new_user_fio'
+]);
+```
+
 ### Изменение пароля
+
+```php
+$user = new User($this->client);
+$user->setId($testUserPk);
+$user->put([
+    'fio' => 'user_new_fio',
+    'password' => 'user_new_password',
+]);
+```
+
 ### Открепление пользователя
+
+```php
+$user = new User($this->client);
+$user->setId($testUserPk);
+$user->delete();
+```
 
 # Доступ к метаданным
 ---
 Доступ к метаданным позволяет посредством API получать информацию о книгах и журналах, доступных подписчику ЭБС Лань в рамках приобретенной подписки.
+
 ### Получение коллекции книг
+
+```php
+$bookCollection = new BookCollection($this->client, [], $limit);
+```
 
 ### Получение метаданных книги
 
+```php
+$book = new Book($this->client);
+$metaDataBook = $book->get($bookId)
+```
+
 ### Получение коллекции журналов
+
+```php
+$journalCollection = new JournalCollection($this->client, [], $limit);
+```
 
 ### Получение метаданных журнала
 
+```php
+$journal = new Journal($this->client);
+$metaDataJournal = $journal->get($journalId)
+```
+
 ### Получение коллекции выпусков журнала
+
+```php
+$issueCollection = new IssueCollection($journalId, $this->client, [], $limit);
+```
 
 ### Получение метаданных выпуска журнала
 
+```php
+$issue = new Issue($this->client);
+$metaDataIssue = $issue->get($issueId)
+```
+
 ### Получение коллекции статей выпуска
 
+```php
+$articleCollection = new ArticleCollection($journalId, $this->client, [], $limit);
+```
+
 ### Получение метаданных статьи
+
+```php
+$article = new Article($this->client);
+$metaDataArticle = $article->get($articleId)
+```
 
 # Отчетность
 ---
