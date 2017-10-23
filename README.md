@@ -1,8 +1,5 @@
 # ЭБС Лань PHP SDK
 ---
-Открытый API ЭБС Лань - RESTful API сервер, предназначенный для взаимодействия с информационными системами клиентов - подписчиков [ЭБС Лань](https://e.lanbook.com/).
-Сервер поддерживает версию 2.0 OpenAPI Specification (так же известную как Swagger spec) - промышленный стандарт описания REST API интерфейсов. Подробнее про спецификацию - [OpenAPI Specification](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md)
-PHP SDK для Открытого API ЭБС Лань позволяет быстро развернуть на сервере подписчиков ЭБС Лань полноценную интеграцию с API сервиса.
 
 [![Build Status](https://scrutinizer-ci.com/g/spb-lan/ebs-sdk/badges/build.png?b=master)](https://scrutinizer-ci.com/g/spb-lan/ebs-sdk/build-status/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spb-lan/ebs-sdk/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spb-lan/ebs-sdk/?branch=master)
@@ -11,6 +8,10 @@ PHP SDK для Открытого API ЭБС Лань позволяет быс�
 [![Latest Stable Version](https://poser.pugx.org/lan/ebs-sdk/v/stable.svg)](https://packagist.org/packages/lan/ebs-sdk)
 [![Total Downloads](https://poser.pugx.org/lan/ebs-sdk/downloads)](https://packagist.org/packages/lan/ebs-sdk)
 [![Latest Unstable Version](https://poser.pugx.org/lan/ebs-sdk/v/unstable.svg)](https://packagist.org/packages/lan/ebs-sdk)
+
+Открытый API ЭБС Лань - RESTful API сервер, предназначенный для взаимодействия с информационными системами клиентов - подписчиков [ЭБС Лань](https://e.lanbook.com/).
+Сервер поддерживает версию 2.0 OpenAPI Specification (так же известную как Swagger spec) - промышленный стандарт описания REST API интерфейсов. Подробнее про спецификацию - [OpenAPI Specification](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md)
+PHP SDK для Открытого API ЭБС Лань позволяет быстро развернуть на сервере подписчиков ЭБС Лань полноценную интеграцию с API сервиса.
 
 ## Содержание:
 ---
