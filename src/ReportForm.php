@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dp
- * Date: 16.08.17
- * Time: 13:09
- */
 
 namespace Lan\Ebs\Sdk;
 
@@ -27,6 +21,15 @@ final class ReportForm implements Common
         }
 
         $this->client = $client;
+    }
+
+    /**
+     * @return mixed
+     * @throws Exception
+     */
+    public function getBibFond()
+    {
+        return $this->client->getResponse($this->getUrl(__FUNCTION__))['data'];
     }
 
     /**
@@ -59,15 +62,6 @@ final class ReportForm implements Common
             default:
                 throw new Exception('Route for ' . $method . ' not found');
         }
-    }
-
-    /**
-     * @return mixed
-     * @throws Exception
-     */
-    public function getBibFond()
-    {
-        return $this->client->getResponse($this->getUrl(__FUNCTION__))['data'];
     }
 
     /**

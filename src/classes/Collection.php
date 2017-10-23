@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dp
- * Date: 26.07.17
- * Time: 11:56
- */
 
 namespace Lan\Ebs\Sdk\Classes;
 
@@ -62,6 +56,13 @@ abstract class Collection extends ArrayObject implements Common
      * @var int
      */
     private $offset = null;
+
+    /**
+     * Всего элементов без учета лимита
+     *
+     * @var int
+     */
+    private $fullCount = null;
 
     /**
      * Конструктор коллекции
@@ -144,9 +145,25 @@ abstract class Collection extends ArrayObject implements Common
 
         $this->loadStatus = $response['status'];
 
+        $this->fullCount = $response['count'];
+
         unset($response);
 
         return $this;
+    }
+
+    /**
+     * Получение количества всех элементов без учета лимита
+     *
+     * @return int
+     *
+     * @throws Exception
+     */
+    public function getFullCount()
+    {
+        $this->load();
+
+        return $this->fullCount;
     }
 
     /**

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dp
- * Date: 16.08.17
- * Time: 13:09
- */
 
 namespace Lan\Ebs\Sdk;
 
@@ -74,6 +68,27 @@ final class Security implements Common
         $this->client = $client;
     }
 
+    public static function getApiHost()
+    {
+        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? Security::DEV_API_HOST : Security::PROD_API_HOST;
+    }
+
+    public static function getEbsHost()
+    {
+        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? Security::DEV_EBS_HOST : Security::PROD_EBS_HOST;
+    }
+
+    /**
+     * @param $type
+     * @param $id
+     * @return mixed
+     * @throws Exception
+     */
+    public function getDemoUrl($type, $id)
+    {
+        return $this->client->getResponse($this->getUrl(__FUNCTION__), ['type' => $type, 'id' => $id])['data'];
+    }
+
     /**
      * Получение данных для запроса через API
      *
@@ -105,17 +120,6 @@ final class Security implements Common
     }
 
     /**
-     * @param $type
-     * @param $id
-     * @return mixed
-     * @throws Exception
-     */
-    public function getDemoUrl($type, $id)
-    {
-        return $this->client->getResponse($this->getUrl(__FUNCTION__), ['type' => $type, 'id' => $id])['data'];
-    }
-
-    /**
      * @param $uid
      * @param null $fio
      * @param null $email
@@ -123,7 +127,8 @@ final class Security implements Common
      * @return mixed
      * @throws Exception
      */
-    public function getAutologinUrl($uid, $fio = null, $email = null, $redirect = null) {
+    public function getAutologinUrl($uid, $fio = null, $email = null, $redirect = null)
+    {
         return $this->client->getResponse(
             $this->getUrl(__FUNCTION__),
             [
@@ -134,15 +139,5 @@ final class Security implements Common
                 'redirect' => $redirect
             ]
         )['data'];
-    }
-
-    public static function getApiHost()
-    {
-        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? Security::DEV_API_HOST : Security::PROD_API_HOST;
-    }
-
-    public static function getEbsHost()
-    {
-        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? Security::DEV_EBS_HOST : Security::PROD_EBS_HOST;
     }
 }

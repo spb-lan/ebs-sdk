@@ -52,13 +52,27 @@ class ClientTest extends \Codeception\Test\Unit
         return new Client(Security::TEST_TOKEN);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testGetAutologinUrl() {
         $security = new Security($this->client);
-        $this->assertNotEmpty($security->getAutologinUrl(rand(0, 9999)));
+
+        $url = $security->getAutologinUrl(rand(0, 9999));
+
+        $this->assertNotNull($url);
+        $this->assertNotEmpty($url);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testGetDemoUrl() {
         $security = new Security($this->client);
-        $this->assertNotEmpty($security->getDemoUrl('book', 27));
+
+        $url = $security->getDemoUrl('book', 27);
+
+        $this->assertNotNull($url);
+        $this->assertNotEmpty($url);
     }
 }

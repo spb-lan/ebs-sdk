@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dp
- * Date: 16.08.17
- * Time: 13:09
- */
 
 namespace Lan\Ebs\Sdk;
 
@@ -27,6 +21,25 @@ final class Report implements Common
         }
 
         $this->client = $client;
+    }
+
+    /**
+     * @param null $groupBy
+     * @param null $periodFrom
+     * @param null $periodTo
+     * @return mixed
+     * @throws Exception
+     */
+    public function getBooksViewsStatistics($groupBy = null, $periodFrom = null, $periodTo = null)
+    {
+        return $this->client->getResponse(
+            $this->getUrl(__FUNCTION__),
+            [
+                'group_by' => $groupBy,
+                'period_range_from' => $periodFrom,
+                'period_range_to' => $periodTo,
+            ]
+        )['data'];
     }
 
     /**
@@ -60,7 +73,6 @@ final class Report implements Common
                 return [
                     'url' => '/1.0/report/available/packet',
                     'method' => 'GET',
-                    'params' => [],
                     'code' => 200
                 ];
             case 'getAvailableBooks':
@@ -72,39 +84,18 @@ final class Report implements Common
             case 'getAvailableJournals':
                 return [
                     'url' => '/1.0/report/available/journal',
-                    'params' => [],
                     'method' => 'GET',
                     'code' => 200
                 ];
             case 'getFormReportEBooks':
                 return [
                     'url' => '/1.0/report/form/eBooks',
-                    'params' => [],
                     'method' => 'GET',
                     'code' => 200
                 ];
             default:
                 throw new Exception('Route for ' . $method . ' not found');
         }
-    }
-
-    /**
-     * @param null $groupBy
-     * @param null $periodFrom
-     * @param null $periodTo
-     * @return mixed
-     * @throws Exception
-     */
-    public function getBooksViewsStatistics($groupBy = null, $periodFrom = null, $periodTo = null)
-    {
-        return $this->client->getResponse(
-            $this->getUrl(__FUNCTION__),
-            [
-                'group_by' => $groupBy,
-                'period_range_from' => $periodFrom,
-                'period_range_to' => $periodTo,
-            ]
-        )['data'];
     }
 
     /**

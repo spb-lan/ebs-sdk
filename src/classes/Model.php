@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dp
- * Date: 26.07.17
- * Time: 12:30
- */
 
 namespace Lan\Ebs\Sdk\Classes;
 
@@ -48,25 +42,26 @@ abstract class Model implements Common
         $this->fields = $fields;
     }
 
-    public function setId($id) {
-        return $this->set(['id' => $id]);
+    /**
+     * @return array
+     */
+    public function getFields()
+    {
+        return $this->fields;
     }
 
-    public function get($id = null)
+    /**
+     * @param array $data
+     * @return $this
+     * @throws Exception
+     */
+    public function post(array $data)
     {
-        if ($id === null && $this->id !== null) {
-            return $this->data;
-        }
-
-        $this->setId($id);
-
-        $params = $this->fields ? ['fields' => implode(',', $this->fields)] : [];
-
-        $response = $this->client->getResponse($this->getUrl(__FUNCTION__, [$this->getId()]), $params);
+        $response = $this->getClient()->getResponse($this->getUrl(__FUNCTION__), $data);
 
         $this->set($response['data'], $response['status']);
 
-        return $this->data;
+        return $this;
     }
 
     /**
@@ -79,17 +74,19 @@ abstract class Model implements Common
      */
     public function set(array $data, $status = null)
     {
-        if (empty($data['id']) && empty($this->id)) {
+        if (empty($data['id']) && empty($this->getId())) {
             throw new Exception(Model::MESSAGE_ID_REQUIRED);
         }
 
-        if (!empty($data['id']) && !empty($this->id) && $data['id'] != $this->id) {
+        if (!empty($data['id']) && !empty($this->getId()) && $data['id'] != $this->getId()) {
             throw new Exception(Model::MESSAGE_ID_CAN_NOT_CHANGED);
         }
 
-        $this->data = array_merge((array)$this->data, $data);
+        if (!empty($data['id'])) {
+            $this->setId($data['id']);
+        }
 
-        $this->id = $this->data['id'];
+        $this->data = array_merge((array)$this->data, $data);
 
         if ($status) {
             $this->lastStatus = $status;
@@ -98,57 +95,105 @@ abstract class Model implements Common
         return $this;
     }
 
-    public function getFields()
+    /**
+     * @param array $data
+     * @return $this
+     * @throws Exception
+     */
+    public function put(array $data)
     {
-        return $this->fields;
+        $this->set($data);
+
+        $response = $this->getClient()->getResponse($this->getUrl(__FUNCTION__, [$this->getId()]), $data);
+
+        $this->set($response['data'], $response['status']);
+
+        return $this;
     }
 
+    /**
+     * @return null
+     */
     public function getId()
     {
         return $this->id;
     }
 
-    public function post(array $data)
+    /**
+     * @param $id
+     * @return Model
+     * @throws Exception
+     */
+    public function setId($id)
     {
-        $response = $this->client->getResponse($this->getUrl(__FUNCTION__), $data);
-
-        $this->set($response['data'], $response['status']);
-
-        return $this;
+        return $this->id = $id;
     }
 
-    public function put(array $data)
-    {
-        $this->set($data);
-
-        $response = $this->client->getResponse($this->getUrl(__FUNCTION__, [$this->getId()]), $data);
-
-        $this->set($response['data'], $response['status']);
-
-        return $this;
-    }
-
+    /**
+     * @param null $id
+     * @return $this
+     * @throws Exception
+     */
     public function delete($id = null)
     {
-        if (empty($this->id)) {
+        if (empty($this->getId())) {
             $this->set(['id' => $id]);
         }
 
-        $response = $this->client->getResponse($this->getUrl(__FUNCTION__, [$this->getId()]));
+        $response = $this->getClient()->getResponse($this->getUrl(__FUNCTION__, [$this->getId()]));
 
         $this->set($response['data'], $response['status']);
 
         return $this;
     }
 
+    /**
+     * @param $name
+     * @return mixed
+     * @throws Exception
+     */
     public function __get($name)
     {
         $data = $this->get();
 
         if (!array_key_exists($name, $data)) {
-            throw new Exception('Param ' . $name . ' not defined for ' . get_class($this));
+            throw new Exception('Поле ' . $name . ' не указано при создвнии объекта модели ' . get_class($this) . ' (см. 2-й аргумент)');
         }
 
         return $data[$name];
+    }
+
+    /**
+     * @param null $id
+     * @return null
+     * @throws Exception
+     */
+    public function get($id = null)
+    {
+        if ($id === null && $this->getId() !== null) {
+            return $this->data;
+        }
+
+        if (!$id) {
+            throw new Exception(Model::MESSAGE_ID_REQUIRED);
+        }
+
+        $this->setId($id);
+
+        $params = $this->fields ? ['fields' => implode(',', $this->fields)] : [];
+
+        $response = $this->getClient()->getResponse($this->getUrl(__FUNCTION__, [$this->getId()]), $params);
+
+        $this->set($response['data'], $response['status']);
+
+        return $this->data;
+    }
+
+    /**
+     * @return Client
+     */
+    protected function getClient()
+    {
+        return $this->client;
     }
 }

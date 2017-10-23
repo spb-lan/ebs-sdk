@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dp
- * Date: 25.07.17
- * Time: 17:18
- */
 
 namespace Lan\Ebs\Sdk;
 

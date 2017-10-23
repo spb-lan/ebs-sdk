@@ -1,0 +1,117 @@
+<?php
+
+namespace Lan\Ebs\Sdk\Test\Unit;
+
+use Exception;
+use Lan\Ebs\Sdk\Classes\Collection;
+use Lan\Ebs\Sdk\Classes\Model;
+use Lan\Ebs\Sdk\Collection\ArticleCollection;
+use Lan\Ebs\Sdk\Collection\BookCollection;
+use Lan\Ebs\Sdk\Collection\IssueCollection;
+use Lan\Ebs\Sdk\Collection\JournalCollection;
+use Lan\Ebs\Sdk\Helper\Test;
+use Lan\Ebs\Sdk\Model\Article;
+use Lan\Ebs\Sdk\Model\Book;
+use Lan\Ebs\Sdk\Model\Issue;
+use Lan\Ebs\Sdk\Model\Journal;
+
+class ModelTest extends \Codeception\Test\Unit
+{
+    /**
+     * @var \UnitTester
+     */
+    protected $tester;
+
+    private $client;
+
+    protected function getServices()
+    {
+        return [
+            'di' => new \Codeception\Lib\Di(),
+            'dispatcher' => new \Codeception\Util\Maybe(),
+            'modules' => \Codeception\Util\Stub::makeEmpty('Codeception\Lib\ModuleContainer')
+        ];
+    }
+
+    protected function setUp()
+    {
+        $this->getMetadata()->setServices($this->getServices());
+
+        parent::setUp();
+    }
+
+    protected function _before()
+    {
+        $this->client = ClientTest::getClient();
+    }
+
+    protected function _after()
+    {
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testSetEmpty()
+    {
+        $book = new Book($this->client);
+
+        $this->expectException(Exception::class);
+
+        $book->set([]);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testGet()
+    {
+        $testModels = [
+            Book::class => [
+                'collectionClass' => BookCollection::class
+            ],
+            Journal::class => [
+                'collectionClass' => JournalCollection::class
+            ],
+            Issue::class => [
+                'collectionClass' => IssueCollection::class
+            ],
+            Article::class => [
+                'collectionClass' => ArticleCollection::class
+            ],
+        ];
+
+        foreach ($testModels as $modelClass => $testData) {
+            /** @var Model $model */
+            $model = new $modelClass($this->client);
+
+            try {
+                $model->get();
+            } catch (Exception $e) {
+                Test::assertExceptionMessage($this, $e, Model::MESSAGE_ID_REQUIRED);
+            }
+
+            /** @var Collection $collection */
+            $collection = new $testData['collectionClass']($this->client, [], 3);
+
+            /** @var Book $model */
+            $model = $collection->reset();
+
+            $data = $model->get();
+
+            $this->assertNotNull($model->getId());
+            $this->assertNotNull($model->id);
+            $this->assertNotNull($data['id']);
+
+//            $this->assertNotNull($model->name);
+//
+            $book1 = new $modelClass($this->client);
+
+            $bookData = $book1->get($model->getId());
+
+            $this->assertEquals($bookData['id'], $model->getId());
+
+//            $this->assertEquals($model->name, $bookData['name']);
+        }
+    }
+}

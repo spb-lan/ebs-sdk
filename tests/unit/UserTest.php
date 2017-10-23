@@ -2,6 +2,7 @@
 
 namespace Lan\Ebs\Sdk\Test\Unit;
 
+use Codeception\Util\Debug;
 use Exception;
 use Lan\Ebs\Sdk\Classes\Model;
 use Lan\Ebs\Sdk\Helper\Test;
@@ -113,13 +114,13 @@ class UserTest extends \Codeception\Test\Unit
         $this->assertNotNull($user->email);
         $this->assertNotNull($user->fio);
 
-        file_put_contents('testUserPk', $user->getId());
-        file_put_contents('testUserFio', $user->fio);
+        file_put_contents(__DIR__ . '/testUserPk', $user->getId());
+        file_put_contents(__DIR__ . '/testUserFio', $user->fio);
     }
 
     public function testGet()
     {
-        $user = new User($this->client);
+        $user = new User($this->client, [User::FIELD_LOGIN, User::FIELD_EMAIL, User::FIELD_FIO]);
 
         try {
             $user->get();
@@ -127,7 +128,7 @@ class UserTest extends \Codeception\Test\Unit
             Test::assertExceptionMessage($this, $e, Model::MESSAGE_ID_REQUIRED);
         }
 
-        $testUserPk = file_get_contents('testUserPk');
+        $testUserPk = file_get_contents(__DIR__ . '/testUserPk');
 
         $user->setId($testUserPk);
 
@@ -146,8 +147,8 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testPut()
     {
-        $testUserPk = file_get_contents('testUserPk');
-        $testUserFio = file_get_contents('testUserFio');
+        $testUserPk = file_get_contents(__DIR__ . '/testUserPk');
+        $testUserFio = file_get_contents(__DIR__ . '/testUserFio');
 
         $user = new User($this->client);
 
@@ -167,7 +168,7 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testDelete()
     {
-        $testUserPk = file_get_contents('testUserPk');
+        $testUserPk = file_get_contents(__DIR__ . '/testUserPk');
 
         $user = new User($this->client);
 
@@ -178,8 +179,8 @@ class UserTest extends \Codeception\Test\Unit
         $this->expectException(Exception::class);
         $this->expectExceptionCode(404);
 
-        unlink('testUserPk');
-        unlink('testUserFio');
+        unlink(__DIR__ . '/testUserPk');
+        unlink(__DIR__ . '/testUserFio');
 
         $user->get($testUserPk);
     }

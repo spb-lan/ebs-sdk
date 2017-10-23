@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dp
- * Date: 26.07.17
- * Time: 11:57
- */
 
 namespace Lan\Ebs\Sdk\Model;
 
@@ -82,7 +76,6 @@ class User extends Model
             case 'post':
                 return [
                     'url' => '/1.0/security/user/post',
-                    'params' => [],
                     'method' => 'POST',
                     'code' => 201
                 ];

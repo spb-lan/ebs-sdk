@@ -5,9 +5,9 @@ namespace Lan\Ebs\Sdk\Collection;
 use Exception;
 use Lan\Ebs\Sdk\Classes\Collection;
 use Lan\Ebs\Sdk\Client;
-use Lan\Ebs\Sdk\Model\Book;
+use Lan\Ebs\Sdk\Model\Journal;
 
-class BookCollection extends Collection
+class JournalCollection extends Collection
 {
     /**
      * BookCollection constructor.
@@ -19,7 +19,7 @@ class BookCollection extends Collection
      */
     public function __construct(Client $client, array $fields = [], $limit = 10, $offset = 0)
     {
-        parent::__construct($client, $fields, Book::class, $limit, $offset);
+        parent::__construct($client, $fields, Journal::class, $limit, $offset);
     }
 
     /**
@@ -33,7 +33,7 @@ class BookCollection extends Collection
         switch ($method) {
             case 'load':
                 return [
-                    'url' => '/1.0/resource/book',
+                    'url' => '/1.0/resource/journal',
                     'method' => 'GET',
                     'code' => '200'
                 ];

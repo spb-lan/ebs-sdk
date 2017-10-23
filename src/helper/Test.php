@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dp
- * Date: 27.07.17
- * Time: 13:17
- */
 
 namespace Lan\Ebs\Sdk\Helper;
 

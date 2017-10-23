@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dp
- * Date: 26.07.17
- * Time: 12:06
- */
 
 namespace Lan\Ebs\Sdk\Helper;
 
@@ -63,9 +57,13 @@ class Curl
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
+//        $fp = fopen(__DIR__ . '/errorlog.txt', 'w');
+//        curl_setopt($curl, CURLOPT_VERBOSE, 1);
+//        curl_setopt($curl, CURLOPT_STDERR, $fp);
+
         $curlResult = curl_exec($curl);
 
-        Debuger::dump($method . ' ' . $host . $url . ' ' . ($method == 'POST' || $method == 'PUT' || $method == 'DELETE' ? Curl::arrayPrettyPrint($params) : '') .  '[' . (curl_errno($curl) ? 500 : curl_getinfo($curl)['http_code']) . ']');
+        Debuger::dump($method . ' ' . $host . $url . ' ' . ($method == 'POST' || $method == 'PUT' || $method == 'DELETE' ? Curl::arrayPrettyPrint($params) : '') . '[' . (curl_errno($curl) ? 500 : curl_getinfo($curl)['http_code']) . ']');
 
         if (curl_errno($curl)) {
             return Curl::getError('Curl error: ' . curl_errno($curl), 500);
@@ -85,6 +83,18 @@ class Curl
     }
 
     /**
+     * Получение массива как строку
+     *
+     * @param array $array Данные массива
+     *
+     * @return mixed
+     */
+    private static function arrayPrettyPrint(array $array)
+    {
+        return str_replace('Array (', '(', preg_replace('/\s{2,}/', ' ', preg_replace('/[\x00-\x1F\x7F ]/', ' ', print_r($array, true))));
+    }
+
+    /**
      *  Дефолтный ответ при ошибке
      *
      * @param string $message Сообщение об ошибке
@@ -101,16 +111,5 @@ class Curl
             'status' => $code,
             'message' => $message
         ];
-    }
-
-    /**
-     * Получение массива как строку
-     *
-     * @param array $array Данные массива
-     *
-     * @return mixed
-     */
-    private static function arrayPrettyPrint(array $array) {
-        return str_replace('Array (', '(', preg_replace('/\s{2,}/', ' ', preg_replace('/[\x00-\x1F\x7F ]/', ' ', print_r($array, true))));
     }
 }

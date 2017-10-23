@@ -9,96 +9,52 @@ use Lan\Ebs\Sdk\Client;
 /**
  * @property mixed name
  * @property mixed description
- * @property mixed isbn
+ * @property mixed issn
+ * @property mixed eissn
+ * @property mixed vac
  * @property mixed year
- * @property mixed edition
- * @property mixed pages
- * @property mixed specialMarks
- * @property mixed classification
- * @property mixed authors
- * @property mixed authorAdditions
- * @property mixed bibliographicRecord
- * @property mixed contentQuality
+ * @property mixed issuesPerYear
+ * @property mixed editors
  * @property mixed publisher
  * @property mixed url
- * @property mixed thumb
  */
-class Book extends Model
+class Article extends Model
 {
     /**
-     * Наименование книги
+     * Наименование статьи
      */
     const FIELD_NAME = 'name';
 
     /**
-     * Описание книги
-     */
-    const FIELD_DESCRIPTION = 'description';
-
-    /**
-     * ISBN книги
-     */
-    const FIELD_ISBN = 'isbn';
-
-    /**
-     * Год издания книги
-     */
-    const FIELD_YEAR = 'year';
-
-    /**
-     * Издание
-     */
-    const FIELD_EDITION = 'edition';
-
-    /**
-     * Объем книги
-     */
-    const FIELD_PAGES = 'pages';
-
-    /**
-     * Специальные отметки
-     */
-    const FIELD_SPECIAL_MARKS = 'specialMarks';
-
-    /**
-     * Гриф
-     */
-    const FIELD_CLASSIFICATION = 'classification';
-
-    /**
-     * Авторы
+     * Авторы статьи
      */
     const FIELD_AUTHORS = 'authors';
 
     /**
-     * Дополнительные авторы
+     * Аннотация статьи
      */
-    const FIELD_AUTHOR_ADDITIONS = 'authorAdditions';
+    const FIELD_DESCRIPTION = 'description';
+
+    /**
+     * Ключевые слова статьи
+     */
+    const FIELD_KEYWORDS = 'keywords';
+
+    /**
+     * Страница начала статьи
+     */
+    const START_PAGE = 'startPage';
+
+    /**
+     * Страница окончания статьи
+     */
+    const FINISH_PAGE = 'finish_page';
 
     /**
      * Библиографическая запись
      */
     const FIELD_BIBLIOGRAPHIC_RECORD = 'bibliographicRecord';
 
-    /**
-     * Качество текста книг (процент)
-     */
-    const FIELD_CONTENT_QUALITY = 'contentQuality';
-
-    /**
-     * Издательство
-     */
-    const FIELD_PUBLISHER = 'publisher';
-
-    /**
-     * Ссылка на карточку книги
-     */
-    const FIELD_URL = 'url';
-
-    /**
-     * Ссылка на обложку книги
-     */
-    const FIELD_THUMB = 'thumb';
 
     /**
      * Конструктор модели пользователя
@@ -128,13 +84,13 @@ class Book extends Model
         switch ($method) {
             case 'get':
                 return [
-                    'url' => vsprintf('/1.0/resource/book/get/%d', $params),
+                    'url' => vsprintf('/1.0/resource/journal/article/get/%d', $params),
                     'method' => 'GET',
                     'code' => 200
                 ];
             case 'text':
                 return [
-                    'url' => vsprintf('/1.0/resource/book/text/%d', $params),
+                    'url' => vsprintf('/1.0/resource/journal/article/text/%d', $params),
                     'method' => 'GET',
                     'code' => 200
                 ];
@@ -144,7 +100,7 @@ class Book extends Model
     }
 
     /**
-     * Получение текстов книги
+     * Получение текстов статьи
      *
      * @param int $id Идентификатор модели
      *
