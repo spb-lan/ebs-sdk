@@ -61,9 +61,11 @@ class Curl
 //        curl_setopt($curl, CURLOPT_VERBOSE, 1);
 //        curl_setopt($curl, CURLOPT_STDERR, $fp);
 
+        Debuger::dump($method . ' ' . $host . $url . ' ' . ($method == 'POST' || $method == 'PUT' || $method == 'DELETE' ? Curl::arrayPrettyPrint($params) : ''));
+
         $curlResult = curl_exec($curl);
 
-        Debuger::dump($method . ' ' . $host . $url . ' ' . ($method == 'POST' || $method == 'PUT' || $method == 'DELETE' ? Curl::arrayPrettyPrint($params) : '') . '[' . (curl_errno($curl) ? 500 : curl_getinfo($curl)['http_code']) . ']');
+        Debuger::dump('Response code: ' . (curl_errno($curl) ? '!!! Error !!!' :  curl_getinfo($curl)['http_code']) . "\n");
 
         if (curl_errno($curl)) {
             return Curl::getError('Curl error: ' . curl_errno($curl), 500);

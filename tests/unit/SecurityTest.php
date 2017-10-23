@@ -40,10 +40,6 @@ class SecurityTest extends \Codeception\Test\Unit
     {
     }
 
-    public function testDemoUrl()
-    {
-    }
-
     public function testAutologinUrl()
     {
     }

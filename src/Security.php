@@ -79,17 +79,6 @@ final class Security implements Common
     }
 
     /**
-     * @param $type
-     * @param $id
-     * @return mixed
-     * @throws Exception
-     */
-    public function getDemoUrl($type, $id)
-    {
-        return $this->client->getResponse($this->getUrl(__FUNCTION__), ['type' => $type, 'id' => $id])['data'];
-    }
-
-    /**
      * Получение данных для запроса через API
      *
      * @param string $method Http-метод запроса
@@ -102,12 +91,6 @@ final class Security implements Common
     public function getUrl($method, array $params = [])
     {
         switch ($method) {
-            case 'getDemoUrl':
-                return [
-                    'url' => '/1.0/security/demoUrl',
-                    'method' => 'GET',
-                    'code' => 200
-                ];
             case 'getAutologinUrl':
                 return [
                     'url' => '/1.0/security/autologinUrl',

@@ -4,9 +4,14 @@ namespace Lan\Ebs\Sdk\Test\Unit;
 
 use Lan\Ebs\Sdk\Classes\Collection;
 use Lan\Ebs\Sdk\Classes\Model;
+use Lan\Ebs\Sdk\Collection\ArticleCollection;
 use Lan\Ebs\Sdk\Collection\BookCollection;
+use Lan\Ebs\Sdk\Collection\IssueCollection;
 use Lan\Ebs\Sdk\Collection\JournalCollection;
+use Lan\Ebs\Sdk\Model\Article;
 use Lan\Ebs\Sdk\Model\Book;
+use Lan\Ebs\Sdk\Model\Issue;
+use Lan\Ebs\Sdk\Model\Journal;
 
 class CollectionTest extends \Codeception\Test\Unit
 {
@@ -51,17 +56,17 @@ class CollectionTest extends \Codeception\Test\Unit
             BookCollection::class => [
                 'modelClass' => Book::class
             ],
-//            JournalCollection::class => [
-//                'modelClass' => Journal::class
-//            ],
-//            IssueCollection::class => [
-//                'modelClass' => Issue::class,
-//                'id' => 2026
-//            ],
-//            ArticleCollection::class => [
-//                'modelClass' => Article::class,
-//                'id' => 284749
-//            ]
+            JournalCollection::class => [
+                'modelClass' => Journal::class
+            ],
+            IssueCollection::class => [
+                'modelClass' => Issue::class,
+                'id' => 2026
+            ],
+            ArticleCollection::class => [
+                'modelClass' => Article::class,
+                'id' => 284749
+            ]
         ];
 
         /**
@@ -79,8 +84,11 @@ class CollectionTest extends \Codeception\Test\Unit
                 $collection = new $collectionClass($testData['id'], $this->client, [], $limit);
             }
 
-
             $collectionCount = $collection->count();
+
+            if (!$collectionCount) {
+                continue;
+            }
 
             if ($collectionCount > 0) {
                 $first = $collection->reset();

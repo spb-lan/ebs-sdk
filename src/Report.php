@@ -87,12 +87,6 @@ final class Report implements Common
                     'method' => 'GET',
                     'code' => 200
                 ];
-            case 'getFormReportEBooks':
-                return [
-                    'url' => '/1.0/report/form/eBooks',
-                    'method' => 'GET',
-                    'code' => 200
-                ];
             default:
                 throw new Exception('Route for ' . $method . ' not found');
         }

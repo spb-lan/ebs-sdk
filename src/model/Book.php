@@ -119,6 +119,11 @@ class Book extends Model
      * @param string $method Http-метод запроса
      * @param array $params Параметры для формирования урла
      *
+     * ```php
+     *
+     *  $url = $this->getUrl('get');
+     * ```
+     *
      * @return array
      *
      * @throws Exception

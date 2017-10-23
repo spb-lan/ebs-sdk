@@ -63,16 +63,4 @@ class ClientTest extends \Codeception\Test\Unit
         $this->assertNotNull($url);
         $this->assertNotEmpty($url);
     }
-
-    /**
-     * @throws \Exception
-     */
-    public function testGetDemoUrl() {
-        $security = new Security($this->client);
-
-        $url = $security->getDemoUrl('book', 27);
-
-        $this->assertNotNull($url);
-        $this->assertNotEmpty($url);
-    }
 }

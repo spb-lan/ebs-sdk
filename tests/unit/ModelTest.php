@@ -74,10 +74,12 @@ class ModelTest extends \Codeception\Test\Unit
                 'collectionClass' => JournalCollection::class
             ],
             Issue::class => [
-                'collectionClass' => IssueCollection::class
+                'collectionClass' => IssueCollection::class,
+                'id' => 2026
             ],
             Article::class => [
-                'collectionClass' => ArticleCollection::class
+                'collectionClass' => ArticleCollection::class,
+                'id' => 284749
             ],
         ];
 
@@ -91,8 +93,17 @@ class ModelTest extends \Codeception\Test\Unit
                 Test::assertExceptionMessage($this, $e, Model::MESSAGE_ID_REQUIRED);
             }
 
-            /** @var Collection $collection */
-            $collection = new $testData['collectionClass']($this->client, [], 3);
+            $collectionClass = $testData['collectionClass'];
+
+            $limit = 3;
+
+            if ($collectionClass == BookCollection::class || $collectionClass == JournalCollection::class) {
+                /** @var Collection $collection */
+                $collection = new $collectionClass($this->client, [], $limit);
+            } else {
+                /** @var Collection $collection */
+                $collection = new $collectionClass($testData['id'], $this->client, [], $limit);
+            }
 
             /** @var Book $model */
             $model = $collection->reset();
