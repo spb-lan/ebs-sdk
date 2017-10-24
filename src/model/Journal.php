@@ -51,7 +51,7 @@ class Journal extends Model
     const FIELD_YEAR = 'year';
 
     /**
-     * Выпусков в грд
+     * Выпусков в год
      */
     const FIELD_ISSUES_PER_YEAR = 'issuesPerYear';
 

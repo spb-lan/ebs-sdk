@@ -28,8 +28,8 @@
 Для авторизации на сервере ЭБС необходим токен, который выдается каждой организации индивидуально при подключении к сервису. Для первичного ознакомления с функционалом Вы можете использовать тестовый токен.
 
 ```php
-$token = '569f1f950afe79012fb9b8edffacc6fb6d6dac99d7103c51570cad1'; // токен для тестового подписчика
-$client = new Client($token);
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
 ```
 
 # Автологин
@@ -65,20 +65,57 @@ try {
 ### Получение списка пользователей
 
 ```php
-$collection = new UserCollection($this->client, [], $limit);
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$limit = 5; // Ограничение на выборку данных (максимально 1000)
+$offset = 0; // Смещение выборки данных 
+
+$fields = [User::FIELD_LOGIN, User::FIELD_EMAIL, User::FIELD_FIO];
+
+/**
+ * Доступные поля:
+ *      User::FIELD_LOGIN = 'login' - Логин пользователя
+ *      User::FIELD_FIO = 'fio' - ФИО пользователя
+ *      User::FIELD_EMAIL = 'email' - Email пользователя
+ *      User::FIELD_REGISTERED = 'registeredAt' - Дата и время регистрации
+ */
+ 
+$userCollection = new UserCollection($client, $fields, $limit, $offset); // коллекция моделей пользователей
+
+/** @var User $user */
+foreach ($userCollection as $user) {
+      echo $user->name;
+}
 ```
 
 ### Получение пользователя
 
 ```php
-$user = new User($this->client, [User::FIELD_LOGIN, User::FIELD_EMAIL, User::FIELD_FIO]);
-$userInfp = $user->get($testUserPk);
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$fields = [User::FIELD_LOGIN, User::FIELD_EMAIL, User::FIELD_FIO];
+
+/**
+ * Доступные поля:
+ *      User::FIELD_LOGIN = 'login' - Логин пользователя
+ *      User::FIELD_FIO = 'fio' - ФИО пользователя
+ *      User::FIELD_EMAIL = 'email' - Email пользователя
+ *      User::FIELD_REGISTERED = 'registeredAt' - Дата и время регистрации
+ */
+ 
+$user = new User($client, $fields);
+$userInfo = $user->get($testUserPk);
 ```
 
 ### Создание пользователя
 
 ```php
-$user = new User($this->client);
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$user = new User($client);
 $user->post([
     'login' => 'new_user_login',
     'password' => 'new_user_password',
@@ -89,7 +126,10 @@ $user->post([
 ### Изменение пароля
 
 ```php
-$user = new User($this->client);
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$user = new User($client);
 $user->setId($testUserPk);
 $user->put([
     'fio' => 'user_new_fio',
@@ -100,7 +140,10 @@ $user->put([
 ### Открепление пользователя
 
 ```php
-$user = new User($this->client);
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$user = new User($client);
 $user->setId($testUserPk);
 $user->delete();
 ```
@@ -112,52 +155,228 @@ $user->delete();
 ### Получение коллекции книг
 
 ```php
-$bookCollection = new BookCollection($this->client, [], $limit);
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$limit = 5; // Ограничение на выборку данных (максимально 1000)
+$offset = 0; // Смещение выборки данных 
+
+$fields = [Book::FIELD_NAME, Book::FIELD_AUTHORS, Book::FIELD_ISBN, Book::FIELD_YEAR, Book::FIELD_PUBLISHER]; // поля для выборки
+
+/**
+ * Доступные поля:
+ *      Book::FIELD_NAME = 'name' - Наименование книги
+ *      Book::FIELD_DESCRIPTION = 'description' - Описание книги
+ *      Book::FIELD_ISBN = 'isbn' - ISBN книги
+ *      Book::FIELD_YEAR = 'year' - Год издания книги
+ *      Book::FIELD_EDITION = 'edition' - Издание
+ *      Book::FIELD_PAGES = 'pages' - Объем книги
+ *      Book::FIELD_SPECIAL_MARKS = 'specialMarks' - Специальные отметки
+ *      Book::FIELD_CLASSIFICATION = 'classification' - Гриф
+ *      Book::FIELD_AUTHORS = 'authors' - Авторы
+ *      Book::FIELD_AUTHOR_ADDITIONS = 'authorAdditions' - Дополнительные авторы
+ *      Book::FIELD_BIBLIOGRAPHIC_RECORD = 'bibliographicRecord' - Библиографическая запись
+ *      Book::FIELD_CONTENT_QUALITY = 'contentQuality' - Качество текста книг (процент)
+ *      Book::FIELD_PUBLISHER = 'publisher' - Издательство
+ *      Book::FIELD_URL = 'url' - Ссылка на карточку книги
+ *      Book::FIELD_THUMB = 'thumb' - Ссылка на обложку книги
+ */
+
+$bookCollection = new BookCollection($client, $fields, $limit, $offset); // коллекция моделей книг
+
+/** @var Book $book */
+foreach ($bookCollection as $book) {
+      
+}
 ```
 
 ### Получение метаданных книги
 
 ```php
-$book = new Book($this->client);
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$fields = [Book::FIELD_NAME, Book::FIELD_AUTHORS, Book::FIELD_ISBN, Book::FIELD_YEAR, Book::FIELD_PUBLISHER]; // поля для выборки
+
+/**
+ * Доступные поля:
+ *      Book::FIELD_NAME = 'name' - Наименование книги
+ *      Book::FIELD_DESCRIPTION = 'description' - Описание книги
+ *      Book::FIELD_ISBN = 'isbn' - ISBN книги
+ *      Book::FIELD_YEAR = 'year' - Год издания книги
+ *      Book::FIELD_EDITION = 'edition' - Издание
+ *      Book::FIELD_PAGES = 'pages' - Объем книги
+ *      Book::FIELD_SPECIAL_MARKS = 'specialMarks' - Специальные отметки
+ *      Book::FIELD_CLASSIFICATION = 'classification' - Гриф
+ *      Book::FIELD_AUTHORS = 'authors' - Авторы
+ *      Book::FIELD_AUTHOR_ADDITIONS = 'authorAdditions' - Дополнительные авторы
+ *      Book::FIELD_BIBLIOGRAPHIC_RECORD = 'bibliographicRecord' - Библиографическая запись
+ *      Book::FIELD_CONTENT_QUALITY = 'contentQuality' - Качество текста книг (процент)
+ *      Book::FIELD_PUBLISHER = 'publisher' - Издательство
+ *      Book::FIELD_URL = 'url' - Ссылка на карточку книги
+ *      Book::FIELD_THUMB = 'thumb' - Ссылка на обложку книги
+ */
+
+$book = new Book($client, $fields);
 $metaDataBook = $book->get($bookId);
 ```
 
 ### Получение коллекции журналов
 
 ```php
-$journalCollection = new JournalCollection($this->client, [], $limit);
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$limit = 5; // Ограничение на выборку данных (максимально 1000)
+$offset = 0; // Смещение выборки данных 
+
+$fields = [Journal::FIELD_NAME, Journal::FIELD_ISSN, Journal::FIELD_PUBLISHER]; // поля для выборки
+
+/**
+ * Доступные поля:
+ *      Journal::FIELD_NAME = 'name' - Наименование журнала
+ *      Journal::FIELD_DESCRIPTION = 'description' - Описание журнала
+ *      Journal::FIELD_ISSN = 'issn' - ISSN журнала
+ *      Journal::FIELD_EISSN = 'eissn' - EISSN журнала
+ *      Journal::FIELD_VAC = 'vac' - Входит в перечень ВАК
+ *      Journal::FIELD_YEAR = 'year' - Год основания
+ *      Journal::FIELD_ISSUES_PER_YEAR = 'issuesPerYear' - Выпусков в год
+ *      Journal::FIELD_EDITORS = 'editors' - Редакторы
+ *      Journal::FIELD_PUBLISHER = 'publisher' -  Издательство
+ *      Journal::FIELD_URL = 'url' - Ссылка на карточку журнала
+ */
+
+$journalCollection = new JournalCollection($client, $fields, $limit, $offset); // коллекция моделей журналов
+
+/** @var Journal $journal */
+foreach ($bookCollection as $book) {
+      
+}
 ```
 
 ### Получение метаданных журнала
 
 ```php
-$journal = new Journal($this->client);
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$fields = [Journal::FIELD_NAME, Journal::FIELD_ISSN, Journal::FIELD_PUBLISHER]; // поля для выборки
+
+/**
+ * Доступные поля:
+ *      Journal::FIELD_NAME = 'name' - Наименование журнала
+ *      Journal::FIELD_DESCRIPTION = 'description' - Описание журнала
+ *      Journal::FIELD_ISSN = 'issn' - ISSN журнала
+ *      Journal::FIELD_EISSN = 'eissn' - EISSN журнала
+ *      Journal::FIELD_VAC = 'vac' - Входит в перечень ВАК
+ *      Journal::FIELD_YEAR = 'year' - Год основания
+ *      Journal::FIELD_ISSUES_PER_YEAR = 'issuesPerYear' - Выпусков в год
+ *      Journal::FIELD_EDITORS = 'editors' - Редакторы
+ *      Journal::FIELD_PUBLISHER = 'publisher' -  Издательство
+ *      Journal::FIELD_URL = 'url' - Ссылка на карточку журнала
+ */
+
+$journal = new Journal($client, $fields);
 $metaDataJournal = $journal->get($journalId);
 ```
 
 ### Получение коллекции выпусков журнала
 
 ```php
-$issueCollection = new IssueCollection($journalId, $this->client, [], $limit);
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$limit = 5; // Ограничение на выборку данных (максимально 1000)
+$offset = 0; // Смещение выборки данных 
+
+$fields = [Issue::FIELD_NAME, Issue::FIELD_YEAR]; // поля для выборки
+
+/**
+ * Доступные поля:
+ *      Issue::FIELD_NAME = 'name' - Номер выпуска
+ *      Issue::FIELD_YEAR = 'year' - Год выпуска
+ *      Issue::FIELD_URL = 'url' - Ссылка на карточку выпуска
+ *      Issue::FIELD_THUMB = 'thumb' - Ссылка на обложку выпуска
+ */
+
+$issueCollection = new IssueCollection($client, $fields, $limit, $offset); // коллекция моделей выпусков
+
+/** @var Issue $issue */
+foreach ($issueCollection as $issue) {
+      
+}
 ```
 
 ### Получение метаданных выпуска журнала
 
 ```php
-$issue = new Issue($this->client);
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$fields = [Issue::FIELD_NAME, Issue::FIELD_YEAR]; // поля для выборки
+
+/**
+ * Доступные поля:
+ *      Issue::FIELD_NAME = 'name' - Номер выпуска
+ *      Issue::FIELD_YEAR = 'year' - Год выпуска
+ *      Issue::FIELD_URL = 'url' - Ссылка на карточку выпуска
+ *      Issue::FIELD_THUMB = 'thumb' - Ссылка на обложку выпуска
+ */
+
+$issue = new Issue($client, $fields);
 $metaDataIssue = $issue->get($issueId);
 ```
 
 ### Получение коллекции статей выпуска
 
 ```php
-$articleCollection = new ArticleCollection($journalId, $this->client, [], $limit);
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$limit = 5; // Ограничение на выборку данных (максимально 1000)
+$offset = 0; // Смещение выборки данных 
+
+$fields = [Article::FIELD_NAME, Article::FIELD_AUTHORS]; // поля для выборки
+
+/**
+ * Доступные поля:
+ *      Article::FIELD_NAME = 'name' - Наименование статьи
+ *      Article::FIELD_AUTHORS = 'authors' - Авторы статьи
+ *      Article::FIELD_DESCRIPTION = 'description' - Аннотация статьи
+ *      Article::FIELD_KEYWORDS = 'keywords' - Ключевые слова статьи
+ *      Article::START_PAGE = 'startPage' - Страница начала статьи
+ *      Article::FINISH_PAGE = 'finish_page' - Страница окончания статьи
+ *      Article::FFIELD_BIBLIOGRAPHIC_RECORD = 'bibliographicRecord' - Библиографическая запись
+ */
+
+$articleCollection = new ArticleCollection($client, $fields, $limit, $offset); // коллекция моделей статей
+
+/** @var Article $article */
+foreach ($articleCollection as $article) {
+      
+}
 ```
 
 ### Получение метаданных статьи
 
 ```php
-$article = new Article($this->client);
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$fields = [Article::FIELD_NAME, Article::FIELD_AUTHORS]; // поля для выборки
+
+/**
+ * Доступные поля:
+ *      Article::FIELD_NAME = 'name' - Наименование статьи
+ *      Article::FIELD_AUTHORS = 'authors' - Авторы статьи
+ *      Article::FIELD_DESCRIPTION = 'description' - Аннотация статьи
+ *      Article::FIELD_KEYWORDS = 'keywords' - Ключевые слова статьи
+ *      Article::START_PAGE = 'startPage' - Страница начала статьи
+ *      Article::FINISH_PAGE = 'finish_page' - Страница окончания статьи
+ *      Article::FFIELD_BIBLIOGRAPHIC_RECORD = 'bibliographicRecord' - Библиографическая запись
+ */
+
+$article = new Article($client, $fields);
 $metaDataArticle = $article->get($articleId);
 ```
 
@@ -167,42 +386,87 @@ $metaDataArticle = $article->get($articleId);
 ### Статистика посещений
 
 ```php
-$report = new Report($this->client);
-$userVisitStatistics = $report->getUsersVisitsStatistics(Report::GROUP_BY_MONTH, '2017-07-01', '2017-08-28');
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$groupBy = Report::GROUP_BY_MONTH; // Группировка
+
+/**
+ * Доступные поля:
+ *      Report::GROUP_BY_DAY = 'day' - По дням
+ *      Report::GROUP_BY_MONTH = 'month' - По месяцам
+ *      Report::GROUP_BY_YEAR = 'year' - По годам
+ */
+
+$report = new Report($client);
+$userVisitStatistics = $report->getUsersVisitsStatistics($groupBy, '2017-07-01', '2017-08-28');
 ```
 
 ### Статистика чтения книг
 
 ```php
-$report = new Report($this->client);
-$bookViewsStatistics = $report->getBooksViewsStatistics(Report::GROUP_BY_MONTH, '2017-07-01', '2017-08-28');
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$groupBy = Report::GROUP_BY_MONTH; // Группировка
+
+/**
+ * Доступные поля:
+ *      Report::GROUP_BY_DAY = 'day' - По дням
+ *      Report::GROUP_BY_MONTH = 'month' - По месяцам
+ *      Report::GROUP_BY_YEAR = 'year' - По годам
+ */
+
+$report = new Report($client);
+$bookViewsStatistics = $report->getBooksViewsStatistics($groupBy, '2017-07-01', '2017-08-28');
 ```
 
 ### Статистика чтения журналов
 
 ```php
-$report = new Report($this->client);
-$journalViewsStatistics = $report->getJournalsViewsStatistics(Report::GROUP_BY_MONTH, '2017-07-01', '2017-08-28');
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$groupBy = Report::GROUP_BY_MONTH; // Группировка
+
+/**
+ * Доступные поля:
+ *      Report::GROUP_BY_DAY = 'day' - По дням
+ *      Report::GROUP_BY_MONTH = 'month' - По месяцам
+ *      Report::GROUP_BY_YEAR = 'year' - По годам
+ */
+
+$report = new Report($client);
+$journalViewsStatistics = $report->getJournalsViewsStatistics($groupBy, '2017-07-01', '2017-08-28');
 ```
 
 ### Отчет о доступных книгах (по коллекциям)
 
 ```php
-$report = new Report($this->client);
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$report = new Report($client);
 $availablePacketsStatistics = $report->getAvailablePackets();
 ```
 
 ### Отчет о доступных книгах - доступные книги в коллекции
 
 ```php
-$report = new Report($this->client);
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$report = new Report($client);
 $availableBooksStatistics = $report->getAvailableBooks();
 ```
 
 ### Отчет о доступных журналах
 
 ```php
-$report = new Report($this->client);
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$report = new Report($client);
 $availableJournalsStatistics = $report->getAvailableJournals();
 ```
 
@@ -212,20 +476,29 @@ $availableJournalsStatistics = $report->getAvailableJournals();
 ### Библиотечный фонд
 
 ```php
-$report = new ReportForm($this->client);
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$report = new ReportForm($client);
 $bibFond = $report->getBibFond();
 ```
 
 ### Электронные книги по направлениям подготовки
 
 ```php
-$report = new ReportForm($this->client);
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$report = new ReportForm($client);
 $ebooks = $report->getEBooks();
 ```
 
 ### Специальное ПО
 
 ```php
-$report = new ReportForm($this->client);
+$token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+$client = new Client($token); // инициализация клиента
+
+$report = new ReportForm($client);
 $specPo = $report->getSpecPo();
 ```

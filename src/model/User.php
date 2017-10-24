@@ -12,7 +12,7 @@ use Lan\Ebs\Sdk\Client;
  * @property mixed login
  * @property mixed email
  * @property mixed fio
- * @property mixed registered_at
+ * @property mixed registeredAt
  */
 class User extends Model
 {
@@ -34,7 +34,7 @@ class User extends Model
     /**
      * Дата и время регистрации
      */
-    const FIELD_REGISTERED = 'registered_at';
+    const FIELD_REGISTERED = 'registeredAt';
 
     /**
      * Пароль пользователя
