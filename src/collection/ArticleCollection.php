@@ -1,4 +1,11 @@
 <?php
+/**
+ * Class ArticleCollection
+ *
+ * @author       Denis Shestakov <das@landev.ru>
+ * @copyright    Copyright (c) 2017, Lan Publishing
+ * @license      MIT
+ */
 
 namespace Lan\Ebs\Sdk\Collection;
 
@@ -7,12 +14,25 @@ use Lan\Ebs\Sdk\Classes\Collection;
 use Lan\Ebs\Sdk\Client;
 use Lan\Ebs\Sdk\Model\Article;
 
+/**
+ * Коллекция статей
+ *
+ * @package      Lan\Ebs
+ * @subpackage   Sdk
+ * @category     Collection
+ */
 class ArticleCollection extends Collection
 {
+    /**
+     * Идентификатор выпуска
+     *
+     * @var int
+     */
     private $issueId = null;
 
     /**
      * BookCollection constructor.
+     * @param $issueId
      * @param Client $client
      * @param array $fields
      * @param int $limit
@@ -27,9 +47,13 @@ class ArticleCollection extends Collection
     }
 
     /**
-     * @param $method
-     * @param array $params
+     * Получение данных для запроса через API
+     *
+     * @param string $method Http-метод запроса
+     * @param array $params Параметры для формирования урла
+     *
      * @return array
+     *
      * @throws Exception
      */
     public function getUrl($method, array $params = [])

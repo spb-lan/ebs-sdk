@@ -1,4 +1,11 @@
 <?php
+/**
+ * Class Model
+ *
+ * @author       Denis Shestakov <das@landev.ru>
+ * @copyright    Copyright (c) 2017, Lan Publishing
+ * @license      MIT
+ */
 
 namespace Lan\Ebs\Sdk\Classes;
 
@@ -6,32 +13,65 @@ use Exception;
 use Lan\Ebs\Sdk\Client;
 use Lan\Ebs\Sdk\Common;
 
+/**
+ *  Абстрактный класс моделей
+ *
+ * @package      Lan\Ebs
+ * @subpackage   Sdk
+ * @category     Classes
+ */
 abstract class Model implements Common
 {
     const MESSAGE_ID_REQUIRED = 'Id is required';
     const MESSAGE_ID_CAN_NOT_CHANGED = 'Id can not be changed';
 
+    /**
+     * Инстанс клиента API
+     *
+     * @var Client
+     */
     private $client;
 
+    /**
+     * Имена полей, подлежаших получению через API
+     *
+     * @var array
+     */
     private $fields = [];
 
-    private $data = null;
+    /**
+     * Данные модели
+     *
+     * @var array
+     */
+    private $data = [];
 
+    /**
+     * Идентификатор модели
+     *
+     * @var null
+     */
     private $id = null;
 
+    /**
+     * Статус последнего обращения по API
+     *
+     * @var int
+     */
     private $lastStatus = 0;
 
     /**
-     * Model constructor.
+     * Конструктор модели
      *
-     * @param  Client $client
-     * @param  $fields
+     * @param Client $client Инстанс клиента
+     * @param array $fields Поля для выборки
+     *
      * @throws Exception
      */
     public function __construct(Client $client, array $fields)
     {
         if (!$client) {
-            throw new Exception('Client not defined');
+            throw new Exception('Клиент не инициализирован');
         }
 
         if (!is_array($fields)) {
@@ -43,6 +83,8 @@ abstract class Model implements Common
     }
 
     /**
+     * Загружаемые поля модели
+     *
      * @return array
      */
     public function getFields()
@@ -51,8 +93,12 @@ abstract class Model implements Common
     }
 
     /**
-     * @param array $data
+     * Добавление новой записи по API
+     *
+     * @param array $data Устанавливаемые данные модели
+     *
      * @return $this
+     *
      * @throws Exception
      */
     public function post(array $data)
@@ -65,11 +111,23 @@ abstract class Model implements Common
     }
 
     /**
-     * Set data to model
+     * Получение инстанса клиента
      *
-     * @param  array $data
-     * @param  null $status
+     * @return Client
+     */
+    protected function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * Установка данных модели
+     *
+     * @param  array $data Данные модели
+     * @param  int $status Статус полученных данных
+     *
      * @return $this
+     *
      * @throws Exception
      */
     public function set(array $data, $status = null)
@@ -96,8 +154,36 @@ abstract class Model implements Common
     }
 
     /**
-     * @param array $data
+     * Получение идентификатора модели
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Установка идентификатора модели
+     *
+     * @param int $id Идентификатор модели
+     *
+     * @return int
+     *
+     * @throws Exception
+     */
+    public function setId($id)
+    {
+        return $this->id = $id;
+    }
+
+    /**
+     * Обновление записи по API
+     *
+     * @param array $data Обновляемые данные
+     *
      * @return $this
+     *
      * @throws Exception
      */
     public function put(array $data)
@@ -112,26 +198,12 @@ abstract class Model implements Common
     }
 
     /**
-     * @return null
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param $id
-     * @return Model
-     * @throws Exception
-     */
-    public function setId($id)
-    {
-        return $this->id = $id;
-    }
-
-    /**
-     * @param null $id
+     * Удаление модели
+     *
+     * @param int $id Идентификатор модели
+     *
      * @return $this
+     *
      * @throws Exception
      */
     public function delete($id = null)
@@ -148,8 +220,12 @@ abstract class Model implements Common
     }
 
     /**
-     * @param $name
+     * Магический Get
+     *
+     * @param mixed $name Имя поля
+     *
      * @return mixed
+     *
      * @throws Exception
      */
     public function __get($name)
@@ -164,8 +240,12 @@ abstract class Model implements Common
     }
 
     /**
-     * @param null $id
-     * @return null
+     * Получение метаданных по идентификатору модели
+     *
+     * @param int $id Идентификатор модели
+     *
+     * @return array
+     *
      * @throws Exception
      */
     public function get($id = null)
@@ -187,13 +267,5 @@ abstract class Model implements Common
         $this->set($response['data'], $response['status']);
 
         return $this->data;
-    }
-
-    /**
-     * @return Client
-     */
-    protected function getClient()
-    {
-        return $this->client;
     }
 }

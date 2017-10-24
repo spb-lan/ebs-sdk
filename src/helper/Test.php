@@ -1,14 +1,24 @@
 <?php
+/**
+ * Class Test
+ *
+ * @author       Denis Shestakov <das@landev.ru>
+ * @copyright    Copyright (c) 2017, Lan Publishing
+ * @license      MIT
+ */
 
 namespace Lan\Ebs\Sdk\Helper;
 
 use Codeception\Test\Unit;
 use Exception;
 
+
 /**
  * Хелпер для тестов
  *
- * @package Lan\Ebs\Sdk\Helper
+ * @package      Lan\Ebs
+ * @subpackage   Sdk
+ * @category     Helper
  */
 class Test
 {

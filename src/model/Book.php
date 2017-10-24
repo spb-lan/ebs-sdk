@@ -1,4 +1,11 @@
 <?php
+/**
+ * Class Book
+ *
+ * @author       Denis Shestakov <das@landev.ru>
+ * @copyright    Copyright (c) 2017, Lan Publishing
+ * @license      MIT
+ */
 
 namespace Lan\Ebs\Sdk\Model;
 
@@ -7,6 +14,8 @@ use Lan\Ebs\Sdk\Classes\Model;
 use Lan\Ebs\Sdk\Client;
 
 /**
+ * Модель книг
+ *
  * @property mixed name
  * @property mixed description
  * @property mixed isbn
@@ -22,6 +31,10 @@ use Lan\Ebs\Sdk\Client;
  * @property mixed publisher
  * @property mixed url
  * @property mixed thumb
+ *
+ * @package      Lan\Ebs
+ * @subpackage   Sdk
+ * @category     Model
  */
 class Book extends Model
 {
@@ -114,6 +127,30 @@ class Book extends Model
     }
 
     /**
+     * Получение текстов книги
+     *
+     * @param int $id Идентификатор модели
+     *
+     * @return array
+     *
+     * @throws Exception
+     */
+    public function text($id = null)
+    {
+        if ($id) {
+            $this->setId($id);
+        } else {
+            $id = $this->getId();
+        }
+
+        if (empty($id)) {
+            throw new Exception(Model::MESSAGE_ID_REQUIRED);
+        }
+
+        return $this->getClient()->getResponse($this->getUrl(__FUNCTION__, [$id]))['data'];
+    }
+
+    /**
      * Получение данных для запроса через API
      *
      * @param string $method Http-метод запроса
@@ -146,29 +183,5 @@ class Book extends Model
             default:
                 throw new Exception('Route for ' . $method . ' not found');
         }
-    }
-
-    /**
-     * Получение текстов книги
-     *
-     * @param int $id Идентификатор модели
-     *
-     * @return array
-     *
-     * @throws Exception
-     */
-    public function text($id = null)
-    {
-        if ($id) {
-            $this->setId($id);
-        } else {
-            $id = $this->getId();
-        }
-
-        if (empty($id)) {
-            throw new Exception(Model::MESSAGE_ID_REQUIRED);
-        }
-
-        return $this->getClient()->getResponse($this->getUrl(__FUNCTION__, [$id]))['data'];
     }
 }

@@ -1,4 +1,11 @@
 <?php
+/**
+ * Class User
+ *
+ * @author       Denis Shestakov <das@landev.ru>
+ * @copyright    Copyright (c) 2017, Lan Publishing
+ * @license      MIT
+ */
 
 namespace Lan\Ebs\Sdk\Model;
 
@@ -13,6 +20,10 @@ use Lan\Ebs\Sdk\Client;
  * @property mixed email
  * @property mixed fio
  * @property mixed registeredAt
+ *
+ * @package      Lan\Ebs
+ * @subpackage   Sdk
+ * @category     Model
  */
 class User extends Model
 {

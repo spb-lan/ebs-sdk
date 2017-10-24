@@ -1,22 +1,44 @@
 <?php
+/**
+ * Class CollectionIterator
+ *
+ * @author       Denis Shestakov <das@landev.ru>
+ * @copyright    Copyright (c) 2017, Lan Publishing
+ * @license      MIT
+ */
 
 namespace Lan\Ebs\Sdk\Classes;
 
 use ArrayIterator;
 
+/**
+ * Итератор коллекции
+ *
+ * @package      Lan\Ebs
+ * @subpackage   Sdk
+ * @category     Classes
+ */
 class CollectionIterator extends ArrayIterator
 {
     /**
+     * Инстанс коллекции
+     *
      * @var Collection
      */
     private $collection;
 
+
+    /**
+     * Данные коллекции
+     *
+     * @var array
+     */
     private $data = [];
 
     /**
-     * CollectionIterator constructor.
+     * Конструктор итератора
      *
-     * @param Collection $collection
+     * @param Collection $collection Коллекция
      */
     public function __construct(Collection $collection)
     {

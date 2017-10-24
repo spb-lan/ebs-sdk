@@ -1,4 +1,11 @@
 <?php
+/**
+ * Class Client
+ *
+ * @author       Denis Shestakov <das@landev.ru>
+ * @copyright    Copyright (c) 2017, Lan Publishing
+ * @license      MIT
+ */
 
 namespace Lan\Ebs\Sdk;
 
@@ -6,29 +13,45 @@ use Exception;
 use Lan\Ebs\Sdk\Helper\Curl;
 use Lan\Ebs\Sdk\Helper\Debuger;
 
+/**
+ * Клиент API
+ *
+ * @package      Lan\Ebs
+ * @subpackage   Sdk
+ */
 final class Client
 {
+    /**
+     * Токен клиента
+     *
+     * @var string
+     */
     private $token = '';
 
     /**
-     * Ebs constructor.
+     * Конструктор клиента
      *
-     * @param  $token
+     * @param string $token Токен клиента
+     *
      * @throws Exception
      */
     public function __construct($token)
     {
         if (empty($token)) {
-            throw new Exception('Token is empty');
+            throw new Exception('Токен пустой');
         }
 
         $this->token = $token;
     }
 
     /**
-     * @param array $request
-     * @param array $params
-     * @return array|mixed
+     * Получение ответа сервера API
+     *
+     * @param array $request Данные для запроса (url, method)
+     * @param array $params Параметры запроса
+     *
+     * @return array
+     *
      * @throws Exception
      */
     public function getResponse(array $request, array $params = [])

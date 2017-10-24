@@ -1,30 +1,52 @@
 <?php
+/**
+ * Class ReportForm
+ *
+ * @author       Emil Limarenko <eal@landev.ru>
+ * @copyright    Copyright (c) 2017, Lan Publishing
+ * @license      MIT
+ */
 
 namespace Lan\Ebs\Sdk;
 
 use Exception;
 
-final class ReportForm implements Common
+/**
+ * SDK формализованных отчетов
+ *
+ * @package      Lan\Ebs
+ * @subpackage   Sdk
+ */
+class ReportForm implements Common
 {
+    /**
+     * Инстанс клиента API
+     *
+     * @var Client
+     */
     private $client;
 
     /**
-     * Security constructor.
+     * Конструктор формализованного отчета
      *
-     * @param  Client $client
+     * @param Client $client Инстанс клиента
+     *
      * @throws Exception
      */
     public function __construct(Client $client)
     {
         if (!$client) {
-            throw new Exception('Client not defined');
+            throw new Exception('Клиент не инициализирован');
         }
 
         $this->client = $client;
     }
 
     /**
+     * Библиотечный фонд
+     *
      * @return mixed
+     *
      * @throws Exception
      */
     public function getBibFond()
@@ -33,9 +55,13 @@ final class ReportForm implements Common
     }
 
     /**
-     * @param $method
-     * @param array $params
+     * Получение данных для запроса через API
+     *
+     * @param string $method Http-метод запроса
+     * @param array $params Параметры для формирования урла
+     *
      * @return array
+     *
      * @throws Exception
      */
     public function getUrl($method, array $params = [])
@@ -65,7 +91,10 @@ final class ReportForm implements Common
     }
 
     /**
+     * Электронных книг по направлениям подготовки
+     *
      * @return mixed
+     *
      * @throws Exception
      */
     public function getEBooks()
@@ -74,7 +103,10 @@ final class ReportForm implements Common
     }
 
     /**
+     * Специальное ПО
+     *
      * @return mixed
+     *
      * @throws Exception
      */
     public function getSpecPo()

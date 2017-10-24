@@ -124,7 +124,7 @@ class ReportTest extends \Codeception\Test\Unit
     public function testGetUsersVisitsStatistics()
     {
         $report = new Report($this->client);
-        $stat = $report->getUsersVisitsSatistics('month', '2017-07-01', '2017-08-28');
+        $stat = $report->getUsersVisitsStatistics('month', '2017-07-01', '2017-08-28');
         $this->assertNotNull($stat);
     }
 

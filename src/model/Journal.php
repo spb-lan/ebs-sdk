@@ -1,4 +1,11 @@
 <?php
+/**
+ * Class Journal
+ *
+ * @author       Denis Shestakov <das@landev.ru>
+ * @copyright    Copyright (c) 2017, Lan Publishing
+ * @license      MIT
+ */
 
 namespace Lan\Ebs\Sdk\Model;
 
@@ -7,6 +14,8 @@ use Lan\Ebs\Sdk\Classes\Model;
 use Lan\Ebs\Sdk\Client;
 
 /**
+ * Модель журналов
+ *
  * @property mixed name
  * @property mixed description
  * @property mixed issn
@@ -17,6 +26,10 @@ use Lan\Ebs\Sdk\Client;
  * @property mixed editors
  * @property mixed publisher
  * @property mixed url
+ *
+ * @package      Lan\Ebs
+ * @subpackage   Sdk
+ * @category     Model
  */
 class Journal extends Model
 {

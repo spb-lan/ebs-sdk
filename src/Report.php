@@ -1,38 +1,71 @@
 <?php
+/**
+ * Class Report
+ *
+ * @author       Emil Limarenko <eal@landev.ru>
+ * @copyright    Copyright (c) 2017, Lan Publishing
+ * @license      MIT
+ */
 
 namespace Lan\Ebs\Sdk;
 
 use Exception;
 
-final class Report implements Common
+/**
+ * SDK для общих отчетов
+ *
+ * @package      Lan\Ebs
+ * @subpackage   Sdk
+ */
+class Report implements Common
 {
+    /**
+     * Группировка по дням
+     */
     const GROUP_BY_DAY = 'day';
-    const GROUP_BY_MONTH = 'month';
-    const GROUP_BY_YEAR = 'year';
-    const GROUP_BY_ALL = 'all';
 
+    /**
+     * Группировка по месяцам
+     */
+    const GROUP_BY_MONTH = 'month';
+
+    /**
+     * Группировка по годам
+     */
+    const GROUP_BY_YEAR = 'year';
+
+    /**
+     * Инстанс клиента API
+     *
+     * @var Client
+     */
     private $client;
 
     /**
-     * Security constructor.
+     * Конструктор общего отчета
      *
-     * @param  Client $client
+     * @param Client $client Инстанс клиента
+     *
      * @throws Exception
      */
     public function __construct(Client $client)
     {
         if (!$client) {
-            throw new Exception('Client not defined');
+            throw new Exception('Клиент не инициализирован');
         }
 
         $this->client = $client;
     }
 
     /**
-     * @param null $groupBy
-     * @param null $periodFrom
-     * @param null $periodTo
+     * Общая статистика чтения книг
+     *
+     * @param string $groupBy Группировка ('day|month|year')
+     * @param string $periodFrom Период с (формат Y-m-d, например 2017-07-01)
+     * @param string $periodTo Период с (формат Y-m-d, например 2017-08-28)
+     *
      * @return mixed
+     *
      * @throws Exception
      */
     public function getBooksViewsStatistics($groupBy, $periodFrom, $periodTo)
@@ -48,9 +81,13 @@ final class Report implements Common
     }
 
     /**
-     * @param $method
-     * @param array $params
+     * Получение данных для запроса через API
+     *
+     * @param string $method Http-метод запроса
+     * @param array $params Параметры для формирования урла
+     *
      * @return array
+     *
      * @throws Exception
      */
     public function getUrl($method, array $params = [])
@@ -68,7 +105,7 @@ final class Report implements Common
                     'method' => 'GET',
                     'code' => 200
                 ];
-            case 'getUsersVisitsSatistics':
+            case 'getUsersVisitsStatistics':
                 return [
                     'url' => '/1.0/report/stat/visit',
                     'method' => 'GET',
@@ -98,10 +135,14 @@ final class Report implements Common
     }
 
     /**
-     * @param null $groupBy
-     * @param null $periodFrom
-     * @param null $periodTo
+     * Общая статистика чтения журналов
+     *
+     * @param string $groupBy Группировка ('day|month|year')
+     * @param string $periodFrom Период с (формат Y-m-d, например 2017-07-01)
+     * @param string $periodTo Период с (формат Y-m-d, например 2017-08-28)
+     *
      * @return mixed
+     *
      * @throws Exception
      */
     public function getJournalsViewsStatistics($groupBy, $periodFrom, $periodTo)
@@ -117,13 +158,17 @@ final class Report implements Common
     }
 
     /**
-     * @param null $groupBy
-     * @param null $periodFrom
-     * @param null $periodTo
+     * Статистика посещаемости
+     *
+     * @param string $groupBy Группировка ('day|month|year')
+     * @param string $periodFrom Период с (формат Y-m-d, например 2017-07-01)
+     * @param string $periodTo Период с (формат Y-m-d, например 2017-08-28)
+     *
      * @return mixed
+     *
      * @throws Exception
      */
-    public function getUsersVisitsSatistics($groupBy, $periodFrom, $periodTo)
+    public function getUsersVisitsStatistics($groupBy, $periodFrom, $periodTo)
     {
         return $this->client->getResponse(
             $this->getUrl(__FUNCTION__),
@@ -136,7 +181,10 @@ final class Report implements Common
     }
 
     /**
+     * Доступные пакеты книг
+     *
      * @return mixed
+     *
      * @throws Exception
      */
     public function getAvailablePackets()
@@ -145,8 +193,12 @@ final class Report implements Common
     }
 
     /**
-     * @param $pdKey
+     * Доступные книги в пакете
+     *
+     * @param int $pdKey Идентификатор пакета
+     *
      * @return mixed
+     *
      * @throws Exception
      */
     public function getAvailableBooks($pdKey)
@@ -155,19 +207,13 @@ final class Report implements Common
     }
 
     /**
+     * Доступные журналы
+     *
      * @return mixed
+     *
      * @throws Exception
      */
     public function getAvailableJournals()
-    {
-        return $this->client->getResponse($this->getUrl(__FUNCTION__))['data'];
-    }
-
-    /**
-     * @return mixed
-     * @throws Exception
-     */
-    public function getFormReportEBooks()
     {
         return $this->client->getResponse($this->getUrl(__FUNCTION__))['data'];
     }

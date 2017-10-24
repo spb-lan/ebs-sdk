@@ -2,13 +2,16 @@
   "name": "lan/ebs-sdk",
   "description": "Ebs SDK",
   "minimum-stability": "stable",
-  "license": "proprietary",
+  "license": "MIT",
   "authors": [
     {
-      "name": "dp",
-      "email": "denis.a.shestakov@gmail.com"
-    }
-  ],
+      "name": "Denis Shestakov",
+      "email": "das@landev.ru"
+    },
+    {
+      "name": "Emil Limarenko",
+      "email": "eal@landev.ru"
+    }  ],
   "autoload": {
     "psr-4": {
       "Lan\\Ebs\\Sdk\\": "src/",

@@ -1,4 +1,11 @@
 <?php
+/**
+ * Class BookCollection
+ *
+ * @author       Denis Shestakov <das@landev.ru>
+ * @copyright    Copyright (c) 2017, Lan Publishing
+ * @license      MIT
+ */
 
 namespace Lan\Ebs\Sdk\Classes;
 
@@ -11,12 +18,14 @@ use ReflectionClass;
 /**
  * Абстрактный класс для всех коллекций (+ итерируемый)
  *
- * @package Lan\Ebs\Sdk\Classes
+ * @package      Lan\Ebs
+ * @subpackage   Sdk
+ * @category     Classes
  */
 abstract class Collection extends ArrayObject implements Common
 {
     /**
-     * Инстанс клиента
+     * Инстанс клиента API
      *
      * @var Client
      */
@@ -78,7 +87,7 @@ abstract class Collection extends ArrayObject implements Common
     public function __construct(Client $client, array $fields, $class, $limit, $offset)
     {
         if (!$client) {
-            throw new Exception('Client not defined');
+            throw new Exception('Клиент не инициализирован');
         }
 
         if (!is_array($fields)) {
@@ -153,20 +162,6 @@ abstract class Collection extends ArrayObject implements Common
     }
 
     /**
-     * Получение количества всех элементов без учета лимита
-     *
-     * @return int
-     *
-     * @throws Exception
-     */
-    public function getFullCount()
-    {
-        $this->load();
-
-        return $this->fullCount;
-    }
-
-    /**
      * Установка смещения выборки
      *
      * @param int $offset Значение смещения выборки
@@ -180,6 +175,20 @@ abstract class Collection extends ArrayObject implements Common
         if ($this->loadStatus == 200) {
             $this->load(true);
         }
+    }
+
+    /**
+     * Получение количества всех элементов без учета лимита
+     *
+     * @return int
+     *
+     * @throws Exception
+     */
+    public function getFullCount()
+    {
+        $this->load();
+
+        return $this->fullCount;
     }
 
     /**
@@ -269,5 +278,15 @@ abstract class Collection extends ArrayObject implements Common
         $this->load();
 
         return $this->createModel(end($this));
+    }
+
+    /**
+     * Получение инстанса клиента
+     *
+     * @return Client
+     */
+    protected function getClient()
+    {
+        return $this->client;
     }
 }

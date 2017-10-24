@@ -1,4 +1,11 @@
 <?php
+/**
+ * Class Issue
+ *
+ * @author       Denis Shestakov <das@landev.ru>
+ * @copyright    Copyright (c) 2017, Lan Publishing
+ * @license      MIT
+ */
 
 namespace Lan\Ebs\Sdk\Model;
 
@@ -7,10 +14,16 @@ use Lan\Ebs\Sdk\Classes\Model;
 use Lan\Ebs\Sdk\Client;
 
 /**
+ * Модель выпусков
+ *
  * @property mixed name
  * @property mixed year
  * @property mixed url
  * @property mixed thumb
+ *
+ * @package      Lan\Ebs
+ * @subpackage   Sdk
+ * @category     Model
  */
 class Issue extends Model
 {

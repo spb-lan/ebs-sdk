@@ -1,4 +1,11 @@
 <?php
+/**
+ * Class Article
+ *
+ * @author       Denis Shestakov <das@landev.ru>
+ * @copyright    Copyright (c) 2017, Lan Publishing
+ * @license      MIT
+ */
 
 namespace Lan\Ebs\Sdk\Model;
 
@@ -7,6 +14,8 @@ use Lan\Ebs\Sdk\Classes\Model;
 use Lan\Ebs\Sdk\Client;
 
 /**
+ * Модель статей
+ *
  * @property mixed name
  * @property mixed description
  * @property mixed issn
@@ -17,6 +26,10 @@ use Lan\Ebs\Sdk\Client;
  * @property mixed editors
  * @property mixed publisher
  * @property mixed url
+ *
+ * @package      Lan\Ebs
+ * @subpackage   Sdk
+ * @category     Model
  */
 class Article extends Model
 {
@@ -55,7 +68,6 @@ class Article extends Model
      */
     const FIELD_BIBLIOGRAPHIC_RECORD = 'bibliographicRecord';
 
-
     /**
      * Конструктор модели пользователя
      *
@@ -67,6 +79,30 @@ class Article extends Model
     public function __construct(Client $client, array $fields = [])
     {
         parent::__construct($client, $fields);
+    }
+
+    /**
+     * Получение текстов статьи
+     *
+     * @param int $id Идентификатор модели
+     *
+     * @return array
+     *
+     * @throws Exception
+     */
+    public function text($id = null)
+    {
+        if ($id) {
+            $this->setId($id);
+        } else {
+            $id = $this->getId();
+        }
+
+        if (empty($id)) {
+            throw new Exception(Model::MESSAGE_ID_REQUIRED);
+        }
+
+        return $this->getClient()->getResponse($this->getUrl(__FUNCTION__, [$id]))['data'];
     }
 
     /**
@@ -97,29 +133,5 @@ class Article extends Model
             default:
                 throw new Exception('Route for ' . $method . ' not found');
         }
-    }
-
-    /**
-     * Получение текстов статьи
-     *
-     * @param int $id Идентификатор модели
-     *
-     * @return array
-     *
-     * @throws Exception
-     */
-    public function text($id = null)
-    {
-        if ($id) {
-            $this->setId($id);
-        } else {
-            $id = $this->getId();
-        }
-
-        if (empty($id)) {
-            throw new Exception(Model::MESSAGE_ID_REQUIRED);
-        }
-
-        return $this->getClient()->getResponse($this->getUrl(__FUNCTION__, [$id]))['data'];
     }
 }

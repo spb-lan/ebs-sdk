@@ -1,4 +1,11 @@
 <?php
+/**
+ * Class Curl
+ *
+ * @author       Denis Shestakov <das@landev.ru>
+ * @copyright    Copyright (c) 2017, Lan Publishing
+ * @license      MIT
+ */
 
 namespace Lan\Ebs\Sdk\Helper;
 
@@ -7,7 +14,9 @@ use Exception;
 /**
  * Хелпер для работы с curl
  *
- * @package Lan\Ebs\Sdk\Helper
+ * @package      Lan\Ebs
+ * @subpackage   Sdk
+ * @category     Helper
  */
 class Curl
 {
@@ -65,7 +74,7 @@ class Curl
 
         $curlResult = curl_exec($curl);
 
-        Debuger::dump('Response code: ' . (curl_errno($curl) ? '!!! Error !!!' :  curl_getinfo($curl)['http_code']) . "\n");
+        Debuger::dump('Response code: ' . (curl_errno($curl) ? '!!! Error !!!' : curl_getinfo($curl)['http_code']) . "\n");
 
         if (curl_errno($curl)) {
             return Curl::getError('Curl error: ' . curl_errno($curl), 500);

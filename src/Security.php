@@ -1,4 +1,11 @@
 <?php
+/**
+ * Class Security
+ *
+ * @author       Denis Shestakov <das@landev.ru>
+ * @copyright    Copyright (c) 2017, Lan Publishing
+ * @license      MIT
+ */
 
 namespace Lan\Ebs\Sdk;
 
@@ -7,7 +14,8 @@ use Exception;
 /**
  * Класс для получения публичных ресурсов по закрытому токену
  *
- * @package Lan\Ebs\Sdk
+ * @package      Lan\Ebs
+ * @subpackage   Sdk
  */
 final class Security implements Common
 {
@@ -57,25 +65,62 @@ final class Security implements Common
      * Конструктор
      *
      * @param Client $client Истанс клиента
+     *
      * @throws Exception
      */
     public function __construct(Client $client)
     {
         if (!$client) {
-            throw new Exception('Client not defined');
+            throw new Exception('Клиент не инициализирован');
         }
 
         $this->client = $client;
     }
 
+    /**
+     * Получение хоста API-сервера
+     *
+     * @return string
+     */
     public static function getApiHost()
     {
         return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? Security::DEV_API_HOST : Security::PROD_API_HOST;
     }
 
+    /**
+     * Получение хоста сервера ЭБС
+     *
+     * @return string
+     */
     public static function getEbsHost()
     {
         return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? Security::DEV_EBS_HOST : Security::PROD_EBS_HOST;
+    }
+
+    /**
+     * Получение url для автологина
+     *
+     * @param int|string $uid Уникальные идентификатора прользователя на стороне клиента
+     * @param string $fio ФИО (необязательно)
+     * @param string $email Электронный адрес (необязательно)
+     * @param string $redirect - Url для редиректа на сайте ЭБС
+     *
+     * @return mixed
+     *
+     * @throws Exception
+     */
+    public function getAutologinUrl($uid, $fio = null, $email = null, $redirect = null)
+    {
+        return $this->client->getResponse(
+            $this->getUrl(__FUNCTION__),
+            [
+                'uid' => $uid,
+                'time' => date('YmdHi'),
+                'fio' => $fio,
+                'email' => $email,
+                'redirect' => $redirect
+            ]
+        )['data'];
     }
 
     /**
@@ -100,27 +145,5 @@ final class Security implements Common
             default:
                 throw new Exception('Route for ' . $method . ' not found');
         }
-    }
-
-    /**
-     * @param $uid
-     * @param null $fio
-     * @param null $email
-     * @param null $redirect
-     * @return mixed
-     * @throws Exception
-     */
-    public function getAutologinUrl($uid, $fio = null, $email = null, $redirect = null)
-    {
-        return $this->client->getResponse(
-            $this->getUrl(__FUNCTION__),
-            [
-                'uid' => $uid,
-                'time' => date('YmdHi'),
-                'fio' => $fio,
-                'email' => $email,
-                'redirect' => $redirect
-            ]
-        )['data'];
     }
 }
