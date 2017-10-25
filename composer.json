@@ -27,6 +27,6 @@
   "require-dev": {
     "codeception/codeception": "dev-master",
     "squizlabs/php_codesniffer": "dev-master",
-    "phpdocumentor/phpdocumentor": "dev-master"
+    "sami/sami": "dev-master"
   }
 }

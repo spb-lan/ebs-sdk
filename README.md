@@ -52,6 +52,7 @@ $security = new Security($client);
 * **$email = ‘ivanov@example.com’;** - email пользователя - *необязательный*
 * **$redirect = ‘/book/27’;** - Желаемая страница, после успешной регистрации/авторизации - *необязательный*
 
+Пример:
 ```php
 try {
     echo '<a class="lan-ebs-autologin" href="' . $security->getAutologinUrl($uid, $fio, $email, $redirect) .  '">ЭБС Лань</a>';
@@ -60,10 +61,15 @@ try {
 }
 ```
 
+Смотри также:
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/#/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B8/get_resource_book)
+ - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Security.html#method_getAutologinUrl)
+ 
 # Управление пользователями
 
 ### Получение списка пользователей
 
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
@@ -83,14 +89,19 @@ $fields = [User::FIELD_LOGIN, User::FIELD_EMAIL, User::FIELD_FIO];
  
 $userCollection = new UserCollection($client, $fields, $limit, $offset); // коллекция моделей пользователей
 
-/** @var User $user */
+/** @var User $user Модель пользователя */
 foreach ($userCollection as $user) {
-      echo $user->name;
+      echo $user->fio; // вывод ФИО пользователя 
 }
 ```
 
-### Получение пользователя
+Смотри также:
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/#/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B8/get_resource_book)
+ - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Collection/UserCollection.html#method___construct)
 
+### Получение пользователя и его метаданных
+
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
@@ -105,12 +116,17 @@ $fields = [User::FIELD_LOGIN, User::FIELD_EMAIL, User::FIELD_FIO];
  *      User::FIELD_REGISTERED = 'registeredAt' - Дата и время регистрации
  */
  
-$user = new User($client, $fields);
-$userInfo = $user->get($testUserPk);
+$user = new User($client, $fields); // Модель пользователя
+$user = $user->get($testUserPk); // Метаданные пользователя
 ```
 
+Смотри также:
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/#/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B8/get_resource_book)
+ - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Model/User.html#method_get)
+ 
 ### Создание пользователя
 
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
@@ -123,8 +139,13 @@ $user->post([
 ]);
 ```
 
-### Изменение пароля
+Смотри также:
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/#/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B8/get_resource_book)
+ - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Model/User.html#method_post)
+ 
+### Изменение ФИО и/или пароля
 
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
@@ -137,8 +158,13 @@ $user->put([
 ]);
 ```
 
+Смотри также:
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/#/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B8/get_resource_book)
+ - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Model/User.html#method_put)
+ 
 ### Открепление пользователя
 
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
@@ -148,12 +174,17 @@ $user->setId($testUserPk);
 $user->delete();
 ```
 
+Смотри также:
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/#/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B8/get_resource_book)
+ - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Model/User.html#method_delete)
+ 
 # Доступ к метаданным
 ---
 Доступ к метаданным позволяет посредством API получать информацию о книгах и журналах, доступных подписчику ЭБС Лань в рамках приобретенной подписки.
 
 ### Получение коллекции книг
 
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
@@ -190,8 +221,13 @@ foreach ($bookCollection as $book) {
 }
 ```
 
+Смотри также:
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/#/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B8/get_resource_book)
+ - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Collection/BookCollection.html#method___construct)
+ 
 ### Получение метаданных книги
 
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
@@ -221,8 +257,13 @@ $book = new Book($client, $fields);
 $metaDataBook = $book->get($bookId);
 ```
 
+Смотри также:
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/#/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B8/get_resource_book)
+ - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Model/Book.html#method_get)
+ 
 ### Получение коллекции журналов
 
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
@@ -254,8 +295,13 @@ foreach ($journalCollection as $journal) {
 }
 ```
 
+Смотри также:
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/#/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B8/get_resource_book)
+ - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Collection/JournalCollection.html#method___construct)
+ 
 ### Получение метаданных журнала
 
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
@@ -280,8 +326,13 @@ $journal = new Journal($client, $fields);
 $metaDataJournal = $journal->get($journalId);
 ```
 
+Смотри также:
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/)
+ - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Model/Journal.html#method_get)
+ 
 ### Получение коллекции выпусков журнала
 
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
@@ -307,8 +358,13 @@ foreach ($issueCollection as $issue) {
 }
 ```
 
+Смотри также:
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/)
+ - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Collection/IssueCollection.html#method___construct)
+ 
 ### Получение метаданных выпуска журнала
 
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
@@ -327,8 +383,13 @@ $issue = new Issue($client, $fields);
 $metaDataIssue = $issue->get($issueId);
 ```
 
+Смотри также:
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/)
+ - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Model/Issue.html#method_get)
+ 
 ### Получение коллекции статей выпуска
 
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
@@ -357,8 +418,13 @@ foreach ($articleCollection as $article) {
 }
 ```
 
+Смотри также:
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/)
+ - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Collection/ArticleCollection.html#method___construct)
+ 
 ### Получение метаданных статьи
 
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
@@ -380,11 +446,16 @@ $article = new Article($client, $fields);
 $metaDataArticle = $article->get($articleId);
 ```
 
+Смотри также:
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/)
+ - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Model/Article.html#method_get)
+ 
 # Отчетность
 ---
 
 ### Статистика посещений
 
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
@@ -404,6 +475,7 @@ $userVisitStatistics = $report->getUsersVisitsStatistics($groupBy, '2017-07-01',
 
 ### Статистика чтения книг
 
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
@@ -423,6 +495,7 @@ $bookViewsStatistics = $report->getBooksViewsStatistics($groupBy, '2017-07-01', 
 
 ### Статистика чтения журналов
 
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
@@ -442,6 +515,7 @@ $journalViewsStatistics = $report->getJournalsViewsStatistics($groupBy, '2017-07
 
 ### Отчет о доступных книгах (по коллекциям)
 
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
@@ -452,6 +526,7 @@ $availablePacketsStatistics = $report->getAvailablePackets();
 
 ### Отчет о доступных книгах - доступные книги в коллекции
 
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
@@ -464,6 +539,7 @@ $availableBooksStatistics = $report->getAvailableBooks($packetId);
 
 ### Отчет о доступных журналах
 
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
@@ -477,6 +553,7 @@ $availableJournalsStatistics = $report->getAvailableJournals();
 
 ### Библиотечный фонд
 
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
@@ -487,6 +564,7 @@ $bibFond = $report->getBibFond();
 
 ### Электронные книги по направлениям подготовки
 
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
@@ -497,6 +575,7 @@ $ebooks = $report->getEBooks();
 
 ### Специальное ПО
 
+Пример:
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента

@@ -29,9 +29,18 @@ final class Client
     private $token = '';
 
     /**
-     * Конструктор клиента
+     * Конструктор экземпляра класса Client
+     *
+     * Экземпляр класса Client нужен для осуществления запросов к API.
      *
      * @param string $token Токен клиента
+     *
+     * Пример:
+     * ```php
+     *      $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+     *
+     *      $client = new Client($token); // инициализация клиента
+     * ```
      *
      * @throws Exception
      */
@@ -47,10 +56,41 @@ final class Client
     /**
      * Получение ответа сервера API
      *
+     * Выполняется запрос к серверу API и получается ответ в формвте JSON
+     *
      * @param array $request Данные для запроса (url, method)
      * @param array $params Параметры запроса
      *
-     * @return array
+     * Пример:
+     * ```php
+     *      $request = [
+     *          'url' => '/1.0/resource/book/get/29),
+     *          'method' => 'GET',
+     *          'code' => 200
+     *      ];
+     *
+     *      $params = ['fields' => 'name,authors.isbn'];
+     *
+     *      $response = $client->getResponse($request, $params);
+     * ```
+     *
+     * @return array Ответ от сервера API приходит в формате JSON
+     *
+     * Пример:
+     * ```json
+     *      {
+     *          "type":"object",
+     *          "data":{
+     *              "id":29,
+     *              "name":"Курс теоретической механики",
+     *              "authors":"Бутенин Н.В., Лунц Я.Л., Меркин Д.Р.",
+     *              "isbn":"978-5-8114-0052-2"
+     *          },
+     *          "count":1,
+     *          "status":200,
+     *          "message":"Ok"
+     *      }
+     * ```
      *
      * @throws Exception
      */

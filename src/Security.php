@@ -62,9 +62,20 @@ final class Security implements Common
     private $client;
 
     /**
-     * Конструктор
+     * Конструктор экземпляра класса Security
+     *
+     * Экземпляр класса Security нужен для получения публичных ресурсов по закрытому токену (Например url для автологина)
      *
      * @param Client $client Истанс клиента
+     *
+     * Пример:
+     * ```php
+     *      $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+     *
+     *      $client = new Client($token); // инициализация клиента
+     *
+     *      $security = new Security($client); // инициализация объекта SDK Security
+     * ```
      *
      * @throws Exception
      */
@@ -80,7 +91,17 @@ final class Security implements Common
     /**
      * Получение хоста API-сервера
      *
-     * @return string
+     * Пример:
+     * ```php
+     *      $apiHost = \Lan\Ebs\Sdk\Security::getApiHost();
+     * ```
+     *
+     * @return string Хост сервера API
+     *
+     * Пример:
+     * ```
+     *      https://openapi.e.lanbook.com
+     * ```
      */
     public static function getApiHost()
     {
@@ -103,7 +124,7 @@ final class Security implements Common
      * @param int|string $uid Уникальные идентификатора прользователя на стороне клиента
      * @param string $fio ФИО (необязательно)
      * @param string $email Электронный адрес (необязательно)
-     * @param string $redirect - Url для редиректа на сайте ЭБС
+     * @param string $redirect Url для редиректа на сайте ЭБС
      *
      * @return mixed
      *
