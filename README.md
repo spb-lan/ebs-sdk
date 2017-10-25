@@ -62,7 +62,7 @@ try {
 ```
 
 Смотри также:
- - [Open Api (Swagger)](http://developers.lanbook.com/swagger/#/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B8/get_resource_book)
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/)
  - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Security.html#method_getAutologinUrl)
  
 # Управление пользователями
@@ -96,7 +96,7 @@ foreach ($userCollection as $user) {
 ```
 
 Смотри также:
- - [Open Api (Swagger)](http://developers.lanbook.com/swagger/#/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B8/get_resource_book)
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/)
  - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Collection/UserCollection.html#method___construct)
 
 ### Получение пользователя и его метаданных
@@ -121,7 +121,7 @@ $user = $user->get($testUserPk); // Метаданные пользовател�
 ```
 
 Смотри также:
- - [Open Api (Swagger)](http://developers.lanbook.com/swagger/#/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B8/get_resource_book)
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/)
  - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Model/User.html#method_get)
  
 ### Создание пользователя
@@ -140,7 +140,7 @@ $user->post([
 ```
 
 Смотри также:
- - [Open Api (Swagger)](http://developers.lanbook.com/swagger/#/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B8/get_resource_book)
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/)
  - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Model/User.html#method_post)
  
 ### Изменение ФИО и/или пароля
@@ -159,7 +159,7 @@ $user->put([
 ```
 
 Смотри также:
- - [Open Api (Swagger)](http://developers.lanbook.com/swagger/#/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B8/get_resource_book)
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/)
  - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Model/User.html#method_put)
  
 ### Открепление пользователя
@@ -175,7 +175,7 @@ $user->delete();
 ```
 
 Смотри также:
- - [Open Api (Swagger)](http://developers.lanbook.com/swagger/#/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B8/get_resource_book)
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/)
  - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Model/User.html#method_delete)
  
 # Доступ к метаданным
@@ -222,7 +222,7 @@ foreach ($bookCollection as $book) {
 ```
 
 Смотри также:
- - [Open Api (Swagger)](http://developers.lanbook.com/swagger/#/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B8/get_resource_book)
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/)
  - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Collection/BookCollection.html#method___construct)
  
 ### Получение метаданных книги
@@ -258,7 +258,7 @@ $metaDataBook = $book->get($bookId);
 ```
 
 Смотри также:
- - [Open Api (Swagger)](http://developers.lanbook.com/swagger/#/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B8/get_resource_book)
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/)
  - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Model/Book.html#method_get)
  
 ### Получение коллекции журналов
@@ -296,7 +296,7 @@ foreach ($journalCollection as $journal) {
 ```
 
 Смотри также:
- - [Open Api (Swagger)](http://developers.lanbook.com/swagger/#/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B8/get_resource_book)
+ - [Open Api (Swagger)](http://developers.lanbook.com/swagger/)
  - [SDK API](http://developers.lanbook.com/sdk-docs/Lan/Ebs/Sdk/Collection/JournalCollection.html#method___construct)
  
 ### Получение метаданных журнала
