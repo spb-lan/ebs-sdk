@@ -75,11 +75,11 @@ class ModelTest extends \Codeception\Test\Unit
             ],
             Issue::class => [
                 'collectionClass' => IssueCollection::class,
-                'id' => 2026
+                'id' => 2194
             ],
             Article::class => [
                 'collectionClass' => ArticleCollection::class,
-                'id' => 284749
+                'id' => 302237
             ],
         ];
 

@@ -521,7 +521,7 @@ $groupBy = Report::GROUP_BY_MONTH; // Группировка
  */
 
 $report = new Report($client);
-$userVisitStatistics = $report->getUsersVisitsStatistics($groupBy, '2017-07-01', '2017-08-28');
+$userVisitStatistics = $report->getUsersVisitsStatistics($groupBy, '2017-10-01', '2017-11-01');
 ```
 
 
@@ -548,7 +548,7 @@ $groupBy = Report::GROUP_BY_MONTH; // Группировка
  */
 
 $report = new Report($client);
-$bookViewsStatistics = $report->getBooksViewsStatistics($groupBy, '2017-07-01', '2017-08-28');
+$bookViewsStatistics = $report->getBooksViewsStatistics($groupBy, '2017-10-01', '2017-11-01');
 ```
 
 
@@ -575,7 +575,7 @@ $groupBy = Report::GROUP_BY_MONTH; // Группировка
  */
 
 $report = new Report($client);
-$journalViewsStatistics = $report->getJournalsViewsStatistics($groupBy, '2017-07-01', '2017-08-28');
+$journalViewsStatistics = $report->getJournalsViewsStatistics($groupBy, '2017-10-01', '2017-11-01');
 ```
 
 

@@ -72,8 +72,8 @@ class Report implements Common
      * Общая статистика чтения книг
      *
      * @param string $groupBy Группировка ('day|month|year')
-     * @param string $periodFrom Период с (формат Y-m-d, например 2017-07-01)
-     * @param string $periodTo Период с (формат Y-m-d, например 2017-08-28)
+     * @param string $periodFrom Период с (формат Y-m-d, например 2017-10-01)
+     * @param string $periodTo Период с (формат Y-m-d, например 2017-11-01)
      *
      *
      *
@@ -151,8 +151,8 @@ class Report implements Common
      * Общая статистика чтения журналов
      *
      * @param string $groupBy Группировка ('day|month|year')
-     * @param string $periodFrom Период с (формат Y-m-d, например 2017-07-01)
-     * @param string $periodTo Период с (формат Y-m-d, например 2017-08-28)
+     * @param string $periodFrom Период с (формат Y-m-d, например 2017-10-01)
+     * @param string $periodTo Период с (формат Y-m-d, например 2017-11-01)
      *
      * @return mixed
      *
@@ -174,8 +174,8 @@ class Report implements Common
      * Статистика посещаемости
      *
      * @param string $groupBy Группировка ('day|month|year')
-     * @param string $periodFrom Период с (формат Y-m-d, например 2017-07-01)
-     * @param string $periodTo Период с (формат Y-m-d, например 2017-08-28)
+     * @param string $periodFrom Период с (формат Y-m-d, например 2017-10-01)
+     * @param string $periodTo Период с (формат Y-m-d, например 2017-11-01)
      *
      * @return mixed
      *

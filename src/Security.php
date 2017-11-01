@@ -30,29 +30,9 @@ final class Security implements Common
     const PROD_API_HOST = 'https://openapi.e.lanbook.com';
 
     /**
-     * Домен тестового сервера API
-     */
-    const TEST_API_HOST = 'http://openapi.landev.ru';
-
-    /**
-     * Домен дев сервера API
-     */
-    const DEV_API_HOST = 'http://eop.local';
-
-    /**
      * Домен продакшен сервера ЭБС
      */
     const PROD_EBS_HOST = 'https://e.lanbook.com';
-
-    /**
-     * Домен тестового сервера ЭБС
-     */
-    const TEST_EBS_HOST = 'http://ebs.landev.ru';
-
-    /**
-     * Домен дев сервера ЭБС
-     */
-    const DEV_EBS_HOST = 'http://ebs.local';
 
     /**
      * Инстанс клиента API
@@ -105,7 +85,7 @@ final class Security implements Common
      */
     public static function getApiHost()
     {
-        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? Security::DEV_API_HOST : Security::PROD_API_HOST;
+        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? 'http://eop.local' : Security::PROD_API_HOST;
     }
 
     /**
@@ -115,7 +95,7 @@ final class Security implements Common
      */
     public static function getEbsHost()
     {
-        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? Security::DEV_EBS_HOST : Security::PROD_EBS_HOST;
+        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? 'http://ebs.local' : Security::PROD_EBS_HOST;
     }
 
     /**

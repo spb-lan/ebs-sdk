@@ -398,7 +398,9 @@ abstract class Collection extends ArrayObject implements Common
     {
         $this->load();
 
-        return $this->createModel(reset($this));
+        $data = reset($this);
+
+        return $data ? $this->createModel($data) : null;
     }
 
     /**
@@ -456,7 +458,9 @@ abstract class Collection extends ArrayObject implements Common
     {
         $this->load();
 
-        return $this->createModel(end($this));
+        $data = end($this);
+
+        return $data ? $this->createModel($data) : null;
     }
 
     /**
