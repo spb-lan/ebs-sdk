@@ -44,7 +44,18 @@ class Report implements Common
     /**
      * Конструктор общего отчета
      *
+     * Экземпляр класса Report нужен для осуществления запросов к API для получения отчетных данных ЭБС Лань.
+     *
      * @param Client $client Инстанс клиента
+     *
+     * Пример:
+     * ```php
+     *      $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+     *
+     *      $client = new Client($token); // инициализация клиента
+     *
+     *      $report = new Report($client):
+     * ```
      *
      * @throws Exception
      */
@@ -63,6 +74,8 @@ class Report implements Common
      * @param string $groupBy Группировка ('day|month|year')
      * @param string $periodFrom Период с (формат Y-m-d, например 2017-07-01)
      * @param string $periodTo Период с (формат Y-m-d, например 2017-08-28)
+     *
+     *
      *
      * @return mixed
      *

@@ -29,7 +29,18 @@ class ReportForm implements Common
     /**
      * Конструктор формализованного отчета
      *
+     * Экземпляр класса ReportForm нужен для осуществления запросов к API для получения формализованных отчетных данных ЭБС Лань.
+     *
      * @param Client $client Инстанс клиента
+     *
+     * Пример:
+     * ```php
+     *      $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+     *
+     *      $client = new Client($token); // инициализация клиента
+     *
+     *      $report = new ReportForm($client):
+     * ```
      *
      * @throws Exception
      */
