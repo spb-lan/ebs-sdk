@@ -66,7 +66,22 @@ abstract class Model implements Common
      * @param Client $client Инстанс клиента
      * @param array $fields Поля для выборки
      *
+     * Пример:
+     * ```php
+     *      $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+     *
+     *      $client = new Client($token); // инициализация клиента
+     *
+     *      $book = new Book($client, []); // инициализация модели книг
+     * ```
+     *
      * @throws Exception
+     *
+     * @see Article::__construct
+     * @see Book::__construct
+     * @see Issue::__construct
+     * @see Journal::__construct
+     * @see User::__construct
      */
     public function __construct(Client $client, array $fields)
     {
@@ -84,6 +99,8 @@ abstract class Model implements Common
 
     /**
      * Загружаемые поля модели
+     *
+     * Те поля модели, которые будут получены по API
      *
      * @return array
      */

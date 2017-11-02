@@ -65,6 +65,7 @@ class Curl
         curl_setopt($curl, CURLOPT_URL, $host . $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
 //        $fp = fopen(__DIR__ . '/errorlog.txt', 'w');
 //        curl_setopt($curl, CURLOPT_VERBOSE, 1);
@@ -77,13 +78,13 @@ class Curl
         Debuger::dump('Response code: ' . (curl_errno($curl) ? '!!! Error !!!' : curl_getinfo($curl)['http_code']) . "\n");
 
         if (curl_errno($curl)) {
-            return Curl::getError('Curl error: ' . curl_errno($curl), 500);
+            return Curl::getError('Curl error ' . curl_errno($curl) . ': ' . curl_error($curl), 500);
         }
 
         $response = json_decode($curlResult, true);
 
         if (json_last_error()) {
-            return Curl::getError('JSON error: ' . json_last_error_msg() . "\n" . $curlResult, curl_getinfo($curl)['http_code']);
+            return Curl::getError('JSON error ' . json_last_error() . ': ' . json_last_error_msg() . "\n" . $curlResult, curl_getinfo($curl)['http_code']);
         }
 
         if (empty($response)) {
