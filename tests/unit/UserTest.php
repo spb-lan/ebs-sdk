@@ -42,14 +42,6 @@ class UserTest extends \Codeception\Test\Unit
     {
     }
 
-    public function testSetEmpty()
-    {
-        $user = new User($this->client);
-
-        $this->expectException(Exception::class);
-        $user->set([]);
-    }
-
 //    public function testSetOnlyId()
 //    {
 //        $user = new User($this->client);

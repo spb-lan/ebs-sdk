@@ -54,18 +54,6 @@ class ModelTest extends \Codeception\Test\Unit
     /**
      * @throws Exception
      */
-    public function testSetEmpty()
-    {
-        $book = new Book($this->client);
-
-        $this->expectException(Exception::class);
-
-        $book->set([]);
-    }
-
-    /**
-     * @throws Exception
-     */
     public function testGet()
     {
         $testModels = [

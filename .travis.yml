@@ -3,7 +3,6 @@ language: php
 dist: trusty
 
 php:
-  - 5.2
   - 5.3
   - 5.4
   - 5.5
@@ -13,7 +12,7 @@ php:
   - 7.2
   - hhvm
 
-install: composer install
+install: composer update
 
 script: vendor/bin/phpunit --coverage-clover="tests/_output/coverage.xml"
 
