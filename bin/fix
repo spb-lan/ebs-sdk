@@ -2,6 +2,8 @@
 <?php
 
 if (version_compare(PHP_VERSION, '7.0.0') >= 0) {
+    echo 'Я использую PHP версии не ниже 7.0.0, моя версия: ' . PHP_VERSION . "\n";
+
     $file = __DIR__ . '/../phpunit.xml.dist';
 
     $contents = file_get_contents($file);
@@ -10,4 +12,6 @@ if (version_compare(PHP_VERSION, '7.0.0') >= 0) {
     $contents = str_replace('PHPUnit_Runner_StandardTestSuiteLoader', 'PHPUnit\Runner\StandardTestSuiteLoader', $contents);
 
     file_put_contents($file, $contents);
+} else {
+    echo 'Я использую PHP версии ниже 7.0.0, моя версия: ' . PHP_VERSION . "\n";
 }
