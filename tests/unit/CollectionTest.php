@@ -8,10 +8,12 @@ use Lan\Ebs\Sdk\Collection\ArticleCollection;
 use Lan\Ebs\Sdk\Collection\BookCollection;
 use Lan\Ebs\Sdk\Collection\IssueCollection;
 use Lan\Ebs\Sdk\Collection\JournalCollection;
+use Lan\Ebs\Sdk\Collection\UserCollection;
 use Lan\Ebs\Sdk\Model\Article;
 use Lan\Ebs\Sdk\Model\Book;
 use Lan\Ebs\Sdk\Model\Issue;
 use Lan\Ebs\Sdk\Model\Journal;
+use Lan\Ebs\Sdk\Model\User;
 
 class CollectionTest extends \Codeception\Test\Unit
 {
@@ -66,6 +68,9 @@ class CollectionTest extends \Codeception\Test\Unit
             ArticleCollection::class => [
                 'modelClass' => Article::class,
                 'id' => 302237
+            ],
+            UserCollection::class => [
+                'modelClass' => User::class
             ]
         ];
 
@@ -76,7 +81,7 @@ class CollectionTest extends \Codeception\Test\Unit
         foreach ($testCollections as $collectionClass => $testData) {
             $limit = 3;
 
-            if ($collectionClass == BookCollection::class || $collectionClass == JournalCollection::class) {
+            if ($collectionClass == BookCollection::class || $collectionClass == JournalCollection::class || $collectionClass == UserCollection::class) {
                 /** @var Collection $collection */
                 $collection = new $collectionClass($this->client, [], $limit);
             } else {

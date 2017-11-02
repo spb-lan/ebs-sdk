@@ -90,7 +90,7 @@ class ReportTest extends \Codeception\Test\Unit
     public function testGetAvailableBooks()
     {
         $report = new Report($this->client);
-        $available = $report->getAvailableBooks(814392);
+        $available = $report->getAvailableBooks(720773);
         $this->assertNotNull($available);
         $this->assertNotEmpty($available);
     }

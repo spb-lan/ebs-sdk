@@ -610,7 +610,7 @@ $availablePacketsStatistics = $report->getAvailablePackets();
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
 
-$packetId = 814392; // Идентификатор пакета
+$packetId = 720773; // Идентификатор пакета
 
 $report = new Report($client);
 $availableBooksStatistics = $report->getAvailableBooks($packetId);

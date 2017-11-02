@@ -9,11 +9,13 @@ use Lan\Ebs\Sdk\Collection\ArticleCollection;
 use Lan\Ebs\Sdk\Collection\BookCollection;
 use Lan\Ebs\Sdk\Collection\IssueCollection;
 use Lan\Ebs\Sdk\Collection\JournalCollection;
+use Lan\Ebs\Sdk\Collection\UserCollection;
 use Lan\Ebs\Sdk\Helper\Test;
 use Lan\Ebs\Sdk\Model\Article;
 use Lan\Ebs\Sdk\Model\Book;
 use Lan\Ebs\Sdk\Model\Issue;
 use Lan\Ebs\Sdk\Model\Journal;
+use Lan\Ebs\Sdk\Model\User;
 
 class ModelTest extends \Codeception\Test\Unit
 {
@@ -81,6 +83,9 @@ class ModelTest extends \Codeception\Test\Unit
                 'collectionClass' => ArticleCollection::class,
                 'id' => 302237
             ],
+            User::class => [
+                'collectionClass' => UserCollection::class
+            ],
         ];
 
         foreach ($testModels as $modelClass => $testData) {
@@ -97,7 +102,7 @@ class ModelTest extends \Codeception\Test\Unit
 
             $limit = 3;
 
-            if ($collectionClass == BookCollection::class || $collectionClass == JournalCollection::class) {
+            if ($collectionClass == BookCollection::class || $collectionClass == JournalCollection::class || $collectionClass == UserCollection::class) {
                 /** @var Collection $collection */
                 $collection = new $collectionClass($this->client, [], $limit);
             } else {
@@ -116,13 +121,13 @@ class ModelTest extends \Codeception\Test\Unit
 
 //            $this->assertNotNull($model->name);
 //
-            $book1 = new $modelClass($this->client);
+            $model1 = new $modelClass($this->client);
 
-            $bookData = $book1->get($model->getId());
+            $modelData = $model1->get($model->getId());
 
-            $this->assertEquals($bookData['id'], $model->getId());
+            $this->assertEquals($modelData['id'], $model->getId());
 
-//            $this->assertEquals($model->name, $bookData['name']);
+//            $this->assertEquals($model->name, $modelData['name']);
         }
     }
 }

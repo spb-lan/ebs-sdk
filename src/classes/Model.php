@@ -112,13 +112,28 @@ abstract class Model implements Common
     /**
      * Добавление новой записи по API
      *
+     * Создание новой сущности
+     *
      * @param array $data Устанавливаемые данные модели
      *
-     * @return $this
+     * ```php
+     * $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+     *
+     * $client = new Client($token); // инициализация клиента
+     *
+     * $user = new User($client);
+     * $user->post([
+     *      'login' => 'new_user_login',
+     *      'password' => 'new_user_password',
+     *      'fio' => 'new_user_fio'
+     * ]);
+     * ```
+     *
+     * @return $this Возвращает модель с данными и вновь созданным идентификатором
      *
      * @throws Exception
      */
-    public function post(array $data)
+    public function post(array $data = [])
     {
         $response = $this->getClient()->getResponse($this->getUrl(__FUNCTION__), $data);
 
@@ -140,15 +155,35 @@ abstract class Model implements Common
     /**
      * Установка данных модели
      *
+     * Изменение данных модели
+     *
      * @param  array $data Данные модели
      * @param  int $status Статус полученных данных
      *
-     * @return $this
+     * ```php
+     * $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+     *
+     * $client = new Client($token); // инициализация клиента
+     *
+     * $user = new User($client);
+     * $user->set([
+     *      'login' => 'new_user_login',
+     *      'password' => 'new_user_password',
+     *      'fio' => 'new_user_fio'
+     * ]);
+     * $user->post();
+     * ```
+     *
+     * @return $this Возвращает модель с данными и вновь созданным идентификатором
      *
      * @throws Exception
      */
     public function set(array $data, $status = null)
     {
+        if (empty($data)) {
+            return $this;
+        }
+
         if (empty($data['id']) && empty($this->getId())) {
             throw new Exception(Model::MESSAGE_ID_REQUIRED);
         }
@@ -199,11 +234,24 @@ abstract class Model implements Common
      *
      * @param array $data Обновляемые данные
      *
-     * @return $this
+     * ```php
+     * $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+     *
+     * $client = new Client($token); // инициализация клиента
+     *
+     * $user = new User($client);
+     * $user->setId($testUserPk);
+     * $user->put([
+     *      'fio' => 'user_new_fio',
+     *      'password' => 'user_new_password',
+     * ]);
+     * ```
+     *
+     * @return $this Возвращает модель с данными и вновь созданным идентификатором
      *
      * @throws Exception
      */
-    public function put(array $data)
+    public function put(array $data = [])
     {
         $this->set($data);
 
@@ -219,7 +267,16 @@ abstract class Model implements Common
      *
      * @param int $id Идентификатор модели
      *
-     * @return $this
+     * ```php
+     * $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+     *
+     * $client = new Client($token); // инициализация клиента
+     *
+     * $user = new User($client);
+     * $user->delete($testUserPk);
+     * ```
+     *
+     * @return $this Возвращает модель с данными и вновь созданным идентификатором
      *
      * @throws Exception
      */
@@ -250,7 +307,7 @@ abstract class Model implements Common
         $data = $this->get();
 
         if (!array_key_exists($name, $data)) {
-            throw new Exception('Поле ' . $name . ' не указано при создвнии объекта модели ' . get_class($this) . ' (см. 2-й аргумент)');
+            throw new Exception('Поле ' . $name . ' не указано при создвнии объекта модели ' . get_class($this) . ' (см. 2-й аргумент fields)');
         }
 
         return $data[$name];
@@ -261,7 +318,16 @@ abstract class Model implements Common
      *
      * @param int $id Идентификатор модели
      *
-     * @return array
+     * ```php
+     * $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
+     *
+     * $client = new Client($token); // инициализация клиента
+     *
+     * $user = new User($client);
+     * $userData = $user->get($testUserPk);
+     * ```
+     *
+     * @return array Получение метаданных модели
      *
      * @throws Exception
      */
