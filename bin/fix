@@ -1,0 +1,13 @@
+#!/usr/bin/env php
+<?php
+
+if (version_compare(PHP_VERSION, '7.0.0') >= 0) {
+    $file = __DIR__ . '/../phpunit.xml.dist';
+
+    $contents = file_get_contents($file);
+
+    $contents = str_replace('PHPUnit_TextUI_ResultPrinter', 'PHPUnit\TextUI\ResultPrinter', $contents);
+    $contents = str_replace('PHPUnit_Runner_StandardTestSuiteLoader', 'PHPUnit\Runner\StandardTestSuiteLoader', $contents);
+
+    file_put_contents($file, $contents);
+}

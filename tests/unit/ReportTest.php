@@ -45,10 +45,6 @@ class ReportTest extends \Codeception\Test\Unit
         $stat = $report->getBooksViewsStatistics('month', '2017-10-01', '2017-11-01');
         $this->assertNotNull($stat);
         $this->assertNotEmpty($stat);
-
-        $this->expectException(Exception::class);
-        $this->expectExceptionCode(400);
-        $stat = $report->getBooksViewsStatistics('month', '', '');
     }
 
     public function testGetJournalsViewsStatistics()
@@ -57,10 +53,6 @@ class ReportTest extends \Codeception\Test\Unit
         $stat = $report->getJournalsViewsStatistics('month', '2017-10-01', '2017-11-01');
         $this->assertNotNull($stat);
         $this->assertNotEmpty($stat);
-
-        $this->expectException(Exception::class);
-        $this->expectExceptionCode(400);
-        $stat = $report->getJournalsViewsStatistics('month', '', '');
     }
 
     public function testGetUsersVisitsStatistics()
@@ -68,6 +60,7 @@ class ReportTest extends \Codeception\Test\Unit
         $report = new Report($this->client);
         $stat = $report->getUsersVisitsStatistics('month', '2017-10-01', '2017-11-01');
         $this->assertNotNull($stat);
+        $this->assertNotEmpty($stat);
     }
 
     public function testGetAvailablePackets()
@@ -85,7 +78,6 @@ class ReportTest extends \Codeception\Test\Unit
         $this->assertNotNull($available);
         $this->assertNotEmpty($available);
     }
-
 
     public function testGetAvailableBooks()
     {
