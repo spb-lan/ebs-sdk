@@ -85,7 +85,7 @@ final class Security implements Common
      */
     public static function getApiHost()
     {
-        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? 'http://eop.local' : Security::PROD_API_HOST;
+        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? 'http://openapi.local' : Security::PROD_API_HOST;
     }
 
     /**
@@ -95,7 +95,7 @@ final class Security implements Common
      */
     public static function getEbsHost()
     {
-        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? 'http://ebs.local' : Security::PROD_EBS_HOST;
+        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? 'http://openapi.local' : Security::PROD_EBS_HOST;
     }
 
     /**
