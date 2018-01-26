@@ -10,7 +10,7 @@ php:
 
 install: composer update
 
-script: bin/fix && vendor/bin/phpunit --coverage-clover="tests/_output/coverage.xml"
+script: vendor/bin/phpunit --coverage-clover="tests/_output/coverage.xml"
 
 after_script:
 - travis_retry wget https://scrutinizer-ci.com/ocular.phar
