@@ -30,6 +30,9 @@ class ClientTest extends \Codeception\Test\Unit
         parent::setUp();
     }
 
+    /**
+     * @throws \Exception
+     */
     protected function _before()
     {
         $this->client = ClientTest::getClient();
@@ -46,6 +49,7 @@ class ClientTest extends \Codeception\Test\Unit
 
     /**
      * @return Client
+     * @throws \Exception
      */
     public static function getClient()
     {
@@ -58,7 +62,12 @@ class ClientTest extends \Codeception\Test\Unit
     public function testGetAutologinUrl() {
         $security = new Security($this->client);
 
-        $url = $security->getAutologinUrl(rand(0, 9999));
+        $uid = '12345';
+        $fio = 'Иванов Иван Иванович';
+        $email = 'ivanov@example.com';
+        $redirect = '/books';
+
+        $url = $security->getAutologinUrl($uid, $fio, $email, $redirect);
 
         $this->assertNotNull($url);
         $this->assertNotEmpty($url);

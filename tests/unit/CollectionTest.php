@@ -117,7 +117,7 @@ class CollectionTest extends \Codeception\Test\Unit
 
                 $this->assertNotNull($model->getId());
 
-                $this->assertNotEquals($previousModelId, $model->getId());
+                $this->assertNotEquals((int)$previousModelId, (int)$model->getId());
 
                 $previousModelId = $model->getId();
 
