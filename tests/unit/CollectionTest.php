@@ -109,7 +109,6 @@ class CollectionTest extends \Codeception\Test\Unit
 
             $count = 0;
 
-            $previousModel = null;
             $previousModelId = 0;
 
             /** @var Model $model */
@@ -118,10 +117,8 @@ class CollectionTest extends \Codeception\Test\Unit
 
                 $this->assertNotNull($model->getId());
 
-                $this->assertNotEquals($previousModel->getId(), $model->getId());
                 $this->assertNotEquals($previousModelId, $model->getId());
 
-                $previousModel = $model;
                 $previousModelId = $model->getId();
 
                 $count++;
