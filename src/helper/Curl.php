@@ -55,6 +55,8 @@ class Curl
                 throw new Exception('Method ' . $method . ' unknown');
         }
 
+//        $url = html_entity_decode($url);
+
         $headers = [
             'X-Auth-Token: ' . $token,
             'Content-Type: application/x-www-form-urlencoded; charset=utf-8',
