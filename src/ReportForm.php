@@ -75,27 +75,27 @@ class ReportForm implements Common
      *
      * @throws Exception
      */
-    public function getUrl($method, array $params = [])
+    public function getUrl($method, array $params = array())
     {
         switch ($method) {
             case 'getBibFond':
-                return [
+                return array(
                     'url' => '/1.0/report/form/bibFond',
                     'method' => 'GET',
                     'code' => 200
-                ];
+                );
             case 'getEBooks':
-                return [
+                return array(
                     'url' => '/1.0/report/form/eBooks',
                     'method' => 'GET',
                     'code' => 200
-                ];
+                );
             case 'getSpecPo':
-                return [
+                return array(
                     'url' => '/1.0/report/form/specPo',
                     'method' => 'GET',
                     'code' => 200
-                ];
+                );
             default:
                 throw new Exception('Route for ' . $method . ' not found');
         }

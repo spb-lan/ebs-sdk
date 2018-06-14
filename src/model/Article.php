@@ -76,7 +76,7 @@ class Article extends Model
      *
      * @throws Exception
      */
-    public function __construct(Client $client, array $fields = [])
+    public function __construct(Client $client, array $fields = array())
     {
         parent::__construct($client, $fields);
     }
@@ -102,7 +102,7 @@ class Article extends Model
             throw new Exception(Model::MESSAGE_ID_REQUIRED);
         }
 
-        return $this->getClient()->getResponse($this->getUrl(__FUNCTION__, [$id]))['data'];
+        return $this->getClient()->getResponse($this->getUrl(__FUNCTION__, array($id)))['data'];
     }
 
     /**
@@ -115,21 +115,21 @@ class Article extends Model
      *
      * @throws Exception
      */
-    public function getUrl($method, array $params = [])
+    public function getUrl($method, array $params = array())
     {
         switch ($method) {
             case 'get':
-                return [
+                return array(
                     'url' => vsprintf('/1.0/resource/journal/article/get/%d', $params),
                     'method' => 'GET',
                     'code' => 200
-                ];
+                );
             case 'text':
-                return [
+                return array(
                     'url' => vsprintf('/1.0/resource/journal/article/text/%d', $params),
                     'method' => 'GET',
                     'code' => 200
-                ];
+                );
             default:
                 throw new Exception('Route for ' . $method . ' not found');
         }

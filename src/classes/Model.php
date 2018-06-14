@@ -37,14 +37,14 @@ abstract class Model implements Common
      *
      * @var array
      */
-    private $fields = [];
+    private $fields = array();
 
     /**
      * Данные модели
      *
      * @var array
      */
-    private $data = [];
+    private $data = array();
 
     /**
      * Идентификатор модели
@@ -133,7 +133,7 @@ abstract class Model implements Common
      *
      * @throws Exception
      */
-    public function post(array $data = [])
+    public function post(array $data = array())
     {
         $response = $this->getClient()->getResponse($this->getUrl(__FUNCTION__), $data);
 
@@ -251,11 +251,11 @@ abstract class Model implements Common
      *
      * @throws Exception
      */
-    public function put(array $data = [])
+    public function put(array $data = array())
     {
         $this->set($data);
 
-        $response = $this->getClient()->getResponse($this->getUrl(__FUNCTION__, [$this->getId()]), $data);
+        $response = $this->getClient()->getResponse($this->getUrl(__FUNCTION__, array($this->getId())), $data);
 
         $this->set($response['data'], $response['status']);
 
@@ -283,10 +283,10 @@ abstract class Model implements Common
     public function delete($id = null)
     {
         if (empty($this->getId())) {
-            $this->set(['id' => $id]);
+            $this->set(array('id' => $id));
         }
 
-        $response = $this->getClient()->getResponse($this->getUrl(__FUNCTION__, [$this->getId()]));
+        $response = $this->getClient()->getResponse($this->getUrl(__FUNCTION__, array($this->getId())));
 
         $this->set($response['data'], $response['status']);
 
@@ -345,7 +345,7 @@ abstract class Model implements Common
 
         $params = $this->fields ? ['fields' => implode(',', $this->fields)] : [];
 
-        $response = $this->getClient()->getResponse($this->getUrl(__FUNCTION__, [$this->getId()]), $params);
+        $response = $this->getClient()->getResponse($this->getUrl(__FUNCTION__, array($this->getId())), $params);
 
         $this->set($response['data'], $response['status']);
 

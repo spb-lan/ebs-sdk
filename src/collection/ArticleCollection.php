@@ -39,7 +39,7 @@ class ArticleCollection extends Collection
      * @param int $offset
      * @throws Exception
      */
-    public function __construct($issueId, Client $client, array $fields = [], $limit = 10, $offset = 0)
+    public function __construct($issueId, Client $client, array $fields = array(), $limit = 10, $offset = 0)
     {
         parent::__construct($client, $fields, Article::class, $limit, $offset);
 
@@ -56,15 +56,15 @@ class ArticleCollection extends Collection
      *
      * @throws Exception
      */
-    public function getUrl($method, array $params = [])
+    public function getUrl($method, array $params = array())
     {
         switch ($method) {
             case 'load':
-                return [
+                return array(
                     'url' => '/1.0/resource/journal/issue/' . ((int)$this->issueId),
                     'method' => 'GET',
                     'code' => '200'
-                ];
+                );
             default:
                 throw new Exception('Route for ' . $method . ' not found');
         }

@@ -57,11 +57,11 @@ class Curl
 
 //        $url = html_entity_decode($url);
 
-        $headers = [
+        $headers = array(
             'X-Auth-Token: ' . $token,
             'Content-Type: application/x-www-form-urlencoded; charset=utf-8',
             'Accept: application/json'
-        ];
+        );
 
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
         curl_setopt($curl, CURLOPT_URL, $host . $url);
@@ -118,12 +118,12 @@ class Curl
      */
     private static function getError($message, $code)
     {
-        return [
+        return array(
             'type' => 'none',
             'data' => null,
             'count' => 0,
             'status' => $code,
             'message' => $message
-        ];
+        );
     }
 }

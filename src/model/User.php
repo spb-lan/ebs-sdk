@@ -60,7 +60,7 @@ class User extends Model
      *
      * @throws Exception
      */
-    public function __construct(Client $client, array $fields = [])
+    public function __construct(Client $client, array $fields = array())
     {
         parent::__construct($client, $fields);
     }
@@ -75,33 +75,33 @@ class User extends Model
      *
      * @throws Exception
      */
-    public function getUrl($method, array $params = [])
+    public function getUrl($method, array $params = array())
     {
         switch ($method) {
             case 'get':
-                return [
+                return array(
                     'url' => vsprintf('/1.0/security/user/get/%d', $params),
                     'method' => 'GET',
                     'code' => 200
-                ];
+                );
             case 'post':
-                return [
+                return array(
                     'url' => '/1.0/security/user/post',
                     'method' => 'POST',
                     'code' => 201
-                ];
+                );
             case 'put':
-                return [
+                return array(
                     'url' => vsprintf('/1.0/security/user/put/%d', $params),
                     'method' => 'PUT',
                     'code' => 200
-                ];
+                );
             case 'delete':
-                return [
+                return array(
                     'url' => vsprintf('/1.0/security/user/delete/%d', $params),
                     'method' => 'DELETE',
                     'code' => 200
-                ];
+                );
             default:
                 throw new Exception('Route for ' . $method . ' not found');
         }

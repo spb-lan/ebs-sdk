@@ -94,7 +94,7 @@ final class Client
      *
      * @throws Exception
      */
-    public function getResponse(array $request, array $params = [])
+    public function getResponse(array $request, array $params = array())
     {
         if (empty($request['url']) || empty($request['method']) || empty($request['code'])) {
             throw new Exception('Request url, method or success_code is missing');
@@ -105,7 +105,7 @@ final class Client
         $response = Curl::getResponse($host, $request['url'], $request['method'], $this->token, $params);
 
         if (isset($response['debug'])) {
-            Debuger::dump(['host' => $host, 'request' => $request, 'params' => $params, 'response' => $response]);
+            Debuger::dump(array('host' => $host, 'request' => $request, 'params' => $params, 'response' => $response));
         }
 
         if ($response['status'] != $request['code']) {

@@ -33,7 +33,7 @@ class CollectionIterator extends ArrayIterator
      *
      * @var array
      */
-    private $data = [];
+    private $data = array();
 
     /**
      * Конструктор итератора

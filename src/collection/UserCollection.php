@@ -32,7 +32,7 @@ class UserCollection extends Collection
      * @param int $offset
      * @throws Exception
      */
-    public function __construct(Client $client, array $fields = [], $limit = 10, $offset = 0)
+    public function __construct(Client $client, array $fields = array(), $limit = 10, $offset = 0)
     {
         parent::__construct($client, $fields, User::class, $limit, $offset);
     }
@@ -47,15 +47,15 @@ class UserCollection extends Collection
      *
      * @throws Exception
      */
-    public function getUrl($method, array $params = [])
+    public function getUrl($method, array $params = array())
     {
         switch ($method) {
             case 'load':
-                return [
+                return array(
                     'url' => '/1.0/security/user',
                     'method' => 'GET',
                     'code' => '200'
-                ];
+                );
             default:
                 throw new Exception('Route for ' . $method . ' not found');
         }

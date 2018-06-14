@@ -85,11 +85,11 @@ class Report implements Common
     {
         return $this->client->getResponse(
             $this->getUrl(__FUNCTION__),
-            [
+            array(
                 'group_by' => $groupBy,
                 'period_range_from' => $periodFrom,
                 'period_range_to' => $periodTo,
-            ]
+            )
         )['data'];
     }
 
@@ -103,45 +103,45 @@ class Report implements Common
      *
      * @throws Exception
      */
-    public function getUrl($method, array $params = [])
+    public function getUrl($method, array $params = array())
     {
         switch ($method) {
             case 'getBooksViewsStatistics':
-                return [
+                return array(
                     'url' => '/1.0/report/stat/book',
                     'method' => 'GET',
                     'code' => 200
-                ];
+                );
             case 'getJournalsViewsStatistics':
-                return [
+                return array(
                     'url' => '/1.0/report/stat/journal',
                     'method' => 'GET',
                     'code' => 200
-                ];
+                );
             case 'getUsersVisitsStatistics':
-                return [
+                return array(
                     'url' => '/1.0/report/stat/visit',
                     'method' => 'GET',
                     'code' => 200
-                ];
+                );
             case 'getAvailablePackets':
-                return [
+                return array(
                     'url' => '/1.0/report/available/packet',
                     'method' => 'GET',
                     'code' => 200
-                ];
+                );
             case 'getAvailableBooks':
-                return [
+                return array(
                     'url' => vsprintf('/1.0/report/available/book/%d', $params),
                     'method' => 'GET',
                     'code' => 200
-                ];
+                );
             case 'getAvailableJournals':
-                return [
+                return array(
                     'url' => '/1.0/report/available/journal',
                     'method' => 'GET',
                     'code' => 200
-                ];
+                );
             default:
                 throw new Exception('Route for ' . $method . ' not found');
         }
@@ -162,11 +162,11 @@ class Report implements Common
     {
         return $this->client->getResponse(
             $this->getUrl(__FUNCTION__),
-            [
+            array(
                 'group_by' => $groupBy,
                 'period_range_from' => $periodFrom,
                 'period_range_to' => $periodTo,
-            ]
+            )
         )['data'];
     }
 
@@ -185,11 +185,11 @@ class Report implements Common
     {
         return $this->client->getResponse(
             $this->getUrl(__FUNCTION__),
-            [
+            array(
                 'group_by' => $groupBy,
                 'period_range_from' => $periodFrom,
                 'period_range_to' => $periodTo,
-            ]
+            )
         )['data'];
     }
 
@@ -216,7 +216,7 @@ class Report implements Common
      */
     public function getAvailableBooks($pdKey)
     {
-        return $this->client->getResponse($this->getUrl(__FUNCTION__, ['pdKey' => $pdKey]))['data'];
+        return $this->client->getResponse($this->getUrl(__FUNCTION__, array('pdKey' => $pdKey)))['data'];
     }
 
     /**

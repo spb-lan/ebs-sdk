@@ -114,13 +114,13 @@ final class Security implements Common
     {
         return $this->client->getResponse(
             $this->getUrl(__FUNCTION__),
-            [
+            array(
                 'uid' => $uid,
                 'time' => date('YmdHi'),
                 'fio' => $fio,
                 'email' => $email,
                 'redirect' => $redirect
-            ]
+            )
         )['data'];
     }
 
@@ -134,15 +134,15 @@ final class Security implements Common
      *
      * @throws Exception
      */
-    public function getUrl($method, array $params = [])
+    public function getUrl($method, array $params = array())
     {
         switch ($method) {
             case 'getAutologinUrl':
-                return [
+                return array(
                     'url' => '/1.0/security/autologinUrl',
                     'method' => 'GET',
                     'code' => 200
-                ];
+                );
             default:
                 throw new Exception('Route for ' . $method . ' not found');
         }

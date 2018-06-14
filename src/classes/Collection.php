@@ -45,7 +45,7 @@ abstract class Collection extends ArrayObject implements Common
      *
      * @var array
      */
-    private $fields = [];
+    private $fields = array();
 
     /**
      * Класс модели
@@ -209,10 +209,10 @@ abstract class Collection extends ArrayObject implements Common
             return $this;
         }
 
-        $params = [
+        $params = array(
             'limit' => $this->limit,
             'offset' => $this->offset
-        ];
+        );
 
         if (!empty($this->fields)) {
             $params['fields'] = implode(',', (array)$this->fields);

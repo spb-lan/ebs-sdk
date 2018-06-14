@@ -33,7 +33,7 @@ class BookCollection extends Collection
      *
      * @throws Exception
      */
-    public function __construct(Client $client, array $fields = [], $limit = 10, $offset = 0)
+    public function __construct(Client $client, array $fields = array(), $limit = 10, $offset = 0)
     {
         parent::__construct($client, $fields, Book::class, $limit, $offset);
     }
@@ -49,15 +49,15 @@ class BookCollection extends Collection
      *
      * @throws Exception
      */
-    public function getUrl($method, array $params = [])
+    public function getUrl($method, array $params = array())
     {
         switch ($method) {
             case 'load':
-                return [
+                return array(
                     'url' => '/1.0/resource/book',
                     'method' => 'GET',
                     'code' => '200'
-                ];
+                );
             default:
                 throw new Exception('Route for ' . $method . ' not found');
         }

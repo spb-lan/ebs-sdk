@@ -31,5 +31,5 @@ interface Common
      *
      * @throws Exception
      */
-    function getUrl($method, array $params = []);
+    function getUrl($method, array $params = array());
 }
