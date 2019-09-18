@@ -40,7 +40,7 @@ class Curl
         switch ($method) {
             case 'GET':
                 if (!empty($params)) {
-                    $url = sprintf("%s?%s", $url, http_build_query($params));
+                    $url = sprintf("%s?%s", $url, http_build_query($params, '', '&'));
                 };
 
                 break;
@@ -48,7 +48,7 @@ class Curl
             case 'PUT':
             case 'DELETE':
                 if (!empty($params)) {
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($params));
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($params, '', '&'));
                 }
                 break;
             default:
