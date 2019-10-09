@@ -90,7 +90,7 @@ class ModelTest extends \Codeception\Test\Unit
 
             $limit = 3;
 
-            if ($collectionClass == BookCollection::class || $collectionClass == JournalCollection::class || $collectionClass == UserCollection::class) {
+            if ($collectionClass === BookCollection::class || $collectionClass === JournalCollection::class || $collectionClass === UserCollection::class) {
                 /** @var Collection $collection */
                 $collection = new $collectionClass($this->client, [], $limit);
             } else {
@@ -109,6 +109,7 @@ class ModelTest extends \Codeception\Test\Unit
 
 //            $this->assertNotNull($model->name);
 //
+            /** @var Model $model1 */
             $model1 = new $modelClass($this->client);
 
             $modelData = $model1->get($model->getId());

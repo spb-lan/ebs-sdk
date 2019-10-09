@@ -61,7 +61,7 @@ class Article extends Model
     /**
      * Страница окончания статьи
      */
-    const FINISH_PAGE = 'finish_page';
+    const FINISH_PAGE = 'finishPage';
 
     /**
      * Библиографическая запись

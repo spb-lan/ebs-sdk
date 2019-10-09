@@ -21,7 +21,7 @@
 # Установка
 
 Для загрузки и установки SDK Вы можете воспользоваться одним из 3-х вариантов:
- - вариант 1 (предпочтительный): Через composer. "lan/ebs-sdk": "1.1.*"
+ - вариант 1 (предпочтительный): Через composer. "lan/ebs-sdk": "1.2.*"
  - вариант 2: Скачать https://github.com/spb-lan/ebs-sdk/archive/master.zip (классы придется подключать вручную)
  - вариант 3: Склонировать из репозитория git clone https://github.com/spb-lan/ebs-sdk.git (классы придется подключать вручную)
 
@@ -91,7 +91,7 @@ $client = new Client($token); // инициализация клиента
 $limit = 5; // Ограничение на выборку данных (максимально 1000)
 $offset = 0; // Смещение выборки данных 
 
-$fields = [Book::FIELD_NAME, Book::FIELD_AUTHORS, Book::FIELD_ISBN, Book::FIELD_YEAR, Book::FIELD_PUBLISHER]; // поля для выборки
+$fields = [Book::FIELD_NAME, Book::FIELD_AUTHORS, Book::FIELD_ISBN, Book::FIELD_YEAR, Book::FIELD_PUBLISHER, Book::FIELD_LANG]; // поля для выборки
 
 /**
  * Доступные поля:
@@ -107,6 +107,7 @@ $fields = [Book::FIELD_NAME, Book::FIELD_AUTHORS, Book::FIELD_ISBN, Book::FIELD_
  *      Book::FIELD_AUTHOR_ADDITIONS = 'authorAdditions' - Дополнительные авторы
  *      Book::FIELD_BIBLIOGRAPHIC_RECORD = 'bibliographicRecord' - Библиографическая запись
  *      Book::FIELD_PUBLISHER = 'publisher' - Издательство
+ *      Book::FIELD_LANG = 'lang' - Язык
  *      Book::FIELD_URL = 'url' - Ссылка на карточку книги
  *      Book::FIELD_THUMB = 'thumb' - Ссылка на обложку книги
  */
@@ -133,7 +134,7 @@ foreach ($bookCollection as $book) {
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
 $client = new Client($token); // инициализация клиента
 
-$fields = [Book::FIELD_NAME, Book::FIELD_AUTHORS, Book::FIELD_ISBN, Book::FIELD_YEAR, Book::FIELD_PUBLISHER]; // поля для выборки
+$fields = [Book::FIELD_NAME, Book::FIELD_AUTHORS, Book::FIELD_ISBN, Book::FIELD_YEAR, Book::FIELD_PUBLISHER, Book::FIELD_LANG]; // поля для выборки
 
 /**
  * Доступные поля:
@@ -149,6 +150,7 @@ $fields = [Book::FIELD_NAME, Book::FIELD_AUTHORS, Book::FIELD_ISBN, Book::FIELD_
  *      Book::FIELD_AUTHOR_ADDITIONS = 'authorAdditions' - Дополнительные авторы
  *      Book::FIELD_BIBLIOGRAPHIC_RECORD = 'bibliographicRecord' - Библиографическая запись
  *      Book::FIELD_PUBLISHER = 'publisher' - Издательство
+ *      Book::FIELD_LANG = 'lang' - Язык
  *      Book::FIELD_URL = 'url' - Ссылка на карточку книги
  *      Book::FIELD_THUMB = 'thumb' - Ссылка на обложку книги
  */
@@ -321,7 +323,7 @@ $fields = [Article::FIELD_NAME, Article::FIELD_AUTHORS]; // поля для вы
  *      Article::FIELD_DESCRIPTION = 'description' - Аннотация статьи
  *      Article::FIELD_KEYWORDS = 'keywords' - Ключевые слова статьи
  *      Article::START_PAGE = 'startPage' - Страница начала статьи
- *      Article::FINISH_PAGE = 'finish_page' - Страница окончания статьи
+ *      Article::FINISH_PAGE = 'finishPage' - Страница окончания статьи
  *      Article::FFIELD_BIBLIOGRAPHIC_RECORD = 'bibliographicRecord' - Библиографическая запись
  */
 
@@ -356,7 +358,7 @@ $fields = [Article::FIELD_NAME, Article::FIELD_AUTHORS]; // поля для вы
  *      Article::FIELD_DESCRIPTION = 'description' - Аннотация статьи
  *      Article::FIELD_KEYWORDS = 'keywords' - Ключевые слова статьи
  *      Article::START_PAGE = 'startPage' - Страница начала статьи
- *      Article::FINISH_PAGE = 'finish_page' - Страница окончания статьи
+ *      Article::FINISH_PAGE = 'finishPage' - Страница окончания статьи
  *      Article::FFIELD_BIBLIOGRAPHIC_RECORD = 'bibliographicRecord' - Библиографическая запись
  */
 

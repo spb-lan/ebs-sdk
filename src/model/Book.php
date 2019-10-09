@@ -104,6 +104,11 @@ class Book extends Model
     const FIELD_PUBLISHER = 'publisher';
 
     /**
+     * Языл
+     */
+    const FIELD_LANG = 'lang';
+
+    /**
      * Ссылка на карточку книги
      */
     const FIELD_URL = 'url';
