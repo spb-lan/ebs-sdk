@@ -32,7 +32,7 @@
 
 ```php
 $token = '7c0c2193d27108a509abd8ea84a8750c82b3a520'; // токен для тестового подписчика
-$client = new Client($token); // инициализация клиента
+$client = new \Lan\Ebs\Sdk\Client($token); // инициализация клиента
 ```
 
 ## Авторизация по коду
@@ -47,7 +47,7 @@ $client = new Client($token); // инициализация клиента
 ### Шаг 1. Получение объекта SDK
 
 ```php
-$security = new Security($client);
+$security = new \Lan\Ebs\Sdk\Security($client);
 ```
 
 
