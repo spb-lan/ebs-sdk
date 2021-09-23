@@ -25,14 +25,24 @@ final class Security implements Common
     const TEST_TOKEN = '7c0c2193d27108a509abd8ea84a8750c82b3a520';
 
     /**
-     * Домен продакшен сервера API
+     * Домен сервера API
      */
     const PROD_API_HOST = 'https://openapi.e.lanbook.com';
 
     /**
-     * Домен продакшен сервера ЭБС
+     * Домен сервера ЭБС
      */
     const PROD_EBS_HOST = 'https://e.lanbook.com';
+
+    /**
+     * Домен сервера авторизация
+     */
+    const SECURITY_HOST = 'https://security.lanbook.com';
+
+    /**
+     * Домен сервера читалки
+     */
+    const READER_HOST = 'https://reader.lanbook.com';
 
     /**
      * Инстанс клиента API
@@ -95,9 +105,29 @@ final class Security implements Common
      */
     public static function getEbsHost()
     {
-        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? 'http://openapi.local' : Security::PROD_EBS_HOST;
+        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? 'http://ebs.local' : Security::PROD_EBS_HOST;
     }
 
+    /**
+     * Получение хоста сервера ЭБС
+     *
+     * @return string
+     */
+    public static function getSecurityHost()
+    {
+        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? 'http://security.ebs.local' : Security::PROD_SECUTITY_HOST;
+    }
+
+    /**
+     * Получение хоста сервера ЭБС
+     *
+     * @return string
+     */
+    public static function getReaderHost()
+    {
+        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? 'http://reader.ebs.local' : Security::PROD_READER_HOST;
+    }
+    
     /**
      * Получение url для автологина
      *
