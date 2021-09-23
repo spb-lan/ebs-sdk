@@ -115,7 +115,7 @@ final class Security implements Common
      */
     public static function getSecurityHost()
     {
-        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? 'http://security.ebs.local' : Security::PROD_SECUTITY_HOST;
+        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? 'http://security.ebs.local' : Security::SECURITY_HOST;
     }
 
     /**
@@ -125,7 +125,7 @@ final class Security implements Common
      */
     public static function getReaderHost()
     {
-        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? 'http://reader.ebs.local' : Security::PROD_READER_HOST;
+        return isset($_SERVER['USER']) && $_SERVER['USER'] == 'dp' ? 'http://reader.ebs.local' : Security::READER_HOST;
     }
     
     /**
