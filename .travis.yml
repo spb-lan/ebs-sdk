@@ -1,6 +1,6 @@
 language: php
 
-dist: trusty
+dist: xenial
 
 php:
   - 5.6
@@ -9,8 +9,9 @@ php:
   - 7.2
   - 7.3
   - 7.4
+  - 8.0
 
-install: composer update
+install: composer install
 
 script: vendor/bin/phpunit --coverage-clover="tests/_output/coverage.xml"
 
