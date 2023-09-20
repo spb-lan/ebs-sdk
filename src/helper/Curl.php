@@ -36,11 +36,11 @@ class Curl
     public static function getResponse($host, $url, $method, $token, array $params)
     {
         $curl = curl_init();
-
+        
         switch ($method) {
             case 'GET':
                 if (!empty($params)) {
-                    $url = sprintf("%s?%s", $url, http_build_query($params, '', '&'));
+                    $url = sprintf("%s?%s", $url, self::httpBuildQuery($params));
                 };
 
                 break;
@@ -48,7 +48,7 @@ class Curl
             case 'PUT':
             case 'DELETE':
                 if (!empty($params)) {
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($params, '', '&'));
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, self::httpBuildQuery($params));
                 }
                 break;
             default:
@@ -94,6 +94,24 @@ class Curl
         }
 
         return $response;
+    }
+
+    /**
+     * Сборка параметров для запроса массива как строку
+     *
+     * @param array $array Данные массива
+     *
+     * @return string
+     */
+    private static function httpBuildQuery(array $array)
+    {
+        $paramsArr = [];
+
+        foreach ($array as $param => $value) {
+            $paramsArr[] = $param . '=' . urlencode($value);
+        }
+
+        return implode('&', $paramsArr);
     }
 
     /**
